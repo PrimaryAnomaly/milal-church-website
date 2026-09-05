@@ -30,4 +30,4 @@ Confirm public email/phone; domain cutover timing; who holds ADMIN_SECRET; sage 
 ## Artifact chain (this repo)
 **INTENT → SPEC → [PLAN](./PLAN.md)** (design collapsed into SPEC; not a separate DESIGN stage/file).
 
-INTENT.md (this file) → [SPEC.md](./SPEC.md) (full requirements + design: REQ-MILAL-*, page contracts, admin model, AC checklist; visual system collapsed in) → [PLAN.md](./PLAN.md) (batches, file map, risks, proof) → build with proof. Former DESIGN.md is a stub redirect only.
+INTENT.md (this file) → [SPEC.md](./SPEC.md) (full requirements + design: REQ-MILAL-*, page contracts, admin model, AC checklist; visual system collapsed in) → [PLAN.md](./PLAN.md) (batches, file map, risks, proof) → build with proof; [AUDIT.md](./AUDIT.md) reviews SPEC+PLAN. Former DESIGN.md is a stub redirect only.

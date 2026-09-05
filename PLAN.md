@@ -83,7 +83,27 @@ Every REQ-MILAL-* and AC-* from SPEC is either **covered** by a batch below or *
 
 **Deferred (not build):** domain cutover, email/phone confirmation (copy omits), ADMIN_SECRET ownership process, Cloud Agents.
 
+### 2b. Acceptance criteria → batch
+
+| AC | Batch | Notes |
+|----|-------|-------|
+| AC-01 | B3 | Home above-fold phone checklist |
+| AC-02 | B1-B2 | KO nav |
+| AC-03 | B3 | Worship table |
+| AC-04 | B3 | Visit rewrite |
+| AC-05 | B3 | About + pastor |
+| AC-06 | B3 | Generations one page |
+| AC-07 | B4-B5 | YT + published summaries |
+| AC-08 | B3 | Korean school |
+| AC-09 | B1 | Footer |
+| AC-10 | B4 | Admin publish flow |
+| AC-11 | B4-B5 | Unpublished hidden |
+| AC-12 | Every batch | `npm run build` / Vercel |
+| AC-13 | B1+B5 | Visual tokens |
+| AC-14 | B1-B2 | No purged IA in nav |
+
 ---
+
 ## 3. Target file map
 
 ### Create
