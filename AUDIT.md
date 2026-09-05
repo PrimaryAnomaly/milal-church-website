@@ -219,8 +219,33 @@ PLAN correctly excludes: domain cutover, giving, albums/자료실, Cloud Agents,
 
 ---
 
+
+
+---
+
+## 11. Addendum — Language policy lock (2026-09-05 ET)
+
+**Supersedes** prior INTENT/SPEC/PLAN/AUDIT assumptions that the public UI is **KO-primary** with **EN for essentials only**, and that **full bilingual / language toggle** was out of scope.
+
+**Locked policy (authoritative in INTENT + SPEC v1.1 + PLAN v1.1):**
+
+1. All public user-facing copy in **both English and Korean** (not essentials-only).
+2. **Default language: English.**
+3. Initial language follows the browser (`Accept-Language` / `navigator.languages`): Korean if preferred, otherwise English.
+4. Easy Header **EN ↔ KO** toggle; preference persists (cookie/`localStorage`) and overrides browser default after the user chooses.
+5. English-first toggle affordance is fine.
+
+**SPEC:** §4.4 REQ-MILAL-I18N-01..07; NAV-03 rewritten; non-goals/open-concerns cleaned; **AC-15** added.
+
+**PLAN:** Batch **Bi18n**; route strategy = **same URL paths + locale cookie** (not `/en`/`/ko` or required `[locale]` segment); Header LocaleToggle; AC-15 mapping.
+
+**Prior audit notes superseded:** any pass/fail text treating KO-primary nav, EN-essentials-only, or “full bilingual out of scope” as correct — including section 2 INTENT alignment row on bilingual out-of-scope, section 6 under-scope “EN visit essentials,” and related judgment calls. Those findings are **historical**; implement against the locked i18n REQs instead.
+
+**Still out of scope:** separate English Ministry blog spectacle; disability-mission (bostonmilal.org) mix.
+
 ## Document control
 
 | Version | Date (America/New_York) | Notes |
 |---------|-------------------------|--------|
 | v1.0 | 2026-09-05 | Initial audit after PLAN v1.0 on main |
+| v1.1 | 2026-09-05 | Addendum: language policy lock; KO-primary / EN-essentials findings superseded |

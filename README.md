@@ -41,3 +41,7 @@ Then open http://localhost:3000
 
 src/lib/posts.ts reads/writes data/posts.json (committed as empty array).
 Replace that module later for Postgres without changing callers.
+
+## Language (planned)
+
+Public UI will be bilingual English + Korean. Default English; initial locale follows the browser; Header EN/KO toggle persists preference (see SPEC REQ-MILAL-I18N-* / PLAN Batch Bi18n). Same URL paths for both locales.

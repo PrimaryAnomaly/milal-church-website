@@ -17,7 +17,7 @@ Implement within this frame. Do not invent IA, CMS, or visual direction outside 
 | Product | Public church website + thin volunteer admin for posts |
 | Repo | https://github.com/PrimaryAnomaly/milal-church-website |
 | Stack (scaffolded) | Next.js App Router, TypeScript, Tailwind, Vercel |
-| Primary language | Korean (KO); EN for times, address, visit essentials only |
+| Languages | **Both EN and KO** for all public user-facing copy. **Default: English.** Initial locale follows browser (`Accept-Language` / `navigator.languages`): KO if Korean preferred, else EN. Header EN↔KO toggle persists preference (cookie/localStorage) and overrides browser default after user chooses. |
 | Predecessor | bostonmilalchurch.org (Imweb brochure — cluttered; purge, do not clone) |
 
 ### Church facts (lock for copy; verify flagged items with church)
@@ -51,7 +51,6 @@ Derived from INTENT success criteria:
 
 ### Non-goals (out of scope for v1)
 
-- Full bilingual parity / language toggle for every page
 - Online giving, sticky donate banners, member portal
 - Photo album archives, 밀알포토 galleries, 자료실
 - Empty English Ministry blog / EM spectacle pages
@@ -67,7 +66,7 @@ Derived from INTENT success criteria:
 
 | Persona | Jobs to be done |
 |---------|------------------|
-| **Visitor** (first-time, often phone, KO primary) | Know when Sunday worship is; get address / parking / kids info; decide whether to visit this Sunday; find YouTube if remote |
+| **Visitor** (first-time, often phone; EN or KO per browser/preference) | Know when Sunday worship is; get address / parking / kids info; decide whether to visit this Sunday; find YouTube if remote; switch language if needed |
 | **Member** | Check schedule / 다음세대 times; read 설교요약 or 소식; share social links |
 | **Volunteer editor** | Log in with shared secret; publish 설교요약 (+ optional image); post rare 소식; unpublish mistakes; log out — no CMS training required |
 
@@ -79,23 +78,23 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 ### 4.1 Public routes & navigation
 
-**REQ-MILAL-NAV-01** Top nav MUST use short KO labels only (no mega-menu, no carousels). Hamburger on mobile.
+**REQ-MILAL-NAV-01** Top nav MUST use short localized labels (EN or KO per active locale; no mega-menu, no carousels). Hamburger on mobile. Label pairs (EN / KO): Worship / 예배·모임; Visit / 새가족; About / 교회소개; Generations / 다음세대; Sermons / 설교; Korean School / 한국학교.
 
-| KO nav label | Suggested path | Scaffold today | Notes |
-|--------------|----------------|----------------|-------|
-| (로고 / 홈) | `/` | `/` | Church name as brand link |
-| 예배·모임 | `/worship` | *(missing)* | Was Imweb 예배안내 |
-| 새가족 | `/visit` | *(missing)* | Was broken YouTube dump |
-| 교회소개 | `/about` | `/about` | Pastor folded in |
-| 다음세대 | `/generations` | *(missing)* | One page only |
-| 설교 | `/sermons` **or** `/posts` | `/posts` | Pick one in PLAN; redirect the other if needed |
-| 한국학교 | `/korean-school` | *(missing)* | One page; no albums |
+| Nav label (EN / KO) | Suggested path | Scaffold today | Notes |
+|---------------------|----------------|----------------|-------|
+| (logo / home) | `/` | `/` | Church name as brand link (show KO+EN name per locale / brand rules) |
+| Worship / 예배·모임 | `/worship` | *(missing)* | Was Imweb 예배안내 |
+| Visit / 새가족 | `/visit` | *(missing)* | Was broken YouTube dump |
+| About / 교회소개 | `/about` | `/about` | Pastor folded in |
+| Generations / 다음세대 | `/generations` | *(missing)* | One page only |
+| Sermons / 설교 | `/sermons` **or** `/posts` | `/posts` | Pick one in PLAN; redirect the other if needed |
+| Korean School / 한국학교 | `/korean-school` | *(missing)* | One page; no albums |
 
 **REQ-MILAL-NAV-02** Admin routes MUST NOT appear in public nav: `/admin/login`, `/admin`, `/admin/edit/[id]` (and any create path PLAN defines).
 
-**REQ-MILAL-NAV-03** Language: KO is primary UI copy. EN MUST appear for worship time, address, and visit essentials (e.g. "Sunday 10:00 AM", street address). Full EN pages are out of scope.
+**REQ-MILAL-NAV-03** Language UX for chrome: Header MUST include an easy **EN ↔ KO** toggle (English-first affordance OK, e.g. `EN | 한국어`). Active locale drives nav labels and all public copy per **§4.4 Internationalization**. See REQ-MILAL-I18N-*.
 
-**Contradiction (scaffold vs SPEC):** Current Header links are Home / About / Posts (EN). Implementing this SPEC requires replacing nav labels/routes to the table above. See §12.
+**Contradiction (scaffold vs SPEC):** Current Header links are Home / About / Posts (EN) with no locale toggle or bilingual dictionary. Implementing this SPEC requires routes in the table above, localized labels, and i18n per §4.4. See §12.
 
 ---
 
@@ -211,11 +210,40 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 ### 4.3 Cross-cutting public behavior
 
-**REQ-MILAL-PUB-01** All public pages MUST be reachable from the KO nav without orphan Imweb-style hash IDs.
+**REQ-MILAL-PUB-01** All public pages MUST be reachable from the localized public nav without orphan Imweb-style hash IDs.
 
-**REQ-MILAL-PUB-02** 404 for unknown routes SHOULD be a simple KO message + link home (nice-to-have in PLAN).
+**REQ-MILAL-PUB-02** 404 for unknown routes SHOULD be a simple localized (EN+KO dictionary) message + link home (nice-to-have in PLAN).
 
 **REQ-MILAL-PUB-03** Unpublished posts MUST NOT be visible on public list/detail.
+
+
+### 4.4 Internationalization (i18n) — REQ-MILAL-I18N-*
+
+**Locked language policy** (replaces earlier KO-primary / EN-essentials-only):
+
+| Rule | Requirement |
+|------|-------------|
+| Coverage | **Both** English and Korean for **all** public user-facing copy on all v1 public pages (home, worship, visit, about, generations, sermons, korean-school, footer, 404, public post list/detail chrome). |
+| Default / fallback | **English** when no preference and browser does not prefer Korean. |
+| Browser detection | Initial language follows `Accept-Language` and/or `navigator.languages`: if Korean is preferred → Korean; **otherwise → English**. |
+| Manual toggle | Header EN ↔ KO control; English-first toggle affordance is fine. |
+| Persistence | Persist preference in **cookie and/or localStorage**; after the user chooses, stored preference **overrides** browser default on later visits. |
+
+**REQ-MILAL-I18N-01** All public user-facing strings for v1 pages MUST be available in **both EN and KO** (not essentials-only). Admin UI MAY remain KO-primary or bilingual (volunteer tooling; not blocking public AC).
+
+**REQ-MILAL-I18N-02** The **default / fallback** locale MUST be **English** when detection yields neither a stored preference nor a Korean browser preference.
+
+**REQ-MILAL-I18N-03** On first visit (no stored preference), the site MUST detect preferred language from the browser (`Accept-Language` on the server and/or `navigator.languages` on the client). If Korean is preferred → serve Korean; otherwise → English.
+
+**REQ-MILAL-I18N-04** The public Header MUST expose an easy **EN ↔ KO** toggle. Toggle UX MAY be English-first (e.g. `EN | 한국어`).
+
+**REQ-MILAL-I18N-05** Choosing a language MUST persist the preference (cookie and/or `localStorage`) and MUST override browser detection on subsequent visits until the user toggles again.
+
+**REQ-MILAL-I18N-06** Route strategy: **same URL paths** for both locales (no required `/en` or `/ko` prefix). Locale is carried by cookie / client state (and `html[lang]`). PLAN may use `next-intl` or a lightweight dictionary; path-prefix `[locale]` is optional and not required for v1.
+
+**REQ-MILAL-I18N-07** `html[lang]` (and page metadata where practical) MUST reflect the active locale (`en` or `ko`).
+
+**Out of i18n scope (unchanged):** separate English Ministry blog spectacle; disability-mission site mix; inventing unconfirmed contact facts in either language.
 
 ---
 
@@ -284,7 +312,7 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 | ID | Requirement |
 |----|-------------|
 | **REQ-MILAL-NFR-01** | **Mobile-first.** Primary design viewport is phone; desktop is enhancement. |
-| **REQ-MILAL-NFR-02** | **KO typography legibility.** Body ~16–18px; large headings; elders on phones must read without pinch-zoom gymnastics. |
+| **REQ-MILAL-NFR-02** | **KO + EN typography legibility.** Body ~16–18px; large headings; Korean and Latin both readable; elders on phones must read without pinch-zoom gymnastics. |
 | **REQ-MILAL-NFR-03** | **Performance.** No heavy hero video; avoid large unoptimized carousels; prefer static/SSR pages; images lazy-load when present. |
 | **REQ-MILAL-NFR-04** | **a11y basics.** Semantic landmarks, label form controls, visible focus, sufficient contrast on accent-on-ground, alt text for meaningful images. |
 | **REQ-MILAL-NFR-05** | **Deploy.** Production on **Vercel** from this GitHub repo; package-manager build must succeed in CI/Vercel. |
@@ -334,7 +362,7 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 **Do**
 
 - Quiet hospitality; warm minimal light UI
-- Mobile-first; large readable type for KO + EN essentials
+- Mobile-first; large readable type for full EN + KO copy
 - Soft rounded cards, thin pale borders, generous whitespace
 - Keep nav short; hero visit info above the fold
 - Single primary accent `#B45309`
@@ -394,9 +422,9 @@ From INTENT (still open — do not silently invent answers in build):
 | Public email / phone | Confirm for footer and 새가족/한국학교 contact |
 | Domain cutover | Timing for bostonmilalchurch.org → this Vercel site |
 | `ADMIN_SECRET` owner | Who holds / rotates the volunteer secret |
-| EN depth | Toggle beyond times/address/visit essentials? (Full bilingual = out of scope) |
 | Sage vs amber | Soft sage companion only if wheat-amber needs UI relief; navy stays rejected |
 | Pastor & schedule currency | 권혁진 bio + worship/다음세대/한국학교 times — verify before treating as final |
+| Admin locale | Public i18n locked (EN+KO); whether thin `/admin` is KO-only or bilingual is a PLAN judgment (not blocking public AC) |
 
 ---
 
@@ -405,7 +433,7 @@ From INTENT (still open — do not silently invent answers in build):
 Testable checklist for v1 done:
 
 - [ ] **AC-01** On a phone-width viewport, home shows church name, 표어, 주일 10:00, address, and CTAs to 예배안내 + 새가족 **without scrolling**.
-- [ ] **AC-02** Public nav matches KO labels in §4.1; no mega-menu; admin links absent from public nav.
+- [ ] **AC-02** Public nav matches localized labels in §4.1 for the active locale; no mega-menu; admin links absent from public nav; Header shows EN↔KO toggle.
 - [ ] **AC-03** `/worship` shows schedule table with 예배/모임 · 시간 · 장소 (verified or clearly marked draft).
 - [ ] **AC-04** `/visit` explains expect / parking / kids / contact — **not** a YouTube-only page.
 - [ ] **AC-05** `/about` shows 표어, KAPC line, and pastor short bio (no separate pastor page).
@@ -418,6 +446,7 @@ Testable checklist for v1 done:
 - [ ] **AC-12** Production build succeeds on Vercel.
 - [ ] **AC-13** UI matches §7 (ground `#FAF7F2`, accent `#B45309`, no navy, no megachurch chrome).
 - [ ] **AC-14** No primary-nav links to 자료실, 밀알포토, empty EM blog, or Imweb numeric URLs.
+- [ ] **AC-15** All v1 public pages show complete user-facing copy in the active locale (EN and KO both implemented); default/fallback is English; first visit without cookie follows browser Korean preference → KO else EN; after toggle, preference persists and overrides browser default.
 
 ---
 
@@ -425,7 +454,8 @@ Testable checklist for v1 done:
 
 | Topic | Issue | Resolution direction |
 |-------|--------|----------------------|
-| **Scaffold routes vs KO nav** | Repo today: `/`, `/about`, `/posts`, `/admin/*` with EN Header labels. SPEC requires `/worship`, `/visit`, `/generations`, `/korean-school`, KO labels, 설교 path choice. | PLAN must add routes + rewrite Header/Footer; optionally keep `/posts` as 설교 with redirect from `/sermons` or vice versa. |
+| **Scaffold routes vs bilingual nav** | Repo today: `/`, `/about`, `/posts`, `/admin/*` with EN-only Header labels and no locale toggle. SPEC requires `/worship`, `/visit`, `/generations`, `/korean-school`, localized EN/KO labels, 설교 path choice, and full i18n (§4.4). | PLAN must add routes + rewrite Header/Footer with toggle + dictionary/`next-intl`; keep same paths (no `/en`/`/ko` required); optionally keep `/posts` as 설교 with redirect from `/sermons` or vice versa. |
+| **Language policy supersession** | Earlier drafts said KO primary UI / EN essentials only / full bilingual out of scope. | **Superseded** by §4.4 REQ-MILAL-I18N-*: full public EN+KO, default EN, browser detection, persisted toggle. |
 | **Post model drift** | Scaffold `Post` has `excerpt`/`content`/`coverImageUrl`/`createdAt` — no `type`, no `published_at`, no `imageUrls[]`. | Extend abstraction in PLAN to match §5.2; migrate JSON shape; map `content`→`body` cleanly. |
 | **Email obfuscation** | Old site Cloudflare email protection scrapes as placeholder protected text. | Confirm real public email with church; do not guess from obfuscation artifacts. |
 | **Schedule / pastor verify** | Seeded from old Imweb pages (2026 표어, 권혁진 bio, 금요 1·3주 7:30, 한국학교 9:30–10:30). May be stale. | Ship with verify flags; replace with church-confirmed copy before domain cutover. |
@@ -440,3 +470,4 @@ Testable checklist for v1 done:
 | Version | Date (America/New_York) | Notes |
 |---------|-------------------------|--------|
 | v1.0 | 2026-09-05 | Full requirements + collapsed design derived from INTENT; supersedes thin SPEC restatement |
+| v1.1 | 2026-09-05 | Language policy lock: full public EN+KO; default EN; browser detection; header toggle + persistence; REQ-MILAL-I18N-*; NAV-03 / non-goals / AC-15 updated; KO-primary / EN-essentials-only superseded |
