@@ -1,49 +1,51 @@
 import type { Metadata } from "next";
+import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 
-export const metadata: Metadata = {
-  title: "About",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getDictionary();
+  return { title: t.about.title };
+}
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const locale = await getLocale();
+  const t = await getDictionary(locale);
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16">
-      <p className="text-sm font-medium uppercase tracking-widest text-accent">About</p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
-        About Milal Church
+    <div className="mx-auto max-w-3xl px-4 py-14">
+      <p className="text-sm font-medium uppercase tracking-widest text-accent">
+        {t.nav.about}
+      </p>
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+        {t.about.title}
       </h1>
-      <div className="mt-8 space-y-5 text-base leading-relaxed text-stone-700">
-        <p>
-          Milal Church is a placeholder congregation page for our growing community.
-          We gather to worship, learn, and care for one another in the name of Christ.
-        </p>
-        <p>
-          Our name, <em>Milal</em>, evokes the idea of a bright path forward — walking
-          together in faith with humility and joy. This site will eventually share
-          service times, ministries, and stories from our church family.
-        </p>
-        <p>
-          For now, explore the posts section for updates, or check back soon as we
-          fill in more details about our mission, leadership, and how to get involved.
-        </p>
-      </div>
+      <p className="mt-5 text-base leading-relaxed text-muted">{t.about.intro}</p>
 
-      <div className="mt-12 rounded-xl border border-stone-200 bg-white p-6">
-        <h2 className="text-lg font-semibold text-stone-900">Visit us</h2>
-        <dl className="mt-4 space-y-3 text-sm text-stone-700">
-          <div>
-            <dt className="font-medium text-stone-900">Address</dt>
-            <dd className="text-muted">123 Faith Avenue (placeholder), Your City</dd>
-          </div>
-          <div>
-            <dt className="font-medium text-stone-900">Service times</dt>
-            <dd className="text-muted">Sundays — time TBD</dd>
-          </div>
-          <div>
-            <dt className="font-medium text-stone-900">Contact</dt>
-            <dd className="text-muted">hello@milal.church (placeholder)</dd>
-          </div>
-        </dl>
-      </div>
+      <section className="mt-10 rounded-xl border border-border bg-white p-6">
+        <h2 className="text-lg font-semibold text-foreground">{t.about.mottoHeading}</h2>
+        <p className="mt-2 text-base text-foreground">
+          {locale === "ko" ? t.about.mottoKo : t.about.motto}
+        </p>
+        <p className="mt-1 text-sm text-muted">
+          {locale === "ko" ? t.about.motto : t.about.mottoKo}
+        </p>
+      </section>
+
+      <section className="mt-6 rounded-xl border border-border bg-white p-6">
+        <h2 className="text-lg font-semibold text-foreground">{t.about.affiliationHeading}</h2>
+        <p className="mt-2 text-base text-muted">{t.about.affiliation}</p>
+      </section>
+
+      <section className="mt-6 rounded-xl border border-border bg-white p-6">
+        <h2 className="text-lg font-semibold text-foreground">{t.about.pastorHeading}</h2>
+        <p className="mt-2 font-medium text-foreground">{t.about.pastorName}</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{t.about.pastorBio}</p>
+        <p className="mt-3 text-xs text-accent">{t.about.pastorVerify}</p>
+      </section>
+
+      <section className="mt-6">
+        <h2 className="text-lg font-semibold text-foreground">{t.about.identityHeading}</h2>
+        <p className="mt-2 text-base leading-relaxed text-muted">{t.about.identity}</p>
+      </section>
     </div>
   );
 }

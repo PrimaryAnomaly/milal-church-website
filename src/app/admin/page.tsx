@@ -57,7 +57,7 @@ export default async function AdminPage() {
                   </Link>
                   {post.published ? (
                     <Link
-                      href={`/posts/${post.slug}`}
+                      href={`/sermons/${post.slug}`}
                       className="text-sm text-stone-600 hover:underline"
                     >
                       View

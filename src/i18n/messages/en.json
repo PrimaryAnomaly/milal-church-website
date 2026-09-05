@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "titleDefault": "Boston Milal Korean Church / 보스톤밀알한인장로교회",
+    "titleTemplate": "%s | Boston Milal Korean Church",
+    "description": "Boston Milal Korean Church — warm Presbyterian congregation in Chelmsford, MA. Sunday worship 10:00 AM."
+  },
+  "nav": {
+    "brand": "Boston Milal Korean Church",
+    "brandShort": "Milal Church",
+    "home": "Home",
+    "worship": "Worship",
+    "visit": "Visit",
+    "about": "About",
+    "generations": "Generations",
+    "sermons": "Sermons",
+    "koreanSchool": "Korean School",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "localeEn": "EN",
+    "localeKo": "한국어",
+    "localeLabel": "Language"
+  },
+  "footer": {
+    "name": "Boston Milal Korean Church",
+    "addressLabel": "Address",
+    "youtube": "YouTube",
+    "facebook": "Facebook",
+    "copyright": "All rights reserved."
+  },
+  "home": {
+    "title": "Home",
+    "eyebrow": "Welcome",
+    "nameEn": "Boston Milal Korean Church",
+    "nameKo": "보스톤밀알한인장로교회",
+    "mottoLabel": "2026 Motto",
+    "motto": "Serve one another as good stewards (1 Peter 4:10)",
+    "mottoKoLine": "선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
+    "worshipTime": "Sunday 10:00 AM",
+    "address": "15 Alpha Road, Chelmsford, MA 01824",
+    "ctaWorship": "Worship info",
+    "ctaVisit": "New here?",
+    "intro": "We are a Korean Presbyterian congregation in Chelmsford, gathering each Sunday to worship, grow, and serve one another with sincerity.",
+    "sermonsLink": "Sermon summaries",
+    "youtubeLink": "Watch on YouTube",
+    "verifyNote": "Motto and schedule details marked for church confirmation."
+  },
+  "worship": {
+    "title": "Worship & gatherings",
+    "intro": "Weekly worship and prayer gatherings. Rows marked for confirmation with the church before treating as final.",
+    "colMeeting": "Meeting",
+    "colTime": "Time",
+    "colPlace": "Place",
+    "addressHeading": "Address",
+    "onlineHeading": "Online worship",
+    "onlineBody": "Join livestreams and past services on our YouTube channel.",
+    "youtubeCta": "YouTube @milalkoreanchurch1435",
+    "verify": "VERIFY-WITH-CHURCH",
+    "rows": {
+      "sunday": "Sunday worship",
+      "friday": "Friday prayer",
+      "intercession": "Intercessory prayer",
+      "cell": "Cell groups",
+      "children": "Children's worship",
+      "youth": "Youth group"
+    }
+  },
+  "visit": {
+    "title": "Visit / New family",
+    "intro": "We are glad you are considering a visit. Here is what to expect.",
+    "expectTitle": "What to expect",
+    "expectBody": "Come as you are. Sunday worship begins at 10:00 AM in the main sanctuary. You will find welcome, scripture, prayer, and fellowship. Stay after for greetings if you like — no pressure.",
+    "parkingTitle": "Parking & arrival",
+    "parkingBody": "Park in the lot at 15 Alpha Road, Chelmsford, MA 01824. Enter through the main entrance. (Arrival details VERIFY-WITH-CHURCH.)",
+    "kidsTitle": "Children",
+    "kidsBody": "Children's worship meets during Sunday service. See Generations for age-band times and rooms.",
+    "contactTitle": "Contact",
+    "contactBody": "Questions? Please ask after worship, or reach us via the Facebook page linked in the footer. Email and phone will appear here once confirmed — we do not list unverified contacts.",
+    "ctaGenerations": "Generations schedule",
+    "ctaWorship": "Worship times"
+  },
+  "about": {
+    "title": "About the church",
+    "intro": "Boston Milal Korean Church is a sincere Presbyterian congregation in Chelmsford, Massachusetts. Our name, Milal (wheat), points to humble growth and hospitality.",
+    "mottoHeading": "2026 Motto",
+    "motto": "Serve one another as good stewards (1 Peter 4:10)",
+    "mottoKo": "선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
+    "affiliationHeading": "Affiliation",
+    "affiliation": "KAPC · New England Presbytery",
+    "pastorHeading": "Pastor",
+    "pastorName": "Rev. Hyukjin Kwon (권혁진 목사)",
+    "pastorBio": "Chongshin University (Theology); M.Div. / Th.M. Gordon-Conwell; formerly senior pastor of Lebanon Korean Presbyterian Church.",
+    "pastorVerify": "Pastoral details VERIFY-WITH-CHURCH before treating as final.",
+    "identityHeading": "Who we are",
+    "identity": "We gather as a Korean-speaking Presbyterian church family in Greater Boston, seeking to worship faithfully and serve one another."
+  },
+  "generations": {
+    "title": "Next generations",
+    "intro": "One page for children's and youth ministries. Blank or verify-marked cells need church confirmation.",
+    "colDept": "Ministry",
+    "colAge": "Ages",
+    "colTime": "Time",
+    "colPlace": "Place",
+    "verify": "VERIFY-WITH-CHURCH",
+    "rows": {
+      "toddlers": "Toddlers / preschool",
+      "elementary": "Elementary",
+      "youth": "Youth Group",
+      "youngAdults": "Young adults"
+    }
+  },
+  "sermons": {
+    "title": "Sermons",
+    "intro": "Watch services on YouTube and read published sermon summaries.",
+    "youtubeHeading": "YouTube channel",
+    "youtubeCta": "Open @milalkoreanchurch1435",
+    "listHeading": "Sermon summaries",
+    "empty": "No published sermon summaries yet.",
+    "back": "All sermons",
+    "readMore": "Read more"
+  },
+  "koreanSchool": {
+    "title": "Korean School",
+    "intro": "Sunday Korean language and culture classes for the next generation.",
+    "goalsHeading": "Goals",
+    "goals": "Help children grow in Korean language, cultural identity, and community — learning with joy alongside the church family.",
+    "timeHeading": "Class time",
+    "time": "Sundays 9:30–10:30 AM (spring and fall semesters). VERIFY-WITH-CHURCH.",
+    "contactHeading": "Location & contact",
+    "contact": "Classes meet at 15 Alpha Road, Chelmsford, MA 01824. For questions, please ask after worship. Phone and email omitted until confirmed.",
+    "noAlbums": "Teacher rosters and photo albums are not published on this site."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This page does not exist or was moved.",
+    "home": "Back to home"
+  },
+  "common": {
+    "verify": "VERIFY-WITH-CHURCH"
+  }
+}

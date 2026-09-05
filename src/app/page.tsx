@@ -1,96 +1,81 @@
 import Link from "next/link";
-import { listPosts } from "@/lib/posts";
+import { CHURCH } from "@/lib/church";
+import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const posts = (await listPosts({ publishedOnly: true })).slice(0, 3);
+  const locale = await getLocale();
+  const t = await getDictionary(locale);
 
   return (
     <div>
-      <section className="bg-gradient-to-b from-amber-50 to-background">
-        <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:py-28">
-          <p className="mb-3 text-sm font-medium uppercase tracking-widest text-accent">
-            Welcome
+      <section className="bg-accent-soft/60">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
+          <p className="text-sm font-medium uppercase tracking-widest text-accent">
+            {t.home.eyebrow}
           </p>
-          <h1 className="text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
-            Milal Church
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            {locale === "ko" ? t.home.nameKo : t.home.nameEn}
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-muted">
-            A placeholder home for our congregation. Join us as we grow in faith,
-            serve our neighbors, and share the good news together.
+          <p className="mt-1 text-base text-muted sm:text-lg">
+            {locale === "ko" ? t.home.nameEn : t.home.nameKo}
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+
+          <p className="mt-5 text-sm font-medium text-accent">{t.home.mottoLabel}</p>
+          <p className="mt-1 text-lg font-medium text-foreground sm:text-xl">
+            {locale === "ko" ? t.home.mottoKoLine : t.home.motto}
+          </p>
+          {locale === "en" ? (
+            <p className="mt-1 text-sm text-muted">{t.home.mottoKoLine}</p>
+          ) : (
+            <p className="mt-1 text-sm text-muted">{t.home.motto}</p>
+          )}
+
+          <dl className="mt-6 space-y-2 text-base text-foreground sm:text-lg">
+            <div>
+              <dt className="sr-only">Worship</dt>
+              <dd className="font-semibold">{t.home.worshipTime}</dd>
+            </div>
+            <div>
+              <dt className="sr-only">Address</dt>
+              <dd>{t.home.address}</dd>
+            </div>
+          </dl>
+
+          <div className="mt-7 flex flex-wrap gap-3">
             <Link
-              href="/about"
-              className="rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white hover:bg-orange-900"
+              href="/worship"
+              className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
             >
-              About us
+              {t.home.ctaWorship}
             </Link>
             <Link
-              href="/posts"
-              className="rounded-full border border-stone-300 bg-white px-6 py-2.5 text-sm font-medium text-stone-800 hover:border-stone-400"
+              href="/visit"
+              className="rounded-full border border-border bg-white px-5 py-2.5 text-sm font-medium text-foreground hover:bg-accent-soft"
             >
-              Latest posts
+              {t.home.ctaVisit}
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-16">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <h2 className="text-2xl font-semibold text-stone-900">Recent posts</h2>
-          <Link href="/posts" className="text-sm text-accent hover:underline">
-            View all
+      <section className="mx-auto max-w-5xl px-4 py-12">
+        <p className="max-w-2xl text-base leading-relaxed text-muted">{t.home.intro}</p>
+        <div className="mt-6 flex flex-wrap gap-4 text-sm">
+          <Link href="/sermons" className="font-medium text-accent hover:underline">
+            {t.home.sermonsLink}
           </Link>
+          <a
+            href={CHURCH.youtubeUrl}
+            className="font-medium text-accent hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t.home.youtubeLink}
+          </a>
         </div>
-        {posts.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-stone-300 bg-white p-8 text-center text-muted">
-            No published posts yet. Admins can create posts in the admin area.
-          </p>
-        ) : (
-          <ul className="grid gap-6 sm:grid-cols-3">
-            {posts.map((post) => (
-              <li
-                key={post.id}
-                className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm"
-              >
-                <h3 className="font-medium text-stone-900">
-                  <Link href={`/posts/${post.slug}`} className="hover:text-accent">
-                    {post.title}
-                  </Link>
-                </h3>
-                <p className="mt-2 line-clamp-3 text-sm text-muted">
-                  {post.excerpt || "Read more..."}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section className="border-t border-stone-200 bg-white">
-        <div className="mx-auto grid max-w-5xl gap-8 px-4 py-16 sm:grid-cols-3">
-          {[
-            {
-              title: "Worship",
-              body: "Sunday gatherings with scripture, prayer, and fellowship. Times TBD.",
-            },
-            {
-              title: "Community",
-              body: "Small groups, meals, and neighborhood outreach throughout the week.",
-            },
-            {
-              title: "Serve",
-              body: "Local missions and care ministries — placeholder details coming soon.",
-            },
-          ].map((item) => (
-            <div key={item.title}>
-              <h3 className="text-lg font-semibold text-stone-900">{item.title}</h3>
-              <p className="mt-2 text-sm text-muted">{item.body}</p>
-            </div>
-          ))}
-        </div>
+        <p className="mt-8 text-xs text-muted">{t.home.verifyNote}</p>
       </section>
     </div>
   );

@@ -1,0 +1,42 @@
+export const CHURCH = {
+  nameEn: "Boston Milal Korean Church",
+  nameKo: "보스톤밀알한인장로교회",
+  address: "15 Alpha Road, Chelmsford, MA 01824",
+  addressLine1: "15 Alpha Road",
+  addressLine2: "Chelmsford, MA 01824",
+  affiliationEn: "KAPC · New England Presbytery",
+  affiliationKo: "KAPC · 뉴잉글랜드노회",
+  mottoYear: "2026",
+  mottoKo: "선한 청지기 같이 서로 봉사하라",
+  mottoRef: "벧전 4:10",
+  mottoEn: "Serve one another as good stewards",
+  mottoRefEn: "1 Peter 4:10",
+  pastorNameKo: "권혁진 목사",
+  pastorNameEn: "Rev. Hyukjin Kwon",
+  youtubeHandle: "@milalkoreanchurch1435",
+  youtubeUrl: "https://www.youtube.com/@milalkoreanchurch1435",
+  facebookHandle: "milalchurch",
+  facebookUrl: "https://www.facebook.com/milalchurch/",
+  sundayWorshipEn: "Sunday 10:00 AM",
+  sundayWorshipKo: "주일 오전 10:00",
+  koreanSchoolTimeEn: "Sundays 9:30–10:30 AM (spring/fall semesters)",
+  koreanSchoolTimeKo: "매주 주일 오전 9:30–10:30 (봄·가을 학기)",
+  verifyNoteEn: "VERIFY-WITH-CHURCH",
+  verifyNoteKo: "교회 확인 필요",
+} as const;
+
+export const WORSHIP_ROWS = [
+  { key: "sunday", timeEn: "Sunday 10:00 AM", timeKo: "주일 오전 10:00", placeEn: "Main sanctuary", placeKo: "대예배실" },
+  { key: "friday", timeEn: "1st & 3rd Fridays 7:30 PM", timeKo: "1·3주 금요일 오후 7:30", placeEn: "Main sanctuary", placeKo: "대예배실" },
+  { key: "intercession", timeEn: "Sunday 9:00 AM", timeKo: "주일 오전 9:00", placeEn: "Conference room", placeKo: "회의실" },
+  { key: "cell", timeEn: "First Sunday each month", timeKo: "매월 첫째 주일", placeEn: "Conference room", placeKo: "회의실" },
+  { key: "children", timeEn: "Sunday 10:00 AM", timeKo: "주일 오전 10:00", placeEn: "Children's room", placeKo: "유치부실" },
+  { key: "youth", timeEn: "Sunday 10:00 AM", timeKo: "주일 오전 10:00", placeEn: "Youth room", placeKo: "Youth's room" },
+] as const;
+
+export const GENERATIONS_ROWS = [
+  { key: "toddlers", ageEn: "Young children", ageKo: "어린이", timeEn: "Sunday 10:00 AM", timeKo: "주일 10:00", placeEn: "Children's room", placeKo: "유치부실", verified: true },
+  { key: "elementary", ageEn: "Elementary", ageKo: "초등", timeEn: "(verify)", timeKo: "(확인 필요)", placeEn: "(verify)", placeKo: "(확인 필요)", verified: false },
+  { key: "youth", ageEn: "Middle & high school", ageKo: "중고등", timeEn: "Sunday 10:00 AM", timeKo: "주일 10:00", placeEn: "Youth room", placeKo: "Youth's room", verified: true },
+  { key: "youngAdults", ageEn: "Young adults", ageKo: "청년", timeEn: "(verify)", timeKo: "(확인 필요)", placeEn: "(verify)", placeKo: "(확인 필요)", verified: false },
+] as const;
