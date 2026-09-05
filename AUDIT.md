@@ -213,7 +213,7 @@ PLAN correctly excludes: domain cutover, giving, albums/자료실, Cloud Agents,
 | Artifact | SHA | URL |
 |----------|-----|-----|
 | PLAN.md | `4f3b3c42646a75779adafe5a717acfd3f0bc9d07` | https://github.com/PrimaryAnomaly/milal-church-website/blob/main/PLAN.md |
-| AUDIT.md | *(this commit)* | https://github.com/PrimaryAnomaly/milal-church-website/blob/main/AUDIT.md |
+| AUDIT.md | `fcdfa00d941c438d57b59c89ba47fb8fb8e48a77` | https://github.com/PrimaryAnomaly/milal-church-website/blob/main/AUDIT.md |
 | SPEC.md | see main history | https://github.com/PrimaryAnomaly/milal-church-website/blob/main/SPEC.md |
 | INTENT.md | see main history | https://github.com/PrimaryAnomaly/milal-church-website/blob/main/INTENT.md |
 
