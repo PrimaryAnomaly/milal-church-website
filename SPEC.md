@@ -1,7 +1,7 @@
 # SPEC.md — Boston Milal Korean Church Website (v1)
 
 **Status:** accepted — engineering plans against this file  
-**Artifact chain:** [INTENT.md](./INTENT.md) → **SPEC.md** (this file) → PLAN → build with proof  
+**Artifact chain:** [INTENT.md](./INTENT.md) → **SPEC.md** (this file) → [PLAN.md](./PLAN.md) → build with proof  
 **Design:** collapsed here (no separate DESIGN stage). [DESIGN.md](./DESIGN.md) is a stub redirect only.
 
 Implement within this frame. Do not invent IA, CMS, or visual direction outside this SPEC.

@@ -28,6 +28,6 @@ Full bilingual parity, online giving, member portal, photo album archives, 자�
 Confirm public email/phone; domain cutover timing; who holds ADMIN_SECRET; sage vs amber final accent if wheat-amber rejected in UI; whether EN toggle is needed beyond essentials.
 
 ## Artifact chain (this repo)
-**INTENT → SPEC → PLAN** (design collapsed into SPEC; not a separate DESIGN stage/file).
+**INTENT → SPEC → [PLAN](./PLAN.md)** (design collapsed into SPEC; not a separate DESIGN stage/file).
 
-INTENT.md (this file) → [SPEC.md](./SPEC.md) (full requirements + design: REQ-MILAL-*, page contracts, admin model, AC checklist; visual system collapsed in) → PLAN before large UI rebuild → proof (build + visual check). Former DESIGN.md is a stub redirect only.
+INTENT.md (this file) → [SPEC.md](./SPEC.md) (full requirements + design: REQ-MILAL-*, page contracts, admin model, AC checklist; visual system collapsed in) → [PLAN.md](./PLAN.md) (batches, file map, risks, proof) → build with proof. Former DESIGN.md is a stub redirect only.
