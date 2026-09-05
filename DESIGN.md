@@ -19,11 +19,21 @@ Design serves **visit information** (when, where, how to come). It is not a perf
 ### Style
 
 - **Warm minimal / light / mobile-first**
-- Ground: off-white
-- Text: near-black / charcoal
-- **Accent (locked):** deep navy (`#1B2A4A` or equivalent) — one restrained accent only; do not introduce a second brand color
 - Generous whitespace
 - Soft rounded cards with thin pale borders for posts and schedule blocks (restraint of refero-style card grids — **not** SaaS logo directories or rainbow status dots)
+
+### Palette (locked)
+
+| Role | Value | Notes |
+|------|--------|--------|
+| Ground | `#FAF7F2` | Off-white / warm paper |
+| Text | `#1C1917` | Near-black / charcoal |
+| Muted text | warm gray (e.g. `#78716C`) | Secondary copy, captions |
+| **Accent (primary)** | `#B45309` | Muted wheat-amber — links, buttons, one restrained accent only |
+| Accent soft / bg | very light warm wash (e.g. `#FEF3E2`) | Soft highlight behind accent UI |
+| Borders | pale warm gray (e.g. `#E7E5E4`) | Thin card and divider edges |
+
+**Accent decision:** Saeyoung rejected deep navy. Muted wheat-amber was chosen for **밀알** (grain) and warm hospitality — earthy, not neon gold. Soft sage may be used as an alternate accent if wheat-amber needs a companion calm tone; do not reintroduce navy.
 
 ### Typography
 
@@ -107,7 +117,7 @@ Contacts and socials (as needed for v1).
 - Soft rounded cards, thin pale borders, generous whitespace
 - Real photos or simple solids
 - Keep nav short; hero visit info above the fold
-- Deep navy as the single accent
+- Muted wheat-amber (`#B45309`) as the single primary accent
 
 ### Don't
 
@@ -119,6 +129,7 @@ Contacts and socials (as needed for v1).
 - SaaS logo carousels, rainbow status dots, or flashy marketing chrome
 - Tiny metadata as the main interface
 - Stock smile photography
+- Deep navy (or any cool blue) as accent — rejected
 
 ---
 
