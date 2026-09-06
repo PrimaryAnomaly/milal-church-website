@@ -7,6 +7,7 @@ import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { PHOTOS } from "@/lib/church";
 import { buildChurchJsonLd } from "@/lib/json-ld";
 import { getSiteUrl } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 /** Display / motto / scripture. Hangul + Latin from the face itself. */
@@ -73,6 +74,7 @@ export default async function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );
