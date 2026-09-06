@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CHURCH } from "@/lib/church";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
+import { PlaceholderBanner } from "@/components/PlaceholderBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,8 @@ export default async function HomePage() {
             {locale === "ko" ? t.home.nameEn : t.home.nameKo}
           </p>
 
-          <p className="mt-5 text-sm font-medium text-accent">{t.home.mottoLabel}</p>
+          <PlaceholderBanner label={t.common.placeholderBanner} className="mt-5 max-w-xl" />
+          <p className="mt-3 text-sm font-medium text-accent">{t.home.mottoLabel}</p>
           <p className="mt-1 text-lg font-medium text-foreground sm:text-xl">
             {locale === "ko" ? t.home.mottoKoLine : t.home.motto}
           </p>
@@ -75,7 +77,7 @@ export default async function HomePage() {
             {t.home.youtubeLink}
           </a>
         </div>
-        <p className="mt-8 text-xs text-muted">{t.home.verifyNote}</p>
+        <p className="mt-8 text-xs font-medium text-accent">{t.home.verifyNote}</p>
       </section>
     </div>
   );

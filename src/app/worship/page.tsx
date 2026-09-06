@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CHURCH, WORSHIP_ROWS } from "@/lib/church";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
+import { PlaceholderBanner, PlaceholderTag } from "@/components/PlaceholderBanner";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
@@ -11,6 +12,7 @@ export default async function WorshipPage() {
   const locale = await getLocale();
   const t = await getDictionary(locale);
   const rows = t.worship.rows;
+  const tag = t.common.placeholderTag;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-14">
@@ -21,9 +23,9 @@ export default async function WorshipPage() {
         {t.worship.title}
       </h1>
       <p className="mt-3 text-muted">{t.worship.intro}</p>
-      <p className="mt-2 text-xs text-accent">{t.worship.verify}</p>
+      <PlaceholderBanner label={t.common.placeholderBanner} className="mt-4" />
 
-      <div className="mt-8 overflow-x-auto rounded-xl border border-border bg-white">
+      <div className="mt-8 overflow-x-auto rounded-xl border-2 border-dashed border-accent bg-white">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-border bg-accent-soft/50 text-foreground">
             <tr>
@@ -34,8 +36,9 @@ export default async function WorshipPage() {
           </thead>
           <tbody className="divide-y divide-border">
             {WORSHIP_ROWS.map((row) => (
-              <tr key={row.key}>
+              <tr key={row.key} className="bg-accent-soft/20">
                 <td className="px-4 py-3 font-medium text-foreground">
+                  <PlaceholderTag label={tag} />
                   {rows[row.key as keyof typeof rows]}
                 </td>
                 <td className="px-4 py-3 text-muted">
@@ -49,6 +52,7 @@ export default async function WorshipPage() {
           </tbody>
         </table>
       </div>
+      <p className="mt-3 text-xs font-semibold text-accent">{t.worship.verify}</p>
 
       <section className="mt-10 space-y-4">
         <div>

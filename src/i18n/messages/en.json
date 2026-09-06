@@ -32,9 +32,9 @@
     "eyebrow": "Welcome",
     "nameEn": "Boston Milal Korean Church",
     "nameKo": "보스톤밀알한인장로교회",
-    "mottoLabel": "2026 Motto",
-    "motto": "Serve one another as good stewards (1 Peter 4:10)",
-    "mottoKoLine": "선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
+    "mottoLabel": "[PLACEHOLDER] 2026 Motto (unconfirmed)",
+    "motto": "[PLACEHOLDER] Serve one another as good stewards (1 Peter 4:10)",
+    "mottoKoLine": "[PLACEHOLDER] 선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
     "worshipTime": "Sunday 10:00 AM",
     "address": "15 Alpha Road, Chelmsford, MA 01824",
     "ctaWorship": "Worship info",
@@ -42,11 +42,11 @@
     "intro": "We are a Korean Presbyterian congregation in Chelmsford, gathering each Sunday to worship, grow, and serve one another with sincerity.",
     "sermonsLink": "Sermon summaries",
     "youtubeLink": "Watch on YouTube",
-    "verifyNote": "Motto and schedule details marked for church confirmation."
+    "verifyNote": "Placeholder — motto year and schedule details below must be confirmed with the church. Do not treat as final."
   },
   "worship": {
     "title": "Worship & gatherings",
-    "intro": "Weekly worship and prayer gatherings. Rows marked for confirmation with the church before treating as final.",
+    "intro": "Weekly worship and prayer gatherings. Every schedule row below is a placeholder until the church confirms.",
     "colMeeting": "Meeting",
     "colTime": "Time",
     "colPlace": "Place",
@@ -54,7 +54,7 @@
     "onlineHeading": "Online worship",
     "onlineBody": "Join livestreams and past services on our YouTube channel.",
     "youtubeCta": "YouTube @milalkoreanchurch1435",
-    "verify": "VERIFY-WITH-CHURCH",
+    "verify": "Placeholder — confirm with church",
     "rows": {
       "sunday": "Sunday worship",
       "friday": "Friday prayer",
@@ -70,37 +70,37 @@
     "expectTitle": "What to expect",
     "expectBody": "Come as you are. Sunday worship begins at 10:00 AM in the main sanctuary. You will find welcome, scripture, prayer, and fellowship. Stay after for greetings if you like — no pressure.",
     "parkingTitle": "Parking & arrival",
-    "parkingBody": "Park in the lot at 15 Alpha Road, Chelmsford, MA 01824. Enter through the main entrance. (Arrival details VERIFY-WITH-CHURCH.)",
+    "parkingBody": "Park in the lot at 15 Alpha Road, Chelmsford, MA 01824. Enter through the main entrance. [PLACEHOLDER] Arrival details (doors, accessibility) — confirm with church.",
     "kidsTitle": "Children",
     "kidsBody": "Children's worship meets during Sunday service. See Generations for age-band times and rooms.",
     "contactTitle": "Contact",
-    "contactBody": "Questions? Please ask after worship, or reach us via the Facebook page linked in the footer. Email and phone will appear here once confirmed — we do not list unverified contacts.",
+    "contactBody": "[PLACEHOLDER] Email and phone are not listed until confirmed. Questions? Please ask after worship, or use the Facebook page in the footer.",
     "ctaGenerations": "Generations schedule",
     "ctaWorship": "Worship times"
   },
   "about": {
     "title": "About the church",
     "intro": "Boston Milal Korean Church is a sincere Presbyterian congregation in Chelmsford, Massachusetts. Our name, Milal (wheat), points to humble growth and hospitality.",
-    "mottoHeading": "2026 Motto",
-    "motto": "Serve one another as good stewards (1 Peter 4:10)",
-    "mottoKo": "선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
+    "mottoHeading": "[PLACEHOLDER] 2026 Motto (unconfirmed)",
+    "motto": "[PLACEHOLDER] Serve one another as good stewards (1 Peter 4:10)",
+    "mottoKo": "[PLACEHOLDER] 선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
     "affiliationHeading": "Affiliation",
     "affiliation": "KAPC · New England Presbytery",
-    "pastorHeading": "Pastor",
-    "pastorName": "Rev. Hyukjin Kwon (권혁진 목사)",
-    "pastorBio": "Chongshin University (Theology); M.Div. / Th.M. Gordon-Conwell; formerly senior pastor of Lebanon Korean Presbyterian Church.",
-    "pastorVerify": "Pastoral details VERIFY-WITH-CHURCH before treating as final.",
+    "pastorHeading": "[PLACEHOLDER] Pastor (unconfirmed)",
+    "pastorName": "[PLACEHOLDER] Rev. Hyukjin Kwon (권혁진 목사)",
+    "pastorBio": "[PLACEHOLDER] Chongshin University (Theology); M.Div. / Th.M. Gordon-Conwell; formerly senior pastor of Lebanon Korean Presbyterian Church.",
+    "pastorVerify": "Placeholder — pastoral details must be confirmed with the church before treating as final.",
     "identityHeading": "Who we are",
     "identity": "We gather as a Korean-speaking Presbyterian church family in Greater Boston, seeking to worship faithfully and serve one another."
   },
   "generations": {
     "title": "Next generations",
-    "intro": "One page for children's and youth ministries. Blank or verify-marked cells need church confirmation.",
+    "intro": "One page for children's and youth ministries. Every time/place cell is a placeholder until the church confirms.",
     "colDept": "Ministry",
     "colAge": "Ages",
     "colTime": "Time",
     "colPlace": "Place",
-    "verify": "VERIFY-WITH-CHURCH",
+    "verify": "Placeholder — confirm with church",
     "rows": {
       "toddlers": "Toddlers / preschool",
       "elementary": "Elementary",
@@ -127,9 +127,9 @@
     "goalsHeading": "Goals",
     "goals": "Help children grow in Korean language, cultural identity, and community — learning with joy alongside the church family.",
     "timeHeading": "Class time",
-    "time": "Sundays 9:30–10:30 AM (spring and fall semesters). VERIFY-WITH-CHURCH.",
+    "time": "[PLACEHOLDER] Sundays 9:30–10:30 AM (spring and fall semesters) — confirm with church.",
     "contactHeading": "Location & contact",
-    "contact": "Classes meet at 15 Alpha Road, Chelmsford, MA 01824. For questions, please ask after worship. Phone and email omitted until confirmed.",
+    "contact": "Classes meet at 15 Alpha Road, Chelmsford, MA 01824. For questions, please ask after worship. [PLACEHOLDER] Phone and email omitted until confirmed.",
     "noAlbums": "Teacher rosters and photo albums are not published on this site."
   },
   "notFound": {
@@ -138,6 +138,9 @@
     "home": "Back to home"
   },
   "common": {
-    "verify": "VERIFY-WITH-CHURCH"
+    "verify": "[PLACEHOLDER]",
+    "placeholderBanner": "Placeholder — confirm with church",
+    "placeholderTag": "[PLACEHOLDER]",
+    "emailPhone": "[PLACEHOLDER] Email and phone not listed until the church confirms."
   }
 }

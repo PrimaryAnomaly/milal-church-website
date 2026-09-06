@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GENERATIONS_ROWS } from "@/lib/church";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
+import { PlaceholderBanner, PlaceholderTag } from "@/components/PlaceholderBanner";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
@@ -11,6 +12,7 @@ export default async function GenerationsPage() {
   const locale = await getLocale();
   const t = await getDictionary(locale);
   const rows = t.generations.rows;
+  const tag = t.common.placeholderTag;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-14">
@@ -21,8 +23,9 @@ export default async function GenerationsPage() {
         {t.generations.title}
       </h1>
       <p className="mt-3 text-muted">{t.generations.intro}</p>
+      <PlaceholderBanner label={t.common.placeholderBanner} className="mt-4" />
 
-      <div className="mt-8 overflow-x-auto rounded-xl border border-border bg-white">
+      <div className="mt-8 overflow-x-auto rounded-xl border-2 border-dashed border-accent bg-white">
         <table className="min-w-full text-left text-sm">
           <thead className="border-b border-border bg-accent-soft/50 text-foreground">
             <tr>
@@ -34,8 +37,9 @@ export default async function GenerationsPage() {
           </thead>
           <tbody className="divide-y divide-border">
             {GENERATIONS_ROWS.map((row) => (
-              <tr key={row.key}>
+              <tr key={row.key} className="bg-accent-soft/20">
                 <td className="px-4 py-3 font-medium text-foreground">
+                  <PlaceholderTag label={tag} />
                   {rows[row.key as keyof typeof rows]}
                 </td>
                 <td className="px-4 py-3 text-muted">
@@ -43,9 +47,6 @@ export default async function GenerationsPage() {
                 </td>
                 <td className="px-4 py-3 text-muted">
                   {locale === "ko" ? row.timeKo : row.timeEn}
-                  {!row.verified ? (
-                    <span className="ml-1 text-xs text-accent">*</span>
-                  ) : null}
                 </td>
                 <td className="px-4 py-3 text-muted">
                   {locale === "ko" ? row.placeKo : row.placeEn}
@@ -55,7 +56,7 @@ export default async function GenerationsPage() {
           </tbody>
         </table>
       </div>
-      <p className="mt-3 text-xs text-accent">* {t.generations.verify}</p>
+      <p className="mt-3 text-xs font-semibold text-accent">{t.generations.verify}</p>
     </div>
   );
 }

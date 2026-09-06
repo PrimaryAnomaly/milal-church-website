@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { PlaceholderBanner } from "@/components/PlaceholderBanner";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
@@ -11,10 +12,10 @@ export default async function VisitPage() {
   const t = await getDictionary();
 
   const blocks = [
-    { title: t.visit.expectTitle, body: t.visit.expectBody },
-    { title: t.visit.parkingTitle, body: t.visit.parkingBody },
-    { title: t.visit.kidsTitle, body: t.visit.kidsBody },
-    { title: t.visit.contactTitle, body: t.visit.contactBody },
+    { title: t.visit.expectTitle, body: t.visit.expectBody, placeholder: false },
+    { title: t.visit.parkingTitle, body: t.visit.parkingBody, placeholder: true },
+    { title: t.visit.kidsTitle, body: t.visit.kidsBody, placeholder: false },
+    { title: t.visit.contactTitle, body: t.visit.contactBody, placeholder: true },
   ];
 
   return (
@@ -31,10 +32,20 @@ export default async function VisitPage() {
         {blocks.map((block) => (
           <section
             key={block.title}
-            className="rounded-xl border border-border bg-white p-5"
+            className={
+              block.placeholder
+                ? "rounded-xl border-2 border-dashed border-accent bg-accent-soft/40 p-5"
+                : "rounded-xl border border-border bg-white p-5"
+            }
           >
+            {block.placeholder ? (
+              <PlaceholderBanner label={t.common.placeholderBanner} className="mb-3" />
+            ) : null}
             <h2 className="text-lg font-semibold text-foreground">{block.title}</h2>
             <p className="mt-2 text-sm leading-relaxed text-muted">{block.body}</p>
+            {block.title === t.visit.contactTitle ? (
+              <p className="mt-3 text-sm font-semibold text-accent">{t.common.emailPhone}</p>
+            ) : null}
           </section>
         ))}
       </div>
