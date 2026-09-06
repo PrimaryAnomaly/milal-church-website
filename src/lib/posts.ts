@@ -5,6 +5,7 @@
 
 import { promises as fs } from "fs";
 import path from "path";
+import { parseYoutubeVideoId } from "./youtube";
 
 export type PostType = "sermon_summary" | "news";
 
@@ -16,6 +17,8 @@ export type Post = {
   body: string;
   excerpt?: string;
   imageUrls: string[];
+  /** Watch URL or 11-char id. Empty string means none. */
+  youtubeUrl?: string;
   published: boolean;
   publishedAt?: string; // set on first transition to published; keep on unpublish; do not reset on republish
   createdAt: string;
@@ -29,6 +32,7 @@ export type PostInput = {
   body?: string;
   excerpt?: string;
   imageUrls?: string[];
+  youtubeUrl?: string;
   /** Legacy alias accepted by API/form during migration */
   content?: string;
   coverImageUrl?: string;
@@ -46,6 +50,15 @@ function isPostType(v: unknown): v is PostType {
 
 function asString(v: unknown, fallback = ""): string {
   return typeof v === "string" ? v : fallback;
+}
+
+function normalizeYoutubeUrl(raw: string | undefined): string | undefined {
+  const trimmed = (raw ?? "").trim();
+  if (!trimmed) return undefined;
+  if (!parseYoutubeVideoId(trimmed)) {
+    throw new Error("YouTube URL is not a valid watch, shorts, or youtu.be link");
+  }
+  return trimmed;
 }
 
 function deriveExcerpt(body: string, existing?: string): string | undefined {
@@ -78,6 +91,8 @@ export function normalizePost(raw: RawPost): Post {
   }
 
   const excerpt = deriveExcerpt(body, asString(raw.excerpt) || undefined);
+  const youtubeRaw = asString(raw.youtubeUrl).trim();
+  const youtubeUrl = youtubeRaw && parseYoutubeVideoId(youtubeRaw) ? youtubeRaw : undefined;
 
   return {
     id: asString(raw.id) || crypto.randomUUID(),
@@ -87,6 +102,7 @@ export function normalizePost(raw: RawPost): Post {
     body,
     excerpt,
     imageUrls,
+    youtubeUrl,
     published,
     publishedAt,
     createdAt,
@@ -202,6 +218,7 @@ export async function createPost(input: PostInput): Promise<Post> {
   const published = Boolean(input.published);
   const type: PostType = isPostType(input.type) ? input.type : "sermon_summary";
   const imageUrls = resolveImageUrls(input);
+  const youtubeUrl = normalizeYoutubeUrl(input.youtubeUrl);
   const post: Post = {
     id: crypto.randomUUID(),
     type,
@@ -210,6 +227,7 @@ export async function createPost(input: PostInput): Promise<Post> {
     body,
     excerpt: deriveExcerpt(body, input.excerpt),
     imageUrls,
+    youtubeUrl,
     published,
     publishedAt: published ? now : undefined,
     createdAt: now,
@@ -251,6 +269,11 @@ export async function updatePost(id: string, input: Partial<PostInput>): Promise
       ? deriveExcerpt(body, input.excerpt)
       : deriveExcerpt(body, existing.excerpt);
 
+  const youtubeUrl =
+    input.youtubeUrl !== undefined
+      ? normalizeYoutubeUrl(input.youtubeUrl)
+      : existing.youtubeUrl;
+
   const updated: Post = {
     ...existing,
     type,
@@ -259,6 +282,7 @@ export async function updatePost(id: string, input: Partial<PostInput>): Promise
     body,
     excerpt,
     imageUrls,
+    youtubeUrl,
     published: nextPublished,
     publishedAt: applyPublishedAt(
       existing.published,

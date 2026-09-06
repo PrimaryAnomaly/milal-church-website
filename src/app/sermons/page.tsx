@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { listPosts } from "@/lib/posts";
-import { CHURCH } from "@/lib/church";
+import {
+  parseYoutubeVideoId,
+  YOUTUBE_UPLOADS_PLAYLIST_ID,
+} from "@/lib/youtube";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
-import { ButtonLink } from "@/components/Button";
 import { PageHeader } from "@/components/PageHeader";
+import { PageShell } from "@/components/PageShell";
+import { YoutubeEmbed } from "@/components/YoutubeEmbed";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
-  return { title: t.sermons.title };
+  return {
+    title: t.sermons.metaTitle ?? t.sermons.title,
+    description: t.sermons.metaDescription,
+  };
 }
 
 export default async function SermonsPage() {
@@ -24,19 +31,18 @@ export default async function SermonsPage() {
   const dateLocale = locale === "ko" ? "ko-KR" : "en-US";
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 md:py-16">
+    <PageShell>
       <PageHeader title={t.sermons.title} intro={t.sermons.intro} />
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-foreground">
           {t.sermons.youtubeHeading}
         </h2>
-        <p className="mt-2 text-muted">{CHURCH.youtubeHandle}</p>
-        <div className="mt-4">
-          <ButtonLink href={CHURCH.youtubeUrl} external>
-            {t.sermons.youtubeCta}
-          </ButtonLink>
-        </div>
+        <YoutubeEmbed
+          playlistId={YOUTUBE_UPLOADS_PLAYLIST_ID}
+          title={t.sermons.youtubePlayerTitle}
+          className="mt-4 max-w-lg"
+        />
       </section>
 
       <section className="mt-12">
@@ -50,9 +56,16 @@ export default async function SermonsPage() {
             {sermonSummaries.map((post) => (
               <li key={post.id} className="py-5">
                 <Link href={`/sermons/${post.slug}`} className="group block">
-                  <h3 className="text-lg font-medium text-foreground group-hover:text-accent">
-                    {post.title}
-                  </h3>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {parseYoutubeVideoId(post.youtubeUrl) ? (
+                      <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent">
+                        {t.sermons.hasVideo}
+                      </span>
+                    ) : null}
+                    <h3 className="text-lg font-medium text-foreground group-hover:text-accent">
+                      {post.title}
+                    </h3>
+                  </div>
                   <p className="mt-1 text-sm text-muted">
                     {new Date(
                       post.publishedAt ?? post.createdAt,
@@ -108,6 +121,6 @@ export default async function SermonsPage() {
           </ul>
         </section>
       ) : null}
-    </div>
+    </PageShell>
   );
 }

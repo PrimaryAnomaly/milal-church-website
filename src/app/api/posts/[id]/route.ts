@@ -51,6 +51,8 @@ export async function PUT(request: Request, ctx: Ctx) {
       imageUrls,
       coverImageUrl:
         typeof body.coverImageUrl === "string" ? body.coverImageUrl : undefined,
+      youtubeUrl:
+        typeof body.youtubeUrl === "string" ? body.youtubeUrl : undefined,
       published: typeof body.published === "boolean" ? body.published : undefined,
     });
     return NextResponse.json({ post });

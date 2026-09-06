@@ -3,12 +3,26 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function DeletePostButton({ id, title }: { id: string; title: string }) {
+type DeletePostButtonProps = {
+  id: string;
+  title: string;
+  label: string;
+  deletingLabel: string;
+  confirmLabel: string;
+};
+
+export function DeletePostButton({
+  id,
+  title,
+  label,
+  deletingLabel,
+  confirmLabel,
+}: DeletePostButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   async function onDelete() {
-    if (!confirm(`Delete "${title}"?`)) return;
+    if (!confirm(`${confirmLabel}\n${title}`)) return;
     setLoading(true);
     try {
       const res = await fetch(`/api/posts/${id}`, { method: "DELETE" });
@@ -30,7 +44,7 @@ export function DeletePostButton({ id, title }: { id: string; title: string }) {
       disabled={loading}
       className="text-sm text-red-700 hover:underline disabled:opacity-60"
     >
-      {loading ? "Deleting..." : "Delete"}
+      {loading ? deletingLabel : label}
     </button>
   );
 }

@@ -8,6 +8,8 @@ type ChurchPhotoProps = {
   className?: string;
   imgClassName?: string;
   sizes?: string;
+  /** Crop into a shared frame so paired photos match. */
+  cover?: boolean;
 };
 
 export function ChurchPhoto({
@@ -18,19 +20,32 @@ export function ChurchPhoto({
   className,
   imgClassName,
   sizes = "(max-width: 768px) 100vw, 768px",
+  cover = false,
 }: ChurchPhotoProps) {
   return (
     <figure
-      className={`overflow-hidden rounded-xl border border-border bg-surface ${className ?? ""}`}
+      className={`overflow-hidden rounded-xl border border-border bg-[#E4DCD0] ${
+        cover ? "relative aspect-[4/3]" : ""
+      } ${className ?? ""}`}
     >
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        className={`h-auto w-full object-cover ${imgClassName ?? ""}`}
-        sizes={sizes}
-      />
+      {cover ? (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className={`object-cover object-center ${imgClassName ?? ""}`}
+          sizes={sizes}
+        />
+      ) : (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className={`h-auto w-full object-cover ${imgClassName ?? ""}`}
+          sizes={sizes}
+        />
+      )}
     </figure>
   );
 }

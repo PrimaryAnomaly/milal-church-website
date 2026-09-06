@@ -37,6 +37,7 @@ export async function POST(request: Request) {
     content?: string;
     imageUrls?: string[];
     coverImageUrl?: string;
+    youtubeUrl?: string;
     published?: boolean;
   };
   try {
@@ -64,6 +65,7 @@ export async function POST(request: Request) {
       excerpt: body.excerpt,
       body: body.body ?? body.content,
       imageUrls,
+      youtubeUrl: body.youtubeUrl,
       published: body.published,
     });
     return NextResponse.json({ post }, { status: 201 });

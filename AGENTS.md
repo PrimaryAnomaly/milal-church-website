@@ -83,7 +83,8 @@ Public sermon index: `type === "sermon_summary" && published`. News is secondary
 - Admin routes never in public nav.
 - In-page actions use `Button` / `ButtonLink` (primary filled, secondary bordered). Footer socials may be text links.
 - Prefer real church photos or solid treatments; no stock smiles.
-- Do not ship dashed placeholder banners or “confirm with church” notes on public pages.
+- Unverified displayed facts get a `TbdChip` labeled TBD. Sunday 10:00 and the street address do not. Omit unknown email/phone; do not TBD an absence.
+- Korean (`html[lang=ko]`): `word-break: keep-all`. Do not CSS-truncate Korean names mid-word.
 - `npm run build` must succeed. Desktop-only checks do not satisfy NFR-01.
 
 ## Proof

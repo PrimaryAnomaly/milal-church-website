@@ -27,6 +27,12 @@
 
 html {
   background: var(--background);
+  overflow-wrap: break-word;
+}
+
+html[lang="ko"] {
+  word-break: keep-all;
+  line-break: strict;
 }
 
 body {

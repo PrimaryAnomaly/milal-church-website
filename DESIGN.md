@@ -49,6 +49,7 @@ One accent on the whole site. No navy. No second brand color.
 - **Motto and scripture only:** Noto Serif KR. Not for nav, buttons, or page titles.
 - Headings: Pretendard semibold, tracking tight, sentence case. No all-caps labels.
 - Korean and English must both read at this size on a phone without pinch-zoom.
+- `html[lang="ko"]` uses `word-break: keep-all` so lines wrap at spacing units, not mid-word. Do not `truncate` Korean names.
 
 ---
 
@@ -79,7 +80,7 @@ Use `Button` / `ButtonLink` (`src/components/Button.tsx`). Never style a text li
 
 ### Header
 
-Single row, max 72px. Logo + short name on small screens, full name from `md`. Nav on one line from `md`. No admin links. Locale toggle is a pill, not a button-looking CTA.
+Single row, max 72px. Logo + short name on small screens, full name from `md`. Nav on one line from `md`. Current page is `font-semibold text-accent` (`aria-current="page"`). Sermon detail keeps 설교 current. No admin links. Locale toggle is a pill, not a button-looking CTA.
 
 ### Page header
 
@@ -87,11 +88,17 @@ Title + one short intro. No eyebrow above the title.
 
 ### Photos
 
-Real church photos only. `rounded-xl`, thin border, no caption overlay, no stock smiles. Hero visit facts stay above the fold on a phone; photos sit below that block.
+Real church photos only. `rounded-xl`, thin border, no caption overlay, no stock smiles. Paired photos share a 4:3 crop (`cover`) so heights match; no white letterboxing. Figure ground is warm `#E4DCD0` while the image loads. Hero visit facts stay above the fold on a phone; photos sit below that block.
+
+### TBD chip
+
+Unverified displayed facts get an obvious filled accent pill labeled `TBD` (`src/components/TbdChip.tsx`). Not dashed boxes, not a sentence about confirmation. Omit unknown contacts entirely; do not TBD an absence.
+
+Use on: 표어, pastor, non-Sunday schedule rows, generations times, Korean School class time. Sunday 10:00 AM and the street address stay unmarked.
 
 ### Tables (worship, generations)
 
-Hairline rows on white. No dashed outer box. Columns stay SPEC: meeting / time / place.
+Hairline rows on white. No dashed outer box. Columns stay SPEC: meeting / time / place. TBD chip on unverified rows.
 
 ### Footer
 
@@ -101,12 +108,12 @@ Name, address, YouTube, Facebook. No invented email or phone. No “we are not l
 
 ## 6. Layout
 
-- Public inner pages: `max-w-3xl`, left aligned.
-- Home: `max-w-5xl`. Hero is left aligned, not a poster-centered manifesto.
+- Public pages (home and inner): `max-w-5xl` with `px-4`, same left edge as the header/footer (`PageShell`). Hero is left aligned, not a poster-centered manifesto.
+- Body copy still uses `max-w-[65ch]` so lines do not stretch with the shell.
 - Section padding `py-12 md:py-16`. Nav height ≤ 72px.
 - Home hero must keep, without scrolling on ~390×844: church name (KO + EN), 표어, Sunday 10:00, address, CTAs to `/worship` and `/visit` (AC-01).
 
-Layout families (do not repeat the same one on adjacent home sections): hero facts, then intro + photo + actions.
+Layout families (do not repeat the same one on adjacent home sections): hero facts, then intro + actions, then a modest photo (`max-w-md`). Photos follow the facts they illustrate; they must not sit full-width above a schedule or time.
 
 ---
 
@@ -118,7 +125,7 @@ Parish bulletin. Not a landing page.
 
 **Korean:** Write it as a church notice, not as translated English. 합니다체. Short facts. Do not calque English lines (`look after one another` → `서로 돌아봅니다`, `come as you are`, thesis-statement couplets). No `추구합니다`, `참고해 주세요`, `가운데 함께`. No `【확인 필요】`. Nav labels stay SPEC (`예배·모임`, `새가족`, …).
 
-**Neither language** explains CMS policy, drafts, or missing contact fields. If a fact is unknown, omit it.
+**Neither language** explains CMS policy or missing contact fields. If a displayed fact is unverified, mark it with a TBD chip. If a contact is unknown, omit it.
 
 No em dashes (`—`) or en dashes (`–`) in UI copy. Hyphen for times (`9:30-10:30`).
 

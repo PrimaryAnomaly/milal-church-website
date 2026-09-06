@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPostBySlug, listPosts } from "@/lib/posts";
+import { parseYoutubeVideoId } from "@/lib/youtube";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { ButtonLink } from "@/components/Button";
+import { PageShell } from "@/components/PageShell";
+import { YoutubeEmbed } from "@/components/YoutubeEmbed";
 
 export const dynamic = "force-dynamic";
 
@@ -13,13 +16,13 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
+  const t = await getDictionary();
   if (!post || !post.published) {
-    const t = await getDictionary();
     return { title: t.sermons.title };
   }
   return {
     title: post.title,
-    description: post.excerpt || undefined,
+    description: post.excerpt || t.sermons.detailFallback,
   };
 }
 
@@ -35,10 +38,12 @@ export default async function SermonDetailPage({ params }: Props) {
   const post = await getPostBySlug(slug);
   if (!post || !post.published) notFound();
 
+  const videoId = parseYoutubeVideoId(post.youtubeUrl);
   const cover = post.imageUrls[0];
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-12 md:py-16">
+    <PageShell>
+    <article>
       <ButtonLink href="/sermons" variant="secondary">
         {t.sermons.back}
       </ButtonLink>
@@ -51,7 +56,14 @@ export default async function SermonDetailPage({ params }: Props) {
           { year: "numeric", month: "long", day: "numeric" },
         )}
       </p>
-      {cover ? (
+      {videoId ? (
+        <YoutubeEmbed
+          videoId={videoId}
+          title={post.title}
+          className="mt-8 max-w-lg"
+        />
+      ) : null}
+      {cover && !videoId ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={cover}
@@ -78,5 +90,6 @@ export default async function SermonDetailPage({ params }: Props) {
         </div>
       ) : null}
     </article>
+    </PageShell>
   );
 }

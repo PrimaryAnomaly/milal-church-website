@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { PHOTOS } from "@/lib/church";
+import { CHURCH, PHOTOS } from "@/lib/church";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { ChurchPhoto } from "@/components/ChurchPhoto";
 import { PageHeader } from "@/components/PageHeader";
+import { PageShell } from "@/components/PageShell";
+import { TbdChip } from "@/components/TbdChip";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
-  return { title: t.about.title };
+  return {
+    title: t.about.metaTitle ?? t.about.title,
+    description: t.about.metaDescription,
+  };
 }
 
 export default async function AboutPage() {
@@ -14,18 +19,16 @@ export default async function AboutPage() {
   const t = await getDictionary(locale);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 md:py-16">
+    <PageShell>
       <PageHeader title={t.about.title} intro={t.about.intro} />
 
       <section className="mt-12 border-t border-border pt-10">
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="flex flex-wrap items-center gap-2 text-xl font-semibold text-foreground">
+          {CHURCH.mottoTbd ? <TbdChip label={t.common.tbd} /> : null}
           {t.about.mottoHeading}
         </h2>
         <p className="font-display mt-4 text-xl text-foreground sm:text-2xl">
           {locale === "ko" ? t.about.mottoKo : t.about.motto}
-        </p>
-        <p className="font-display mt-2 text-base text-muted">
-          {locale === "ko" ? t.about.motto : t.about.mottoKo}
         </p>
       </section>
 
@@ -37,7 +40,8 @@ export default async function AboutPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="flex flex-wrap items-center gap-2 text-xl font-semibold text-foreground">
+          {CHURCH.pastorTbd ? <TbdChip label={t.common.tbd} /> : null}
           {t.about.pastorHeading}
         </h2>
         <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-start">
@@ -67,8 +71,9 @@ export default async function AboutPage() {
           width={627}
           height={627}
           className="mt-5 max-w-md"
+          sizes="(max-width: 448px) 100vw, 448px"
         />
       </section>
-    </div>
+    </PageShell>
   );
 }

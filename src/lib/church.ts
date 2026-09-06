@@ -4,6 +4,9 @@ export const CHURCH = {
   address: "15 Alpha Road, Chelmsford, MA 01824",
   addressLine1: "15 Alpha Road",
   addressLine2: "Chelmsford, MA 01824",
+  geo: { lat: 42.5928872, lng: -71.3260446 }, // OSM Nominatim for 15 Alpha Road, Chelmsford, MA 01824
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=15+Alpha+Road%2C+Chelmsford%2C+MA+01824",
   affiliationEn: "KAPC · New England Presbytery",
   affiliationKo: "KAPC · 뉴잉글랜드노회",
   mottoYear: "2026",
@@ -21,6 +24,9 @@ export const CHURCH = {
   sundayWorshipKo: "주일 오전 10:00",
   koreanSchoolTimeEn: "Sundays 9:30-10:30 AM (spring/fall semesters)",
   koreanSchoolTimeKo: "매주 주일 오전 9:30-10:30 (봄·가을 학기)",
+  mottoTbd: false,
+  pastorTbd: true,
+  koreanSchoolTimeTbd: true,
 } as const;
 
 /** Real photos from the old Weebly site (bostonmilalchurch.org). */
@@ -41,27 +47,31 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Main sanctuary",
     placeKo: "대예배실",
+    tbd: false,
   },
   {
     key: "friday",
     timeEn: "1st & 3rd Fridays 7:30 PM",
     timeKo: "매월 첫째·셋째 주 금요일 오후 7:30",
-    placeEn: "Main sanctuary",
-    placeKo: "대예배실",
+    placeEn: "",
+    placeKo: "",
+    tbd: false,
   },
   {
     key: "intercession",
     timeEn: "Sunday 9:00 AM",
     timeKo: "주일 오전 9:00",
-    placeEn: "Conference room",
-    placeKo: "회의실",
+    placeEn: "",
+    placeKo: "",
+    tbd: false,
   },
   {
     key: "cell",
     timeEn: "First Sunday each month",
     timeKo: "매월 첫째 주일",
-    placeEn: "Conference room",
-    placeKo: "회의실",
+    placeEn: "",
+    placeKo: "",
+    tbd: false,
   },
   {
     key: "children",
@@ -69,6 +79,7 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Children's room",
     placeKo: "유치부실",
+    tbd: true,
   },
   {
     key: "youth",
@@ -76,6 +87,7 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Youth room",
     placeKo: "중고등부실",
+    tbd: true,
   },
 ] as const;
 
@@ -88,6 +100,7 @@ export const GENERATIONS_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Children's room",
     placeKo: "유치부실",
+    tbd: true,
   },
   {
     key: "elementary",
@@ -97,6 +110,7 @@ export const GENERATIONS_ROWS = [
     timeKo: "",
     placeEn: "",
     placeKo: "",
+    tbd: true,
   },
   {
     key: "youth",
@@ -106,6 +120,7 @@ export const GENERATIONS_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Youth room",
     placeKo: "중고등부실",
+    tbd: true,
   },
   {
     key: "youngAdults",
@@ -115,5 +130,6 @@ export const GENERATIONS_ROWS = [
     timeKo: "",
     placeEn: "",
     placeKo: "",
+    tbd: true,
   },
 ] as const;

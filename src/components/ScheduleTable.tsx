@@ -1,11 +1,24 @@
+import { TbdChip } from "./TbdChip";
+
 type Column = { key: string; label: string };
+
+export type ScheduleRow = {
+  key: string;
+  tbd?: boolean;
+  [cell: string]: string | boolean | undefined;
+};
 
 type ScheduleTableProps = {
   columns: Column[];
-  rows: Array<Record<string, string>>;
+  rows: ScheduleRow[];
+  tbdLabel: string;
 };
 
-export function ScheduleTable({ columns, rows }: ScheduleTableProps) {
+export function ScheduleTable({
+  columns,
+  rows,
+  tbdLabel,
+}: ScheduleTableProps) {
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-surface">
       <table className="min-w-full text-left text-sm">
@@ -24,18 +37,31 @@ export function ScheduleTable({ columns, rows }: ScheduleTableProps) {
               key={row.key ?? i}
               className="border-b border-border last:border-b-0"
             >
-              {columns.map((col, ci) => (
-                <td
-                  key={col.key}
-                  className={`px-4 py-3 ${
-                    ci === 0
-                      ? "font-medium text-foreground"
-                      : "text-muted"
-                  }`}
-                >
-                  {row[col.key]}
-                </td>
-              ))}
+              {columns.map((col, ci) => {
+                const raw = row[col.key];
+                const value = typeof raw === "string" ? raw : "";
+                return (
+                  <td
+                    key={col.key}
+                    className={`px-4 py-3 ${
+                      ci === 0
+                        ? "font-medium text-foreground"
+                        : "text-muted"
+                    }`}
+                  >
+                    {ci === 0 ? (
+                      <span className="inline-flex flex-wrap items-center gap-2">
+                        {row.tbd ? <TbdChip label={tbdLabel} /> : null}
+                        {value}
+                      </span>
+                    ) : value ? (
+                      value
+                    ) : row.tbd ? (
+                      <TbdChip label={tbdLabel} />
+                    ) : null}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

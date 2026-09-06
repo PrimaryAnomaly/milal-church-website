@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { List, X } from "@phosphor-icons/react";
 import { LocaleToggle } from "./LocaleToggle";
+import { NavLink } from "./NavLink";
 import type { Locale } from "@/i18n/config";
 
 export type NavItem = { href: string; label: string };
@@ -53,14 +53,15 @@ export function MobileNav({
         >
           <nav className="flex flex-col">
             {items.map((item) => (
-              <Link
+              <NavLink
                 key={item.href}
                 href={item.href}
                 className="rounded-lg px-3 py-3 text-base text-foreground hover:bg-accent-soft hover:text-accent"
+                activeClassName="bg-accent-soft font-semibold text-accent"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
           <div className="mt-3 border-t border-border pt-4">
