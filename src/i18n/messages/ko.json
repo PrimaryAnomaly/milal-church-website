@@ -180,6 +180,7 @@
     "submit": "로그인",
     "submitting": "들어가는 중...",
     "wrongPassword": "비밀번호가 맞지 않습니다.",
+    "tooManyTries": "비밀번호를 너무 많이 틀렸습니다. 잠시 후 다시 해 주세요.",
     "networkError": "연결이 안 됩니다. 잠시 후 다시 해 보세요.",
     "notConfigured": "이 컴퓨터에 관리자 비밀번호가 없습니다.",
     "showPassword": "보기",

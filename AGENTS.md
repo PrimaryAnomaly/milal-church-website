@@ -49,7 +49,7 @@ Env: `ADMIN_SECRET` (required for `/admin/login`). `BLOB_READ_WRITE_TOKEN` optio
 - **Public copy:** Full EN+KO for all public user-facing strings. Admin MAY stay KO-primary.
 - **Visuals:** Follow [SPEC.md](./SPEC.md) §7. Palette locked (ground `#FAF7F2`, accent `#B45309`). No navy, megachurch dark, Netflix sermon grids, donate banners, stock-photo theater, dashed draft chrome, or heavy animation.
 - **Copy:** Parish bulletin voice, both EN and KO. No marketing conversion copy. No public meta about drafts, confirmation, or omitted contacts.
-- **Admin:** Shared secret `ADMIN_SECRET`, httpOnly cookie `milal_admin_session` (HMAC, 7 days, Secure in production, SameSite=Lax). No multi-user RBAC.
+- **Admin:** Shared secret `ADMIN_SECRET`, httpOnly cookie `milal_admin_session` (HMAC, 7 days, Secure in production, SameSite=Lax). No multi-user RBAC. Login: 5 free failures per IP, then exponential wait (30s → 15 min cap). In-memory per instance; enough to deter bots.
 - **Posts:** Types `sermon_summary` | `news`. Callers go through `src/lib/posts.ts` only (file-backed `data/posts.json`; Postgres swap later). Unpublished posts must not appear on public list/detail.
 - **Contacts:** Do not invent public email or phone. Omit until church confirms.
 

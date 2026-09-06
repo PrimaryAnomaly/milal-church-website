@@ -8,6 +8,7 @@ type AdminLoginFormProps = {
   submitLabel: string;
   submittingLabel: string;
   wrongPassword: string;
+  tooManyTries: string;
   networkError: string;
   notConfigured: string;
   showPassword: string;
@@ -19,6 +20,7 @@ export function AdminLoginForm({
   submitLabel,
   submittingLabel,
   wrongPassword,
+  tooManyTries,
   networkError,
   notConfigured,
   showPassword,
@@ -27,9 +29,9 @@ export function AdminLoginForm({
   const router = useRouter();
   const [secret, setSecret] = useState("");
   const [visible, setVisible] = useState(false);
-  const [error, setError] = useState<"password" | "network" | "config" | null>(
-    null,
-  );
+  const [error, setError] = useState<
+    "password" | "network" | "config" | "locked" | null
+  >(null);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: FormEvent) {
@@ -42,6 +44,10 @@ export function AdminLoginForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ secret }),
       });
+      if (res.status === 429) {
+        setError("locked");
+        return;
+      }
       if (res.status === 401) {
         setError("password");
         return;
@@ -83,6 +89,9 @@ export function AdminLoginForm({
       </label>
       {error === "password" ? (
         <p className="text-base text-red-700">{wrongPassword}</p>
+      ) : null}
+      {error === "locked" ? (
+        <p className="text-base text-red-700">{tooManyTries}</p>
       ) : null}
       {error === "network" ? (
         <p className="text-base text-red-700">{networkError}</p>

@@ -180,6 +180,7 @@
     "submit": "Sign in",
     "submitting": "Signing in...",
     "wrongPassword": "Wrong password.",
+    "tooManyTries": "Too many tries. Wait a bit, then try again.",
     "networkError": "Connection failed. Try again in a moment.",
     "notConfigured": "The admin password is not set on this computer.",
     "showPassword": "Show",

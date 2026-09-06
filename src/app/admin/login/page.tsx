@@ -29,6 +29,7 @@ export default async function AdminLoginPage() {
         submitLabel={t.admin.submit}
         submittingLabel={t.admin.submitting}
         wrongPassword={t.admin.wrongPassword}
+        tooManyTries={t.admin.tooManyTries}
         networkError={t.admin.networkError}
         notConfigured={t.admin.notConfigured}
         showPassword={t.admin.showPassword}
