@@ -1,17 +1,26 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/auth";
-import { createPost, listPosts } from "@/lib/posts";
+import { createPost, listPosts, type PostType } from "@/lib/posts";
+
+function parseType(v: unknown): PostType | undefined {
+  if (v === "sermon_summary" || v === "news") return v;
+  return undefined;
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const all = searchParams.get("all") === "1";
+  const type = parseType(searchParams.get("type"));
   if (all) {
     const ok = await isAdminAuthenticated();
     if (!ok) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    const posts = await listPosts();
+    const posts = await listPosts(type ? { type } : undefined);
     return NextResponse.json({ posts });
   }
-  const posts = await listPosts({ publishedOnly: true });
+  const posts = await listPosts({
+    publishedOnly: true,
+    ...(type ? { type } : {}),
+  });
   return NextResponse.json({ posts });
 }
 
@@ -20,10 +29,13 @@ export async function POST(request: Request) {
   if (!ok) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   let body: {
+    type?: string;
     title?: string;
     slug?: string;
     excerpt?: string;
+    body?: string;
     content?: string;
+    imageUrls?: string[];
     coverImageUrl?: string;
     published?: boolean;
   };
@@ -37,13 +49,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Title is required" }, { status: 400 });
   }
 
+  const imageUrls =
+    Array.isArray(body.imageUrls)
+      ? body.imageUrls.filter((u): u is string => typeof u === "string")
+      : body.coverImageUrl
+        ? [body.coverImageUrl]
+        : undefined;
+
   try {
     const post = await createPost({
+      type: parseType(body.type),
       title: body.title,
       slug: body.slug ?? "",
       excerpt: body.excerpt,
-      content: body.content,
-      coverImageUrl: body.coverImageUrl,
+      body: body.body ?? body.content,
+      imageUrls,
       published: body.published,
     });
     return NextResponse.json({ post }, { status: 201 });

@@ -6,34 +6,100 @@
 import { promises as fs } from "fs";
 import path from "path";
 
+export type PostType = "sermon_summary" | "news";
+
 export type Post = {
   id: string;
+  type: PostType;
   title: string;
   slug: string;
-  excerpt: string;
-  content: string;
-  coverImageUrl?: string;
+  body: string;
+  excerpt?: string;
+  imageUrls: string[];
   published: boolean;
+  publishedAt?: string; // set on first transition to published; keep on unpublish; do not reset on republish
   createdAt: string;
   updatedAt: string;
 };
 
 export type PostInput = {
+  type?: PostType;
   title: string;
-  slug: string;
+  slug?: string;
+  body?: string;
   excerpt?: string;
+  imageUrls?: string[];
+  /** Legacy alias accepted by API/form during migration */
   content?: string;
   coverImageUrl?: string;
   published?: boolean;
 };
 
+type RawPost = Record<string, unknown>;
+
 const DATA_PATH = path.join(process.cwd(), "data", "posts.json");
+const EXCERPT_LEN = 160;
+
+function isPostType(v: unknown): v is PostType {
+  return v === "sermon_summary" || v === "news";
+}
+
+function asString(v: unknown, fallback = ""): string {
+  return typeof v === "string" ? v : fallback;
+}
+
+function deriveExcerpt(body: string, existing?: string): string | undefined {
+  const trimmed = (existing ?? "").trim();
+  if (trimmed) return trimmed;
+  const slice = body.trim().replace(/\s+/g, " ").slice(0, EXCERPT_LEN);
+  return slice || undefined;
+}
+
+/** Normalize every post from JSON (legacy content/coverImageUrl migration). */
+export function normalizePost(raw: RawPost): Post {
+  const body =
+    asString(raw.body) ||
+    asString(raw.content) ||
+    "";
+
+  let imageUrls: string[] = [];
+  if (Array.isArray(raw.imageUrls)) {
+    imageUrls = raw.imageUrls.filter((u): u is string => typeof u === "string" && u.trim() !== "").map((u) => u.trim());
+  } else if (typeof raw.coverImageUrl === "string" && raw.coverImageUrl.trim()) {
+    imageUrls = [raw.coverImageUrl.trim()];
+  }
+
+  const type: PostType = isPostType(raw.type) ? raw.type : "sermon_summary";
+  const published = Boolean(raw.published);
+  const createdAt = asString(raw.createdAt) || new Date().toISOString();
+  let publishedAt = typeof raw.publishedAt === "string" && raw.publishedAt ? raw.publishedAt : undefined;
+  if (published && !publishedAt) {
+    publishedAt = createdAt;
+  }
+
+  const excerpt = deriveExcerpt(body, asString(raw.excerpt) || undefined);
+
+  return {
+    id: asString(raw.id) || crypto.randomUUID(),
+    type,
+    title: asString(raw.title),
+    slug: asString(raw.slug),
+    body,
+    excerpt,
+    imageUrls,
+    published,
+    publishedAt,
+    createdAt,
+    updatedAt: asString(raw.updatedAt) || createdAt,
+  };
+}
 
 async function readAll(): Promise<Post[]> {
   try {
     const raw = await fs.readFile(DATA_PATH, "utf8");
-    const parsed = JSON.parse(raw) as Post[];
-    return Array.isArray(parsed) ? parsed : [];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((item) => normalizePost((item ?? {}) as RawPost));
   } catch (err) {
     const code = (err as NodeJS.ErrnoException).code;
     if (code === "ENOENT") {
@@ -58,12 +124,58 @@ function slugify(input: string): string {
     .replace(/^-|-$/g, "");
 }
 
-export async function listPosts(opts?: { publishedOnly?: boolean }): Promise<Post[]> {
-  const posts = await readAll();
-  const filtered = opts?.publishedOnly ? posts.filter((p) => p.published) : posts;
-  return filtered.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+function resolveImageUrls(input: PostInput, existing?: string[]): string[] {
+  if (input.imageUrls !== undefined) {
+    return input.imageUrls
+      .filter((u) => typeof u === "string" && u.trim())
+      .map((u) => u.trim());
+  }
+  if (input.coverImageUrl !== undefined) {
+    const url = input.coverImageUrl.trim();
+    return url ? [url] : [];
+  }
+  return existing ? [...existing] : [];
+}
+
+function resolveBody(input: PostInput, existing = ""): string {
+  if (input.body !== undefined) return input.body.trim();
+  if (input.content !== undefined) return input.content.trim();
+  return existing;
+}
+
+function applyPublishedAt(
+  wasPublished: boolean,
+  existingPublishedAt: string | undefined,
+  nextPublished: boolean,
+  createdAt: string,
+): string | undefined {
+  if (nextPublished) {
+    // First transition to published sets publishedAt; republish keeps it.
+    if (!wasPublished && !existingPublishedAt) {
+      return new Date().toISOString();
+    }
+    return existingPublishedAt ?? createdAt;
+  }
+  // Unpublish: keep last publishedAt
+  return existingPublishedAt;
+}
+
+export async function listPosts(opts?: {
+  publishedOnly?: boolean;
+  type?: PostType;
+}): Promise<Post[]> {
+  let posts = await readAll();
+  if (opts?.publishedOnly) {
+    posts = posts.filter((p) => p.published);
+  }
+  if (opts?.type) {
+    posts = posts.filter((p) => p.type === opts.type);
+  }
+  return posts.sort((a, b) => {
+    const aTime = new Date(a.publishedAt ?? a.createdAt).getTime();
+    const bTime = new Date(b.publishedAt ?? b.createdAt).getTime();
+    return bTime - aTime;
+  });
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
@@ -80,17 +192,26 @@ export async function createPost(input: PostInput): Promise<Post> {
   const posts = await readAll();
   const now = new Date().toISOString();
   const slug = input.slug?.trim() || slugify(input.title);
+  if (!slug) {
+    throw new Error("Slug could not be derived from title");
+  }
   if (posts.some((p) => p.slug === slug)) {
     throw new Error(`Slug already exists: ${slug}`);
   }
+  const body = resolveBody(input);
+  const published = Boolean(input.published);
+  const type: PostType = isPostType(input.type) ? input.type : "sermon_summary";
+  const imageUrls = resolveImageUrls(input);
   const post: Post = {
     id: crypto.randomUUID(),
+    type,
     title: input.title.trim(),
     slug,
-    excerpt: (input.excerpt ?? "").trim(),
-    content: (input.content ?? "").trim(),
-    coverImageUrl: input.coverImageUrl?.trim() || undefined,
-    published: Boolean(input.published),
+    body,
+    excerpt: deriveExcerpt(body, input.excerpt),
+    imageUrls,
+    published,
+    publishedAt: published ? now : undefined,
     createdAt: now,
     updatedAt: now,
   };
@@ -108,17 +229,43 @@ export async function updatePost(id: string, input: Partial<PostInput>): Promise
   if (nextSlug !== existing.slug && posts.some((p) => p.slug === nextSlug)) {
     throw new Error(`Slug already exists: ${nextSlug}`);
   }
+
+  const body =
+    input.body !== undefined || input.content !== undefined
+      ? resolveBody(input as PostInput, existing.body)
+      : existing.body;
+
+  const nextPublished =
+    input.published !== undefined ? Boolean(input.published) : existing.published;
+
+  const imageUrls =
+    input.imageUrls !== undefined || input.coverImageUrl !== undefined
+      ? resolveImageUrls(input as PostInput, existing.imageUrls)
+      : existing.imageUrls;
+
+  const type =
+    input.type !== undefined && isPostType(input.type) ? input.type : existing.type;
+
+  const excerpt =
+    input.excerpt !== undefined
+      ? deriveExcerpt(body, input.excerpt)
+      : deriveExcerpt(body, existing.excerpt);
+
   const updated: Post = {
     ...existing,
+    type,
     title: input.title !== undefined ? input.title.trim() : existing.title,
     slug: nextSlug,
-    excerpt: input.excerpt !== undefined ? input.excerpt.trim() : existing.excerpt,
-    content: input.content !== undefined ? input.content.trim() : existing.content,
-    coverImageUrl:
-      input.coverImageUrl !== undefined
-        ? input.coverImageUrl.trim() || undefined
-        : existing.coverImageUrl,
-    published: input.published !== undefined ? Boolean(input.published) : existing.published,
+    body,
+    excerpt,
+    imageUrls,
+    published: nextPublished,
+    publishedAt: applyPublishedAt(
+      existing.published,
+      existing.publishedAt,
+      nextPublished,
+      existing.createdAt,
+    ),
     updatedAt: new Date().toISOString(),
   };
   posts[idx] = updated;

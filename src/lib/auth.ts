@@ -67,6 +67,11 @@ export async function isAdminAuthenticated(): Promise<boolean> {
     if (!payload || !sig) return false;
     const expected = sign(payload, secret);
     if (!safeEqual(sig, expected)) return false;
+    // Session age check from payload timestamp
+    const parts = payload.split(":");
+    const ts = Number(parts[1]);
+    if (!Number.isFinite(ts)) return false;
+    if (Date.now() - ts > MAX_AGE_SECONDS * 1000) return false;
     return true;
   } catch {
     return false;

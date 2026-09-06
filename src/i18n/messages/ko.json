@@ -116,7 +116,10 @@
     "listHeading": "설교요약",
     "empty": "게시된 설교요약이 아직 없습니다.",
     "back": "설교 목록",
-    "readMore": "더 보기"
+    "readMore": "더 보기",
+    "newsHeading": "소식",
+    "newsLabel": "교회 소식·공지 (보조)",
+    "newsBadge": "소식"
   },
   "koreanSchool": {
     "title": "한국학교",

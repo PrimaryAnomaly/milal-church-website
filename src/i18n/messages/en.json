@@ -116,7 +116,10 @@
     "listHeading": "Sermon summaries",
     "empty": "No published sermon summaries yet.",
     "back": "All sermons",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "newsHeading": "News",
+    "newsLabel": "Church news and announcements (secondary)",
+    "newsBadge": "News"
   },
   "koreanSchool": {
     "title": "Korean School",

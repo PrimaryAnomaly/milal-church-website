@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/auth";
-import { deletePost, getPostById, updatePost } from "@/lib/posts";
+import { deletePost, getPostById, updatePost, type PostType } from "@/lib/posts";
 
 type Ctx = { params: Promise<{ id: string }> };
+
+function parseType(v: unknown): PostType | undefined {
+  if (v === "sermon_summary" || v === "news") return v;
+  return undefined;
+}
 
 export async function GET(_request: Request, ctx: Ctx) {
   const { id } = await ctx.params;
@@ -27,12 +32,23 @@ export async function PUT(request: Request, ctx: Ctx) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
+  const imageUrls = Array.isArray(body.imageUrls)
+    ? body.imageUrls.filter((u): u is string => typeof u === "string")
+    : undefined;
+
   try {
     const post = await updatePost(id, {
+      type: parseType(body.type),
       title: typeof body.title === "string" ? body.title : undefined,
       slug: typeof body.slug === "string" ? body.slug : undefined,
       excerpt: typeof body.excerpt === "string" ? body.excerpt : undefined,
-      content: typeof body.content === "string" ? body.content : undefined,
+      body:
+        typeof body.body === "string"
+          ? body.body
+          : typeof body.content === "string"
+            ? body.content
+            : undefined,
+      imageUrls,
       coverImageUrl:
         typeof body.coverImageUrl === "string" ? body.coverImageUrl : undefined,
       published: typeof body.published === "boolean" ? body.published : undefined,
