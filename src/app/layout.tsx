@@ -8,6 +8,7 @@ import { PHOTOS } from "@/lib/church";
 import { buildChurchJsonLd } from "@/lib/json-ld";
 import { getSiteUrl } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /** Display / motto / scripture. Hangul + Latin from the face itself. */
@@ -75,6 +76,7 @@ export default async function RootLayout({
           <Footer />
         </div>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
