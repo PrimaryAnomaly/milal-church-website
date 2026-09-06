@@ -19,13 +19,21 @@ export const CHURCH = {
   facebookUrl: "https://www.facebook.com/milalchurch/",
   sundayWorshipEn: "Sunday 10:00 AM",
   sundayWorshipKo: "주일 오전 10:00",
-  koreanSchoolTimeEn: "Sundays 9:30–10:30 AM (spring/fall semesters)",
-  koreanSchoolTimeKo: "매주 주일 오전 9:30–10:30 (봄·가을 학기)",
-  verifyNoteEn: "[PLACEHOLDER] Draft — confirm with church",
-  verifyNoteKo: "【확인 필요】 교회에 확인해 주세요",
+  koreanSchoolTimeEn: "Sundays 9:30-10:30 AM (spring/fall semesters)",
+  koreanSchoolTimeKo: "매주 주일 오전 9:30-10:30 (봄·가을 학기)",
 } as const;
 
-/** Schedule rows are draft until church confirms — show as placeholders. */
+/** Real photos from the old Weebly site (bostonmilalchurch.org). */
+export const PHOTOS = {
+  logo: "/images/logo.png",
+  pastor: "/images/pastor.jpg",
+  worship: "/images/worship.jpg",
+  congregation: "/images/congregation.jpg",
+  children: "/images/children.jpg",
+  youth: "/images/youth.jpg",
+  koreanSchool: "/images/korean-school.jpg",
+} as const;
+
 export const WORSHIP_ROWS = [
   {
     key: "sunday",
@@ -33,15 +41,13 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Main sanctuary",
     placeKo: "대예배실",
-    verified: false,
   },
   {
     key: "friday",
     timeEn: "1st & 3rd Fridays 7:30 PM",
-    timeKo: "1·3주 금요일 오후 7:30",
+    timeKo: "매월 첫째·셋째 주 금요일 오후 7:30",
     placeEn: "Main sanctuary",
     placeKo: "대예배실",
-    verified: false,
   },
   {
     key: "intercession",
@@ -49,7 +55,6 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 9:00",
     placeEn: "Conference room",
     placeKo: "회의실",
-    verified: false,
   },
   {
     key: "cell",
@@ -57,7 +62,6 @@ export const WORSHIP_ROWS = [
     timeKo: "매월 첫째 주일",
     placeEn: "Conference room",
     placeKo: "회의실",
-    verified: false,
   },
   {
     key: "children",
@@ -65,7 +69,6 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Children's room",
     placeKo: "유치부실",
-    verified: false,
   },
   {
     key: "youth",
@@ -73,7 +76,6 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 10:00",
     placeEn: "Youth room",
     placeKo: "중고등부실",
-    verified: false,
   },
 ] as const;
 
@@ -83,39 +85,35 @@ export const GENERATIONS_ROWS = [
     ageEn: "Young children",
     ageKo: "어린이",
     timeEn: "Sunday 10:00 AM",
-    timeKo: "주일 10:00",
+    timeKo: "주일 오전 10:00",
     placeEn: "Children's room",
     placeKo: "유치부실",
-    verified: false,
   },
   {
     key: "elementary",
     ageEn: "Elementary",
     ageKo: "초등",
-    timeEn: "[PLACEHOLDER]",
-    timeKo: "【확인 필요】",
-    placeEn: "[PLACEHOLDER]",
-    placeKo: "【확인 필요】",
-    verified: false,
+    timeEn: "",
+    timeKo: "",
+    placeEn: "",
+    placeKo: "",
   },
   {
     key: "youth",
     ageEn: "Middle & high school",
     ageKo: "중고등",
     timeEn: "Sunday 10:00 AM",
-    timeKo: "주일 10:00",
+    timeKo: "주일 오전 10:00",
     placeEn: "Youth room",
     placeKo: "중고등부실",
-    verified: false,
   },
   {
     key: "youngAdults",
     ageEn: "Young adults",
     ageKo: "청년",
-    timeEn: "[PLACEHOLDER]",
-    timeKo: "【확인 필요】",
-    placeEn: "[PLACEHOLDER]",
-    placeKo: "【확인 필요】",
-    verified: false,
+    timeEn: "",
+    timeKo: "",
+    placeEn: "",
+    placeKo: "",
   },
 ] as const;

@@ -32,14 +32,14 @@ export function LocaleToggle({ locale, labelEn, labelKo, ariaLabel }: Props) {
 
   return (
     <div
-      className="inline-flex items-center rounded-full border border-border bg-white p-0.5 text-xs font-medium"
+      className="inline-flex items-center rounded-full border border-border bg-surface p-0.5 text-xs font-medium"
       role="group"
       aria-label={ariaLabel}
     >
       <button
         type="button"
         onClick={() => select("en")}
-        className={`rounded-full px-2.5 py-1 transition-colors ${
+        className={`min-h-8 cursor-pointer rounded-full px-2.5 py-1 transition-colors ${
           locale === "en"
             ? "bg-accent text-[#FAF7F2]"
             : "text-muted hover:text-foreground"
@@ -51,7 +51,7 @@ export function LocaleToggle({ locale, labelEn, labelKo, ariaLabel }: Props) {
       <button
         type="button"
         onClick={() => select("ko")}
-        className={`rounded-full px-2.5 py-1 transition-colors ${
+        className={`min-h-8 cursor-pointer rounded-full px-2.5 py-1 transition-colors ${
           locale === "ko"
             ? "bg-accent text-[#FAF7F2]"
             : "text-muted hover:text-foreground"

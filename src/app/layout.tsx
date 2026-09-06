@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import "./globals.css";
 
-/** Display / motto / scripture — Hangul + Latin from the face itself. */
+/** Display / motto / scripture. Hangul + Latin from the face itself. */
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
@@ -35,7 +35,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={notoSerifKr.variable}>
       <head>
-        {/* Pretendard primary sans — jsDelivr CDN (Hangul-capable; works on Vercel) */}
+        {/* Pretendard primary sans, jsDelivr CDN (Hangul-capable; works on Vercel) */}
         <link
           rel="stylesheet"
           as="style"
@@ -43,8 +43,8 @@ export default async function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
       </head>
-      <body className="min-h-screen font-sans antialiased">
-        <div className="flex min-h-screen flex-col">
+      <body className="min-h-[100dvh] font-sans antialiased">
+        <div className="flex min-h-[100dvh] flex-col">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

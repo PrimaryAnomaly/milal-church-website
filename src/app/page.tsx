@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { CHURCH } from "@/lib/church";
+import { CHURCH, PHOTOS } from "@/lib/church";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
-import { PlaceholderBanner } from "@/components/PlaceholderBanner";
+import { ButtonLink } from "@/components/Button";
+import { ChurchPhoto } from "@/components/ChurchPhoto";
 
 export const dynamic = "force-dynamic";
 
@@ -11,73 +11,55 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="bg-accent-soft/60">
-        <div className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
-          <p className="text-sm font-medium uppercase tracking-widest text-accent">
-            {t.home.eyebrow}
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+      <section className="border-b border-border bg-accent-soft/50">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:py-12">
+          <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">
             {locale === "ko" ? t.home.nameKo : t.home.nameEn}
           </h1>
-          <p className="mt-1 text-base text-muted sm:text-lg">
+          <p className="mt-1 text-base text-muted">
             {locale === "ko" ? t.home.nameEn : t.home.nameKo}
           </p>
 
-          <PlaceholderBanner label={t.common.placeholderBanner} className="mt-5 max-w-xl" />
-          <p className="mt-3 text-sm font-medium tracking-wide text-accent">{t.home.mottoLabel}</p>
-          <p className="font-display mt-1 text-lg font-semibold text-foreground sm:text-xl">
+          <p className="font-display mt-6 text-lg text-foreground sm:text-xl">
             {locale === "ko" ? t.home.mottoKoLine : t.home.motto}
           </p>
-          {locale === "en" ? (
-            <p className="font-display mt-1 text-sm text-muted">{t.home.mottoKoLine}</p>
-          ) : (
-            <p className="font-display mt-1 text-sm text-muted">{t.home.motto}</p>
-          )}
+          <p className="font-display mt-1 text-sm text-muted">
+            {locale === "ko" ? t.home.motto : t.home.mottoKoLine}
+          </p>
 
-          <dl className="mt-6 space-y-2 text-base text-foreground sm:text-lg">
-            <div>
-              <dt className="sr-only">Worship</dt>
-              <dd className="font-semibold">{t.home.worshipTime}</dd>
-            </div>
-            <div>
-              <dt className="sr-only">Address</dt>
-              <dd>{t.home.address}</dd>
-            </div>
-          </dl>
+          <p className="mt-6 text-lg font-semibold text-foreground">
+            {t.home.worshipTime}
+          </p>
+          <p className="mt-1 text-base text-foreground">{t.home.address}</p>
 
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link
-              href="/worship"
-              className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-[#FAF7F2] hover:bg-[#9A3412]"
-            >
-              {t.home.ctaWorship}
-            </Link>
-            <Link
-              href="/visit"
-              className="rounded-full border border-accent bg-accent-soft px-5 py-2.5 text-sm font-medium text-foreground hover:bg-white"
-            >
+            <ButtonLink href="/worship">{t.home.ctaWorship}</ButtonLink>
+            <ButtonLink href="/visit" variant="secondary">
               {t.home.ctaVisit}
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-12">
-        <p className="max-w-2xl text-base leading-relaxed text-muted">{t.home.intro}</p>
-        <div className="mt-6 flex flex-wrap gap-4 text-sm">
-          <Link href="/sermons" className="font-medium text-accent hover:underline">
+      <section className="mx-auto max-w-5xl px-4 py-12 md:py-16">
+        <p className="max-w-[65ch] text-base leading-relaxed text-muted">
+          {t.home.intro}
+        </p>
+        <ChurchPhoto
+          src={PHOTOS.worship}
+          alt={t.home.photoAlt}
+          width={1080}
+          height={720}
+          className="mt-8 max-w-2xl"
+        />
+        <div className="mt-6 flex flex-wrap gap-3">
+          <ButtonLink href="/sermons" variant="secondary">
             {t.home.sermonsLink}
-          </Link>
-          <a
-            href={CHURCH.youtubeUrl}
-            className="font-medium text-accent hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          </ButtonLink>
+          <ButtonLink href={CHURCH.youtubeUrl} variant="secondary" external>
             {t.home.youtubeLink}
-          </a>
+          </ButtonLink>
         </div>
-        <p className="mt-8 text-xs font-medium text-accent">{t.home.verifyNote}</p>
       </section>
     </div>
   );

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { PHOTOS } from "@/lib/church";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
 import { LocaleToggle } from "./LocaleToggle";
 import { MobileNav } from "./MobileNav";
@@ -17,12 +19,20 @@ export async function Header() {
   ];
 
   return (
-    <header className="relative z-50 border-b border-border bg-background/90 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4">
         <Link
           href="/"
-          className="min-w-0 shrink text-base font-semibold tracking-tight text-accent sm:text-lg"
+          className="flex min-w-0 shrink items-center gap-2 text-[0.9375rem] font-semibold tracking-tight text-foreground sm:text-base"
         >
+          <Image
+            src={PHOTOS.logo}
+            alt=""
+            width={28}
+            height={37}
+            className="h-8 w-auto shrink-0"
+            priority
+          />
           <span className="block truncate sm:hidden">{t.nav.brandShort}</span>
           <span className="hidden truncate sm:block">{t.nav.brand}</span>
         </Link>
@@ -32,7 +42,7 @@ export async function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="whitespace-nowrap transition-colors hover:text-accent"
+              className="whitespace-nowrap hover:text-accent"
             >
               {link.label}
             </Link>

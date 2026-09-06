@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, listPosts } from "@/lib/posts";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
+import { ButtonLink } from "@/components/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -38,11 +38,11 @@ export default async function SermonDetailPage({ params }: Props) {
   const cover = post.imageUrls[0];
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-14">
-      <Link href="/sermons" className="text-sm text-accent hover:underline">
-        &larr; {t.sermons.back}
-      </Link>
-      <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+    <article className="mx-auto max-w-3xl px-4 py-12 md:py-16">
+      <ButtonLink href="/sermons" variant="secondary">
+        {t.sermons.back}
+      </ButtonLink>
+      <h1 className="mt-8 text-3xl font-semibold text-foreground sm:text-4xl">
         {post.title}
       </h1>
       <p className="mt-3 text-sm text-muted">
@@ -72,9 +72,11 @@ export default async function SermonDetailPage({ params }: Props) {
           ))}
         </div>
       ) : null}
-      <div className="prose prose-stone mt-8 max-w-none whitespace-pre-wrap text-base leading-relaxed text-foreground/90 sm:text-lg">
-        {post.body || post.excerpt || "—"}
-      </div>
+      {post.body || post.excerpt ? (
+        <div className="mt-8 max-w-[65ch] whitespace-pre-wrap text-base leading-relaxed text-foreground">
+          {post.body || post.excerpt}
+        </div>
+      ) : null}
     </article>
   );
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { PHOTOS } from "@/lib/church";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { PlaceholderBanner } from "@/components/PlaceholderBanner";
+import { ButtonLink } from "@/components/Button";
+import { ChurchPhoto } from "@/components/ChurchPhoto";
+import { PageHeader } from "@/components/PageHeader";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
@@ -12,51 +14,41 @@ export default async function VisitPage() {
   const t = await getDictionary();
 
   const blocks = [
-    { title: t.visit.expectTitle, body: t.visit.expectBody, placeholder: false },
-    { title: t.visit.parkingTitle, body: t.visit.parkingBody, placeholder: true },
-    { title: t.visit.kidsTitle, body: t.visit.kidsBody, placeholder: false },
-    { title: t.visit.contactTitle, body: t.visit.contactBody, placeholder: true },
+    { title: t.visit.expectTitle, body: t.visit.expectBody, kids: false },
+    { title: t.visit.parkingTitle, body: t.visit.parkingBody, kids: false },
+    { title: t.visit.kidsTitle, body: t.visit.kidsBody, kids: true },
+    { title: t.visit.contactTitle, body: t.visit.contactBody, kids: false },
   ];
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-14">
-      <p className="text-sm font-medium uppercase tracking-widest text-accent">
-        {t.nav.visit}
-      </p>
-      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
-        {t.visit.title}
-      </h1>
-      <p className="mt-3 text-muted">{t.visit.intro}</p>
+    <div className="mx-auto max-w-3xl px-4 py-12 md:py-16">
+      <PageHeader title={t.visit.title} intro={t.visit.intro} />
 
-      <div className="mt-8 space-y-4">
+      <div className="mt-10 space-y-10">
         {blocks.map((block) => (
-          <section
-            key={block.title}
-            className={
-              block.placeholder
-                ? "rounded-xl border-2 border-dashed border-accent bg-accent-soft/40 p-5"
-                : "rounded-xl border border-border bg-white p-5"
-            }
-          >
-            {block.placeholder ? (
-              <PlaceholderBanner label={t.common.placeholderBanner} className="mb-3" />
-            ) : null}
-            <h2 className="text-lg font-semibold text-foreground">{block.title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{block.body}</p>
-            {block.title === t.visit.contactTitle ? (
-              <p className="mt-3 text-sm font-semibold text-accent">{t.common.emailPhone}</p>
+          <section key={block.title}>
+            <h2 className="text-xl font-semibold text-foreground">
+              {block.title}
+            </h2>
+            <p className="mt-2 max-w-[65ch] text-muted">{block.body}</p>
+            {block.kids ? (
+              <ChurchPhoto
+                src={PHOTOS.children}
+                alt={t.visit.kidsPhotoAlt}
+                width={800}
+                height={450}
+                className="mt-5"
+              />
             ) : null}
           </section>
         ))}
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-4 text-sm">
-        <Link href="/worship" className="font-medium text-accent hover:underline">
-          {t.visit.ctaWorship}
-        </Link>
-        <Link href="/generations" className="font-medium text-accent hover:underline">
+      <div className="mt-10 flex flex-wrap gap-3">
+        <ButtonLink href="/worship">{t.visit.ctaWorship}</ButtonLink>
+        <ButtonLink href="/generations" variant="secondary">
           {t.visit.ctaGenerations}
-        </Link>
+        </ButtonLink>
       </div>
     </div>
   );

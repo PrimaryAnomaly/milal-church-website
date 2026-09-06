@@ -4,9 +4,9 @@
 **Artifact chain:** [INTENT.md](./INTENT.md) → **SPEC.md** (this file) → [PLAN.md](./PLAN.md) → build with proof  
 **Audit:** [AUDIT.md](./AUDIT.md) (SPEC+PLAN review)
 
-**Design:** collapsed here (no separate DESIGN stage). [DESIGN.md](./DESIGN.md) is a stub redirect only.
+**Design:** [DESIGN.md](./DESIGN.md) is the binding visual + copy system. This file keeps product IA, REQ/AC, and the locked palette constraints in §7.
 
-Implement within this frame. Do not invent IA, CMS, or visual direction outside this SPEC.
+Implement within this frame. Do not invent IA, CMS, or visual direction outside SPEC + DESIGN.
 
 ---
 
@@ -322,14 +322,7 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 ## 7. Visual system
 
-*(Locked — former DESIGN.md collapsed here. Do not redesign.)*
-
-### Style
-
-- Warm minimal / light / mobile-first
-- Generous whitespace
-- Soft rounded cards with thin pale borders for posts and schedule blocks
-- Restraint of calm card grids — **not** SaaS logo directories or rainbow status dots
+Execution lives in **[DESIGN.md](./DESIGN.md)**. Constraints below are product locks. Do not invent a second palette or a megachurch look.
 
 ### Palette (locked)
 
@@ -337,46 +330,32 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 |------|--------|--------|
 | Ground | `#FAF7F2` | Off-white / warm paper |
 | Text | `#1C1917` | Near-black / charcoal |
-| Muted text | warm gray (e.g. `#78716C`) | Secondary copy, captions |
-| **Accent (primary)** | `#B45309` | Muted wheat-amber — links, buttons, one restrained accent only |
-| Accent soft / bg | very light warm wash (e.g. `#FEF3E2`) | Soft highlight behind accent UI |
-| Borders | pale warm gray (e.g. `#E7E5E4`) | Thin card and divider edges |
+| Muted text | `#57534E` | Secondary copy (AA on ground) |
+| **Accent (primary)** | `#B45309` | Muted wheat-amber — one accent only |
+| Accent hover | `#9A3412` | Primary button hover |
+| Accent soft / bg | `#FEF3E2` | Soft highlight |
+| Borders | `#E7E5E4` | Hairlines |
+| Surface | `#FFFFFF` | Header, footer, tables |
 
-**Accent decision:** Deep navy rejected. Muted wheat-amber chosen for 밀알 (grain) and warm hospitality — earthy, not neon gold. Soft sage MAY be a companion calm tone if wheat-amber needs relief; **do not reintroduce navy**.
+Deep navy stays rejected. Soft sage is not in use.
 
-### Typography
+### Public UI
 
-- Large, clear headings
-- Body ~16–18px
-- Korean + Latin both legible
-- No tiny metadata as primary UI
+- Light, mobile-first, quiet hospitality. See DESIGN.md for type, radius, buttons, and copy voice.
+- In-page actions are real buttons (filled primary or bordered secondary), not underlined text.
+- No dashed “draft” chrome and no public notes about unconfirmed or omitted facts. If a contact is unknown, omit it.
+- Real church photos when we have them. No stock smiles.
+- Home hero visit facts stay above the fold on a phone (AC-01).
 
-### Imagery
-
-- Prefer real church photos when available
-- Until then: solid / simple treatments
-- **No** stock smiles or generic happy-church photography
-
-### UX do / don't
-
-**Do**
-
-- Quiet hospitality; warm minimal light UI
-- Mobile-first; large readable type for full EN + KO copy
-- Soft rounded cards, thin pale borders, generous whitespace
-- Keep nav short; hero visit info above the fold
-- Single primary accent `#B45309`
-
-**Don't**
+### Don't
 
 - Megachurch dark mode as default
 - Netflix-style sermon grids
 - Sticky give / donate banners
 - Heavy animation / autoplay hero video
 - Fake English Ministry spectacle
-- SaaS logo carousels, rainbow status dots, flashy marketing chrome
-- Tiny metadata as the main interface
-- Stock smile photography
+- SaaS logo carousels, rainbow status dots
+- Conversion / marketing voice
 - Deep navy (or cool blue) as accent
 
 ---
@@ -458,7 +437,7 @@ Testable checklist for v1 done:
 | **Language policy supersession** | Earlier drafts said KO primary UI / EN essentials only / full bilingual out of scope. | **Superseded** by §4.4 REQ-MILAL-I18N-*: full public EN+KO, default EN, browser detection, persisted toggle. |
 | **Post model drift** | Scaffold `Post` has `excerpt`/`content`/`coverImageUrl`/`createdAt` — no `type`, no `published_at`, no `imageUrls[]`. | Extend abstraction in PLAN to match §5.2; migrate JSON shape; map `content`→`body` cleanly. |
 | **Email obfuscation** | Old site Cloudflare email protection scrapes as placeholder protected text. | Confirm real public email with church; do not guess from obfuscation artifacts. |
-| **Schedule / pastor verify** | Seeded from old Imweb pages (2026 표어, 권혁진 bio, 금요 1·3주 7:30, 한국학교 9:30–10:30). May be stale. | Ship with verify flags; replace with church-confirmed copy before domain cutover. |
+| **Schedule / pastor verify** | Seeded from old Imweb pages (2026 표어, 권혁진 bio, 금요 1·3주 7:30, 한국학교 9:30–10:30). May be stale. | Publish as normal copy. Do not show draft banners. Replace with church-confirmed copy before domain cutover. |
 | **설교 path naming** | `/sermons` (domain language) vs `/posts` (scaffold). | Pick one canonical in PLAN; redirect the other. |
 | **Name collision** | Milal disability mission at bostonmilal.org is not this KAPC church. | Never link or brand-mix; copy must say Korean Church / 한인장로교회. |
 | **INTENT vs thin SPEC risk** | Earlier SPEC restated INTENT without page contracts. | This file is the binding product+design source; PLAN/build must cite REQ/AC IDs. |
@@ -471,3 +450,4 @@ Testable checklist for v1 done:
 |---------|-------------------------|--------|
 | v1.0 | 2026-09-05 | Full requirements + collapsed design derived from INTENT; supersedes thin SPEC restatement |
 | v1.1 | 2026-09-05 | Language policy lock: full public EN+KO; default EN; browser detection; header toggle + persistence; REQ-MILAL-I18N-*; NAV-03 / non-goals / AC-15 updated; KO-primary / EN-essentials-only superseded |
+| v1.2 | 2026-09-05 | Visual + copy system moved to DESIGN.md; §7 keeps palette locks; public draft banners and meta-omission copy retired |
