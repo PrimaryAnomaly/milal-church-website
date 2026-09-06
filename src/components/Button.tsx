@@ -1,12 +1,13 @@
 import Link from "next/link";
 
 const base =
-  "inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-5 text-[0.9375rem] font-medium transition-colors duration-200 active:scale-[0.98]";
+  "inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-5 text-[0.9375rem] font-medium transition-[color,background-color,border-color] duration-200";
 
 const variants = {
-  primary: "bg-accent text-[#FAF7F2] hover:bg-accent-hover",
+  primary:
+    "border border-transparent bg-accent text-[#FAF7F2] hover:bg-accent-hover active:bg-accent-hover",
   secondary:
-    "border border-border bg-surface text-foreground hover:border-accent hover:text-accent",
+    "border border-border bg-surface text-foreground hover:border-accent hover:text-accent active:border-accent active:bg-accent-soft",
 } as const;
 
 type Variant = keyof typeof variants;

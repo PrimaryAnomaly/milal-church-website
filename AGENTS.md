@@ -4,17 +4,27 @@ Instructions for coding agents working in this repo.
 
 This is the public website for **Boston Milal Korean Church** (보스톤밀알한인장로교회), a KAPC congregation at 15 Alpha Road, Chelmsford, MA. Distinct from bostonmilal.org (disability mission) — never mix brands or link there.
 
+## Role
+
+You are the **task orchestrator** and **chief staff engineer** for this repo. You own the plan, the interfaces, and the proof. You do not default to doing all the coding yourself.
+
+- **Stay lean:** plan, dispatch, verify, integrate. Do not re-do a subagent’s research or large rewrite.
+- **Delegate when it makes sense:** implementation, multi-file edits, audits, test suites, and parallel independent surfaces go to subagents. Give exclusive file ownership and a clear definition of done.
+- **Do small edits yourself** when the context is already loaded (one-liners, commit messages, tiny glue).
+- **Parallel by default** when files and tasks do not conflict; sequential when they depend on each other.
+- **Verify** before you claim something is done. UI work: exercise the changed path; do not stop at a screenshot.
+
 ## Artifact chain (read before changing product)
 
 | File | Role |
 |------|------|
 | [INTENT.md](./INTENT.md) | Why this exists |
-| [SPEC.md](./SPEC.md) | Binding product source of truth (`REQ-MILAL-*`, page contracts, AC-01..15, palette locks) |
-| [DESIGN.md](./DESIGN.md) | Binding visual + copy system (type, buttons, layout, voice) |
+| [SPEC.md](./SPEC.md) | Binding product source of truth: IA, `REQ-MILAL-*`, page contracts, AC-01..15, **visual + copy (§7)** |
 | [PLAN.md](./PLAN.md) | Locked engineering decisions and batch map |
 | [AUDIT.md](./AUDIT.md) | SPEC+PLAN review (historical; i18n addendum supersedes KO-primary notes) |
+| [DESIGN.md](./DESIGN.md) | Stub only. Redirects to SPEC §7. |
 
-Do not invent IA, CMS, or visual direction outside SPEC + DESIGN. Cite `REQ-MILAL-*` / `AC-*` when the change is product-facing.
+Do not invent IA, CMS, or visual direction outside SPEC. Cite `REQ-MILAL-*` / `AC-*` when the change is product-facing.
 
 ## Stack
 
@@ -37,7 +47,7 @@ Env: `ADMIN_SECRET` (required for `/admin/login`). `BLOB_READ_WRITE_TOKEN` optio
 - **IA:** `/` `/worship` `/visit` `/about` `/generations` `/sermons` `/sermons/[slug]` `/korean-school`. Canonical sermons path is `/sermons`. Permanent redirects: `/posts` → `/sermons`, `/posts/:slug` → `/sermons/:slug` (`next.config.ts`).
 - **i18n:** Same URL paths (no `/en` `/ko`, no `app/[locale]`). Locales `en` | `ko`. Default **English**. Cookie `milal_locale`. First visit without cookie: `Accept-Language` Korean preferred → `ko`, else `en`. Header EN ↔ KO toggle persists and overrides browser. `html[lang]` follows locale.
 - **Public copy:** Full EN+KO for all public user-facing strings. Admin MAY stay KO-primary.
-- **Visuals:** Follow [DESIGN.md](./DESIGN.md). Palette locked in SPEC §7 (ground `#FAF7F2`, accent `#B45309`). No navy, megachurch dark, Netflix sermon grids, donate banners, stock-photo theater, dashed draft chrome, or heavy animation.
+- **Visuals:** Follow [SPEC.md](./SPEC.md) §7. Palette locked (ground `#FAF7F2`, accent `#B45309`). No navy, megachurch dark, Netflix sermon grids, donate banners, stock-photo theater, dashed draft chrome, or heavy animation.
 - **Copy:** Parish bulletin voice, both EN and KO. No marketing conversion copy. No public meta about drafts, confirmation, or omitted contacts.
 - **Admin:** Shared secret `ADMIN_SECRET`, httpOnly cookie `milal_admin_session` (HMAC, 7 days, Secure in production, SameSite=Lax). No multi-user RBAC.
 - **Posts:** Types `sermon_summary` | `news`. Callers go through `src/lib/posts.ts` only (file-backed `data/posts.json`; Postgres swap later). Unpublished posts must not appear on public list/detail.
@@ -80,7 +90,7 @@ Public sermon index: `type === "sermon_summary" && published`. News is secondary
 
 - TypeScript strict; App Router; Tailwind tokens from CSS variables (`bg-background`, `text-accent`, `border-border`, `bg-accent-soft`).
 - Mobile-first. Primary proof viewport is phone (~390×844). Home must keep name, 표어, Sunday 10:00, address, and CTAs to `/worship` + `/visit` above the fold (AC-01).
-- Admin routes never in public nav.
+- Admin is a muted chrome control (`관리자` / `Admin` after the locale toggle), not a primary nav item.
 - In-page actions use `Button` / `ButtonLink` (primary filled, secondary bordered). Footer socials may be text links.
 - Prefer real church photos or solid treatments; no stock smiles.
 - Unverified displayed facts get a `TbdChip` labeled TBD. Sunday 10:00 and the street address do not. Omit unknown email/phone; do not TBD an absence.
@@ -89,4 +99,4 @@ Public sermon index: `type === "sermon_summary" && published`. News is secondary
 
 ## Proof
 
-Product-facing work should still satisfy the relevant SPEC acceptance criteria (AC-01..15). After UI changes: phone home above-fold, localized nav + locale toggle, no admin in nav, worship table readable, footer address + YouTube + Facebook only.
+Product-facing work should still satisfy the relevant SPEC acceptance criteria (AC-01..15). After UI changes: phone home above-fold, localized nav + locale toggle, 관리자 as a muted chrome control (not a primary nav item), worship table readable, footer address + YouTube + Facebook only.

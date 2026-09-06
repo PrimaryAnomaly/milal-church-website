@@ -15,7 +15,7 @@ export function AdminLogoutButton({ label }: { label: string }) {
     <button
       type="button"
       onClick={() => void logout()}
-      className="rounded-full border border-border px-4 py-2 text-sm hover:bg-accent-soft"
+      className="inline-flex min-h-12 items-center rounded-full border border-border px-5 py-2 text-lg hover:bg-accent-soft"
     >
       {label}
     </button>

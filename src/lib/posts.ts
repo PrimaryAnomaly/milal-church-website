@@ -207,12 +207,12 @@ export async function getPostById(id: string): Promise<Post | null> {
 export async function createPost(input: PostInput): Promise<Post> {
   const posts = await readAll();
   const now = new Date().toISOString();
-  const slug = input.slug?.trim() || slugify(input.title);
+  let slug = input.slug?.trim() || slugify(input.title);
   if (!slug) {
-    throw new Error("Slug could not be derived from title");
+    slug = `post-${Date.now().toString(36)}`;
   }
   if (posts.some((p) => p.slug === slug)) {
-    throw new Error(`Slug already exists: ${slug}`);
+    slug = `${slug}-${Date.now().toString(36)}`;
   }
   const body = resolveBody(input);
   const published = Boolean(input.published);
@@ -267,7 +267,9 @@ export async function updatePost(id: string, input: Partial<PostInput>): Promise
   const excerpt =
     input.excerpt !== undefined
       ? deriveExcerpt(body, input.excerpt)
-      : deriveExcerpt(body, existing.excerpt);
+      : input.body !== undefined
+        ? deriveExcerpt(body)
+        : existing.excerpt;
 
   const youtubeUrl =
     input.youtubeUrl !== undefined

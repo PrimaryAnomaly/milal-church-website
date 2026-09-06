@@ -55,6 +55,12 @@ export async function Header() {
             labelKo={t.nav.localeKo}
             ariaLabel={t.nav.localeLabel}
           />
+          <Link
+            href="/admin"
+            className="text-[11px] tracking-wide text-muted/70 hover:text-muted"
+          >
+            {t.nav.admin}
+          </Link>
         </nav>
 
         <MobileNav
@@ -65,6 +71,7 @@ export async function Header() {
           localeEn={t.nav.localeEn}
           localeKo={t.nav.localeKo}
           localeAria={t.nav.localeLabel}
+          adminLabel={t.nav.admin}
         />
       </div>
     </header>

@@ -19,10 +19,10 @@ export default async function AdminLoginPage() {
 
   return (
     <PageShell>
-      <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">
+      <h1 className="text-3xl font-semibold text-foreground">
         {t.admin.loginTitle}
       </h1>
-      <p className="mt-3 max-w-[65ch] text-base text-muted">{t.admin.loginBody}</p>
+      <p className="mt-3 max-w-[65ch] text-lg text-muted">{t.admin.loginBody}</p>
       <AdminLoginForm
         key={locale}
         passwordLabel={t.admin.password}

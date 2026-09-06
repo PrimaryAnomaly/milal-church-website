@@ -69,7 +69,7 @@ Every REQ-MILAL-* and AC-* from SPEC is either **covered** by a batch below or *
 | ID | Batch | Notes |
 |----|-------|-------|
 | NAV-01 | B1, Bi18n | Localized EN/KO labels + mobile hamburger |
-| NAV-02 | B1 | Admin never in public nav |
+| NAV-02 | B1 | Admin not a primary nav item; discreet chrome control to `/admin` after locale toggle |
 | NAV-03 | Bi18n | Header EN↔KO toggle affordance |
 | I18N-01..07 | **Bi18n** (+ B3 copy) | Detection, default EN, toggle, persistence, full public bilingual, same paths |
 | HOME-* | B3 | Rewrite `src/app/page.tsx` (both locales) |
@@ -183,7 +183,7 @@ Every REQ-MILAL-* and AC-* from SPEC is either **covered** by a batch below or *
 1. Set CSS variables: ground `#FAF7F2`, text `#1C1917`, muted `#78716C`, accent `#B45309`, accent-soft `#FEF3E2`, border `#E7E5E4`.
 2. Metadata title default includes both names: Boston Milal Korean Church / 보스톤밀알한인장로교회; `html lang` wired for active locale (default `en` until Bi18n lands).
 3. Header brand + nav paths: `/worship`, `/visit`, `/about`, `/generations`, `/sermons`, `/korean-school` (labels may be temporary EN until Bi18n dictionary wires KO).
-4. Mobile nav toggle; no mega-menu; **no** admin links.
+4. Mobile nav toggle; no mega-menu; primary items only from §4.1; discreet 관리자/Admin control after the locale toggle (desktop) and at the bottom of the mobile menu.
 5. Footer: church name, address `15 Alpha Road, Chelmsford, MA 01824`, YouTube `@milalkoreanchurch1435`, Facebook `milalchurch`; **omit** email/phone.
 6. Prefer Batch 2 pages in same PR if nav would 404; else stub minimal pages.
 7. Leave a clear hook for LocaleToggle (Bi18n) — do not ship KO-primary-only chrome as final.
@@ -193,7 +193,7 @@ Every REQ-MILAL-* and AC-* from SPEC is either **covered** by a batch below or *
 **Proof:**
 
 - [ ] `npm run build`
-- [ ] Phone viewport (~390x844): nav labels visible; admin not in nav
+- [ ] Phone viewport (~390x844): nav labels visible; 관리자 is a quiet control at the bottom of the menu, not in the primary list
 - [ ] Accent wheat-amber (not navy / not `#7c2d12`)
 - [ ] Footer shows address + YT + FB only
 
@@ -381,7 +381,7 @@ export type Post = {
 1. `npm run build` must succeed before merge to main.
 2. Phone viewport checklist (~390x844):
    - [ ] Home above-fold after B3
-   - [ ] Localized mobile nav + locale toggle; no admin
+   - [ ] Localized mobile nav + locale toggle; 관리자 is a quiet chrome control, not a primary item
    - [ ] Worship table readable
    - [ ] Footer address + socials
    - [ ] Sermons YT + list after B4-5
@@ -410,3 +410,4 @@ Batches 1+Bi18n and/or Bi18n+3 may combine if small; do not merge UI rewrite wit
 |---------|-------------------------|--------|
 | v1.0 | 2026-09-05 | Initial PLAN from SPEC v1.0; canonical /sermons; batches 1-5 |
 | v1.1 | 2026-09-05 | Language policy: Batch Bi18n; same-path + locale cookie (not /en /ko); full public EN+KO; default EN; Header toggle; AC-15; remove KO-primary contradictions |
+| v1.2 | 2026-09-06 | NAV-02: discreet 관리자 chrome control (not a primary nav item) |

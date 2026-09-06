@@ -9,6 +9,7 @@ type DeletePostButtonProps = {
   label: string;
   deletingLabel: string;
   confirmLabel: string;
+  failedLabel: string;
 };
 
 export function DeletePostButton({
@@ -17,20 +18,21 @@ export function DeletePostButton({
   label,
   deletingLabel,
   confirmLabel,
+  failedLabel,
 }: DeletePostButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   async function onDelete() {
-    if (!confirm(`${confirmLabel}\n${title}`)) return;
+    if (!confirm(`${confirmLabel}\n\n${title}`)) return;
     setLoading(true);
     try {
       const res = await fetch(`/api/posts/${id}`, { method: "DELETE" });
       if (!res.ok) {
-        const data = await res.json();
-        alert(data.error || "Delete failed");
+        alert(failedLabel);
         return;
       }
+      router.push("/admin");
       router.refresh();
     } finally {
       setLoading(false);
@@ -42,7 +44,7 @@ export function DeletePostButton({
       type="button"
       onClick={() => void onDelete()}
       disabled={loading}
-      className="text-sm text-red-700 hover:underline disabled:opacity-60"
+      className="inline-flex min-h-12 items-center justify-center rounded-full border border-red-300 px-5 py-2 text-lg text-red-800 hover:bg-red-50 disabled:opacity-60"
     >
       {loading ? deletingLabel : label}
     </button>

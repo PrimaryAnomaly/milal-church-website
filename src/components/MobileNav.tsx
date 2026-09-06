@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { List, X } from "@phosphor-icons/react";
+import Link from "next/link";
 import { LocaleToggle } from "./LocaleToggle";
 import { NavLink } from "./NavLink";
 import type { Locale } from "@/i18n/config";
@@ -16,6 +17,7 @@ type Props = {
   localeEn: string;
   localeKo: string;
   localeAria: string;
+  adminLabel: string;
 };
 
 export function MobileNav({
@@ -26,6 +28,7 @@ export function MobileNav({
   localeEn,
   localeKo,
   localeAria,
+  adminLabel,
 }: Props) {
   const [open, setOpen] = useState(false);
 
@@ -71,6 +74,13 @@ export function MobileNav({
               labelKo={localeKo}
               ariaLabel={localeAria}
             />
+            <Link
+              href="/admin"
+              className="mt-4 block px-1 py-2 text-xs text-muted/80"
+              onClick={() => setOpen(false)}
+            >
+              {adminLabel}
+            </Link>
           </div>
         </div>
       ) : null}

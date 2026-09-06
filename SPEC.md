@@ -4,9 +4,9 @@
 **Artifact chain:** [INTENT.md](./INTENT.md) → **SPEC.md** (this file) → [PLAN.md](./PLAN.md) → build with proof  
 **Audit:** [AUDIT.md](./AUDIT.md) (SPEC+PLAN review)
 
-**Design:** [DESIGN.md](./DESIGN.md) is the binding visual + copy system. This file keeps product IA, REQ/AC, and the locked palette constraints in §7.
+**Design:** Visual + copy system is **this file, §7**. [DESIGN.md](./DESIGN.md) is a stub redirect only.
 
-Implement within this frame. Do not invent IA, CMS, or visual direction outside SPEC + DESIGN.
+Implement within this frame. Do not invent IA, CMS, or visual direction outside SPEC.
 
 ---
 
@@ -90,7 +90,7 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 | Sermons / 설교 | `/sermons` **or** `/posts` | `/posts` | Pick one in PLAN; redirect the other if needed |
 | Korean School / 한국학교 | `/korean-school` | *(missing)* | One page; no albums |
 
-**REQ-MILAL-NAV-02** Admin routes MUST NOT appear in public nav: `/admin/login`, `/admin`, `/admin/edit/[id]` (and any create path PLAN defines).
+**REQ-MILAL-NAV-02** Admin MUST NOT appear as a **primary** nav item (not in the §4.1 label table; not accent/pill styled). Header MUST include a **discreet chrome control** to `/admin` (unauthenticated visitors land on `/admin/login`): extra-small muted type, after the locale toggle on desktop; same control at the **bottom** of the mobile menu after the locale toggle. `/admin/edit/[id]` MUST NOT have its own nav entry. Rationale: volunteer 관리자 cannot be asked to type a URL.
 
 **REQ-MILAL-NAV-03** Language UX for chrome: Header MUST include an easy **EN ↔ KO** toggle (English-first affordance OK, e.g. `EN | 한국어`). Active locale drives nav labels and all public copy per **§4.4 Internationalization**. See REQ-MILAL-I18N-*.
 
@@ -322,30 +322,89 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 ## 7. Visual system
 
-Execution lives in **[DESIGN.md](./DESIGN.md)**. Constraints below are product locks. Do not invent a second palette or a megachurch look.
+Binding visual + copy system for v1. Code tokens live in `src/app/globals.css`. Do not invent a second palette or a megachurch look. Light theme only. No dark mode.
+
+Read: bilingual parish site for first-time visitors and members (often on a phone, including elders). Quiet hospitality. Not a marketing landing page.
+
+Dials: `DESIGN_VARIANCE: 4` · `MOTION_INTENSITY: 3` · `VISUAL_DENSITY: 4`.
 
 ### Palette (locked)
 
-| Role | Value | Notes |
-|------|--------|--------|
-| Ground | `#FAF7F2` | Off-white / warm paper |
-| Text | `#1C1917` | Near-black / charcoal |
-| Muted text | `#57534E` | Secondary copy (AA on ground) |
-| **Accent (primary)** | `#B45309` | Muted wheat-amber — one accent only |
-| Accent hover | `#9A3412` | Primary button hover |
-| Accent soft / bg | `#FEF3E2` | Soft highlight |
-| Borders | `#E7E5E4` | Hairlines |
-| Surface | `#FFFFFF` | Header, footer, tables |
+Wheat-amber is the 밀알 mark. One accent. No navy. No second brand color.
+
+| Role | Token | Hex | Notes |
+|------|-------|-----|--------|
+| Ground | `--background` | `#FAF7F2` | Warm paper |
+| Text | `--foreground` | `#1C1917` | Body and headings |
+| Muted text | `--muted` | `#57534E` | Secondary copy (AA on ground) |
+| **Accent** | `--accent` | `#B45309` | Buttons, current nav, motto rule |
+| Accent hover | `--accent-hover` | `#9A3412` | Primary hover |
+| Accent soft | `--accent-soft` | `#FEF3E2` | Hero wash, selected chips |
+| Borders | `--border` | `#E7E5E4` | Hairlines, tables, image edge |
+| Surface | `--surface` | `#FFFFFF` | Header, footer, tables |
 
 Deep navy stays rejected. Soft sage is not in use.
 
-### Public UI
+### Type
 
-- Light, mobile-first, quiet hospitality. See DESIGN.md for type, radius, buttons, and copy voice.
-- In-page actions are real buttons (filled primary or bordered secondary), not underlined text.
-- No dashed “draft” chrome and no public notes about unconfirmed or omitted facts. If a contact is unknown, omit it.
-- Real church photos when we have them. No stock smiles.
-- Home hero visit facts stay above the fold on a phone (AC-01).
+- **UI / body / headings:** Pretendard (Hangul + Latin). Body 17px, line-height 1.65, measure ≤ 65ch.
+- **Motto and scripture only:** Noto Serif KR. Not for nav, buttons, or page titles.
+- Headings: Pretendard semibold, tracking tight, sentence case. No all-caps labels.
+- Korean and English must both read at this size on a phone without pinch-zoom.
+- `html[lang="ko"]` uses `word-break: keep-all`. Do not `truncate` Korean names.
+
+### Shape and motion
+
+| Element | Radius |
+|---------|--------|
+| Buttons, locale toggle, chips | `9999px` (pill) |
+| Photos, table, header | `12px` |
+| Inputs (admin) | `8px` |
+
+Motion is hover and `:active` color only (`duration-200`). Do not scale buttons: a 1px border plus `scale` makes left/right look thicker than top/bottom. Keep a 1px border on all sides (primary uses transparent border so size matches secondary). Honor `prefers-reduced-motion`. No scroll theater, no marquees, no hero video.
+
+Focus: `outline-2 outline-offset-2 outline-accent`. Touch targets ≥ 44px.
+
+### Components
+
+**Buttons.** Use `Button` / `ButtonLink`. Never style a text link as a page action.
+
+- **Primary:** filled accent, cream label (`#FAF7F2`). One per cluster.
+- **Secondary:** white fill, visible border, foreground label. Hover: accent border + accent text.
+- Labels: short, one line (`예배 안내`, `새가족`, `설교 요약`, `유튜브`).
+- Footer socials may stay text links. In-page actions may not.
+
+**Header.** Single row, max 72px. Logo + short name on small screens, full name from `md`. Nav on one line from `md`. Current page is `font-semibold text-accent` (`aria-current="page"`). Sermon detail keeps 설교 current. Locale toggle is a pill, not a CTA. Admin is **not** a primary nav item: extra-small muted `관리자` / `Admin` after the locale toggle; same control at the bottom of the mobile menu. No pill, no accent.
+
+**Page header.** Title + one short intro. No eyebrow above the title.
+
+**Photos.** Real church photos only. `rounded-xl`, thin border, no caption overlay, no stock smiles. Paired photos share a 4:3 `cover` crop. Figure ground `#E4DCD0` while loading. Facts first; modest photos (`max-w-md`) after. Do not sit a full-width photo above a schedule.
+
+**TBD chip.** Unverified displayed facts: filled accent pill `TBD` (`TbdChip`). Not dashed boxes, not a sentence about confirmation. Omit unknown contacts; do not TBD an absence. Use on: 표어, pastor, non-Sunday schedule rows, generations times, Korean School class time. Sunday 10:00 AM and the street address stay unmarked.
+
+**Tables.** Hairline rows on white. No dashed outer box. Columns stay meeting / time / place. TBD chip on unverified rows.
+
+**Footer.** Name, address, YouTube, Facebook. No invented email or phone. No “we are not listing email yet.”
+
+### Layout
+
+- Public pages: `max-w-5xl` + `px-4`, same left edge as header/footer (`PageShell`).
+- Body copy `max-w-[65ch]`.
+- Section padding `py-12 md:py-16`.
+- Home hero without scrolling on ~390×844: church name (KO + EN), 표어, Sunday 10:00, address, CTAs to `/worship` and `/visit` (AC-01).
+- Home after hero: intro + actions, then a modest photo.
+
+### Copy voice
+
+Parish bulletin. Not a landing page.
+
+**English:** short sentences, concrete facts, “we” as the congregation. No “aim to”, “journey”, “come as you are”, “no pressure”, “welcome to the family.”
+
+**Korean:** Church notice, not translated English. 합니다체. Do not calque (`look after one another` → `서로 돌아봅니다`). No `추구합니다`, `참고해 주세요`, `가운데 함께`. No `【확인 필요】`. Nav labels stay §4.1.
+
+**Neither language** explains CMS policy or missing contacts. Unverified displayed fact → TBD chip. Unknown contact → omit.
+
+No em dashes or en dashes in UI copy. Hyphen for times (`9:30-10:30`).
 
 ### Don't
 
@@ -357,6 +416,7 @@ Deep navy stays rejected. Soft sage is not in use.
 - SaaS logo carousels, rainbow status dots
 - Conversion / marketing voice
 - Deep navy (or cool blue) as accent
+- Dashed prototype chrome, uppercase eyebrows on every section, stock photography
 
 ---
 
@@ -412,7 +472,7 @@ From INTENT (still open — do not silently invent answers in build):
 Testable checklist for v1 done:
 
 - [ ] **AC-01** On a phone-width viewport, home shows church name, 표어, 주일 10:00, address, and CTAs to 예배안내 + 새가족 **without scrolling**.
-- [ ] **AC-02** Public nav matches localized labels in §4.1 for the active locale; no mega-menu; admin links absent from public nav; Header shows EN↔KO toggle.
+- [ ] **AC-02** Public nav matches localized labels in §4.1 for the active locale; no mega-menu; Header shows EN↔KO toggle; a discreet 관리자/Admin chrome control is present (not a primary nav item).
 - [ ] **AC-03** `/worship` shows schedule table with 예배/모임 · 시간 · 장소 (verified or clearly marked draft).
 - [ ] **AC-04** `/visit` explains expect / parking / kids / contact — **not** a YouTube-only page.
 - [ ] **AC-05** `/about` shows 표어, KAPC line, and pastor short bio (no separate pastor page).
@@ -451,3 +511,5 @@ Testable checklist for v1 done:
 | v1.0 | 2026-09-05 | Full requirements + collapsed design derived from INTENT; supersedes thin SPEC restatement |
 | v1.1 | 2026-09-05 | Language policy lock: full public EN+KO; default EN; browser detection; header toggle + persistence; REQ-MILAL-I18N-*; NAV-03 / non-goals / AC-15 updated; KO-primary / EN-essentials-only superseded |
 | v1.2 | 2026-09-05 | Visual + copy system moved to DESIGN.md; §7 keeps palette locks; public draft banners and meta-omission copy retired |
+| v1.3 | 2026-09-06 | NAV-02 / AC-02: discreet 관리자 chrome control required (not a primary nav item); volunteers must not type `/admin` |
+| v1.4 | 2026-09-06 | Visual + copy system lives in §7 again (INTENT: design collapsed into SPEC). DESIGN.md is a stub redirect. |
