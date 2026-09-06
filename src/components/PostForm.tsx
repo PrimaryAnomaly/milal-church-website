@@ -160,7 +160,7 @@ export function PostForm({ post }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-60"
+        className="rounded-lg bg-accent px-5 py-2.5 text-sm font-medium text-[#FAF7F2] hover:bg-[#9A3412] disabled:opacity-60"
       >
         {loading ? "Saving..." : isEdit ? "Update post" : "Create post"}
       </button>

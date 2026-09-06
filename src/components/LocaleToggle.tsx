@@ -41,7 +41,7 @@ export function LocaleToggle({ locale, labelEn, labelKo, ariaLabel }: Props) {
         onClick={() => select("en")}
         className={`rounded-full px-2.5 py-1 transition-colors ${
           locale === "en"
-            ? "bg-accent text-white"
+            ? "bg-accent text-[#FAF7F2]"
             : "text-muted hover:text-foreground"
         }`}
         aria-pressed={locale === "en"}
@@ -53,7 +53,7 @@ export function LocaleToggle({ locale, labelEn, labelKo, ariaLabel }: Props) {
         onClick={() => select("ko")}
         className={`rounded-full px-2.5 py-1 transition-colors ${
           locale === "ko"
-            ? "bg-accent text-white"
+            ? "bg-accent text-[#FAF7F2]"
             : "text-muted hover:text-foreground"
         }`}
         aria-pressed={locale === "ko"}

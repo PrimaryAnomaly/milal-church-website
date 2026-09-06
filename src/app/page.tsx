@@ -24,14 +24,14 @@ export default async function HomePage() {
           </p>
 
           <PlaceholderBanner label={t.common.placeholderBanner} className="mt-5 max-w-xl" />
-          <p className="mt-3 text-sm font-medium text-accent">{t.home.mottoLabel}</p>
-          <p className="mt-1 text-lg font-medium text-foreground sm:text-xl">
+          <p className="mt-3 text-sm font-medium tracking-wide text-accent">{t.home.mottoLabel}</p>
+          <p className="font-display mt-1 text-lg font-semibold text-foreground sm:text-xl">
             {locale === "ko" ? t.home.mottoKoLine : t.home.motto}
           </p>
           {locale === "en" ? (
-            <p className="mt-1 text-sm text-muted">{t.home.mottoKoLine}</p>
+            <p className="font-display mt-1 text-sm text-muted">{t.home.mottoKoLine}</p>
           ) : (
-            <p className="mt-1 text-sm text-muted">{t.home.motto}</p>
+            <p className="font-display mt-1 text-sm text-muted">{t.home.motto}</p>
           )}
 
           <dl className="mt-6 space-y-2 text-base text-foreground sm:text-lg">
@@ -48,13 +48,13 @@ export default async function HomePage() {
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
               href="/worship"
-              className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+              className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-[#FAF7F2] hover:bg-[#9A3412]"
             >
               {t.home.ctaWorship}
             </Link>
             <Link
               href="/visit"
-              className="rounded-full border border-border bg-white px-5 py-2.5 text-sm font-medium text-foreground hover:bg-accent-soft"
+              className="rounded-full border border-accent bg-accent-soft px-5 py-2.5 text-sm font-medium text-foreground hover:bg-white"
             >
               {t.home.ctaVisit}
             </Link>

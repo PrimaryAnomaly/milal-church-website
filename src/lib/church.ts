@@ -21,8 +21,8 @@ export const CHURCH = {
   sundayWorshipKo: "주일 오전 10:00",
   koreanSchoolTimeEn: "Sundays 9:30–10:30 AM (spring/fall semesters)",
   koreanSchoolTimeKo: "매주 주일 오전 9:30–10:30 (봄·가을 학기)",
-  verifyNoteEn: "[PLACEHOLDER] — confirm with church",
-  verifyNoteKo: "【확인 필요】 — 교회에 확인하세요",
+  verifyNoteEn: "[PLACEHOLDER] Draft — confirm with church",
+  verifyNoteKo: "【확인 필요】 교회에 확인해 주세요",
 } as const;
 
 /** Schedule rows are draft until church confirms — show as placeholders. */
@@ -72,7 +72,7 @@ export const WORSHIP_ROWS = [
     timeEn: "Sunday 10:00 AM",
     timeKo: "주일 오전 10:00",
     placeEn: "Youth room",
-    placeKo: "Youth's room",
+    placeKo: "중고등부실",
     verified: false,
   },
 ] as const;
@@ -105,7 +105,7 @@ export const GENERATIONS_ROWS = [
     timeEn: "Sunday 10:00 AM",
     timeKo: "주일 10:00",
     placeEn: "Youth room",
-    placeKo: "Youth's room",
+    placeKo: "중고등부실",
     verified: false,
   },
   {

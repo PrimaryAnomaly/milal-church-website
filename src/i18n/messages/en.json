@@ -2,7 +2,7 @@
   "meta": {
     "titleDefault": "Boston Milal Korean Church / 보스톤밀알한인장로교회",
     "titleTemplate": "%s | Boston Milal Korean Church",
-    "description": "Boston Milal Korean Church — warm Presbyterian congregation in Chelmsford, MA. Sunday worship 10:00 AM."
+    "description": "Boston Milal Korean Church in Chelmsford, MA. Sunday worship at 10:00 AM."
   },
   "nav": {
     "brand": "Boston Milal Korean Church",
@@ -32,114 +32,114 @@
     "eyebrow": "Welcome",
     "nameEn": "Boston Milal Korean Church",
     "nameKo": "보스톤밀알한인장로교회",
-    "mottoLabel": "[PLACEHOLDER] 2026 Motto (unconfirmed)",
+    "mottoLabel": "[PLACEHOLDER] 2026 motto (unconfirmed)",
     "motto": "[PLACEHOLDER] Serve one another as good stewards (1 Peter 4:10)",
     "mottoKoLine": "[PLACEHOLDER] 선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
     "worshipTime": "Sunday 10:00 AM",
     "address": "15 Alpha Road, Chelmsford, MA 01824",
-    "ctaWorship": "Worship info",
+    "ctaWorship": "Worship times",
     "ctaVisit": "New here?",
-    "intro": "We are a Korean Presbyterian congregation in Chelmsford, gathering each Sunday to worship, grow, and serve one another with sincerity.",
+    "intro": "We are a Korean Presbyterian church in Chelmsford. On Sundays we gather to worship, learn Scripture, and look after one another.",
     "sermonsLink": "Sermon summaries",
     "youtubeLink": "Watch on YouTube",
-    "verifyNote": "Placeholder — motto year and schedule details below must be confirmed with the church. Do not treat as final."
+    "verifyNote": "Draft copy: motto year and some schedule details still need church confirmation."
   },
   "worship": {
     "title": "Worship & gatherings",
-    "intro": "Weekly worship and prayer gatherings. Every schedule row below is a placeholder until the church confirms.",
+    "intro": "Weekly worship and prayer. Times and rooms below are drafts until the church confirms them.",
     "colMeeting": "Meeting",
     "colTime": "Time",
     "colPlace": "Place",
     "addressHeading": "Address",
-    "onlineHeading": "Online worship",
-    "onlineBody": "Join livestreams and past services on our YouTube channel.",
+    "onlineHeading": "Online",
+    "onlineBody": "Livestreams and past services are on our YouTube channel.",
     "youtubeCta": "YouTube @milalkoreanchurch1435",
-    "verify": "Placeholder — confirm with church",
+    "verify": "Draft — confirm with church",
     "rows": {
       "sunday": "Sunday worship",
       "friday": "Friday prayer",
       "intercession": "Intercessory prayer",
       "cell": "Cell groups",
       "children": "Children's worship",
-      "youth": "Youth group"
+      "youth": "Youth"
     }
   },
   "visit": {
-    "title": "Visit / New family",
-    "intro": "We are glad you are considering a visit. Here is what to expect.",
+    "title": "Visit",
+    "intro": "Thinking of coming this Sunday? Here is what to know.",
     "expectTitle": "What to expect",
-    "expectBody": "Come as you are. Sunday worship begins at 10:00 AM in the main sanctuary. You will find welcome, scripture, prayer, and fellowship. Stay after for greetings if you like — no pressure.",
+    "expectBody": "Come as you are. Sunday worship starts at 10:00 AM in the main sanctuary: welcome, Scripture, prayer, and fellowship. Stay after for greetings if you want. No pressure.",
     "parkingTitle": "Parking & arrival",
-    "parkingBody": "Park in the lot at 15 Alpha Road, Chelmsford, MA 01824. Enter through the main entrance. [PLACEHOLDER] Arrival details (doors, accessibility) — confirm with church.",
+    "parkingBody": "Park at 15 Alpha Road, Chelmsford, MA 01824 and come in through the main entrance. [PLACEHOLDER] Door and accessibility notes — confirm with church.",
     "kidsTitle": "Children",
-    "kidsBody": "Children's worship meets during Sunday service. See Generations for age-band times and rooms.",
+    "kidsBody": "Children's worship meets during the Sunday service. Ages, times, and rooms are on the Generations page.",
     "contactTitle": "Contact",
-    "contactBody": "[PLACEHOLDER] Email and phone are not listed until confirmed. Questions? Please ask after worship, or use the Facebook page in the footer.",
-    "ctaGenerations": "Generations schedule",
+    "contactBody": "[PLACEHOLDER] Email and phone are not listed yet. Ask someone after worship, or reach us on the Facebook page linked in the footer.",
+    "ctaGenerations": "Generations",
     "ctaWorship": "Worship times"
   },
   "about": {
-    "title": "About the church",
-    "intro": "Boston Milal Korean Church is a sincere Presbyterian congregation in Chelmsford, Massachusetts. Our name, Milal (wheat), points to humble growth and hospitality.",
-    "mottoHeading": "[PLACEHOLDER] 2026 Motto (unconfirmed)",
+    "title": "About",
+    "intro": "Boston Milal Korean Church is a Presbyterian congregation in Chelmsford, Massachusetts. Milal means wheat: quiet growth, and room for guests.",
+    "mottoHeading": "[PLACEHOLDER] 2026 motto (unconfirmed)",
     "motto": "[PLACEHOLDER] Serve one another as good stewards (1 Peter 4:10)",
     "mottoKo": "[PLACEHOLDER] 선한 청지기 같이 서로 봉사하라 (벧전 4:10)",
     "affiliationHeading": "Affiliation",
     "affiliation": "KAPC · New England Presbytery",
     "pastorHeading": "[PLACEHOLDER] Pastor (unconfirmed)",
     "pastorName": "[PLACEHOLDER] Rev. Hyukjin Kwon (권혁진 목사)",
-    "pastorBio": "[PLACEHOLDER] Chongshin University (Theology); M.Div. / Th.M. Gordon-Conwell; formerly senior pastor of Lebanon Korean Presbyterian Church.",
-    "pastorVerify": "Placeholder — pastoral details must be confirmed with the church before treating as final.",
+    "pastorBio": "[PLACEHOLDER] Chongshin University (Theology); M.Div. / Th.M., Gordon-Conwell; formerly senior pastor of Lebanon Korean Presbyterian Church.",
+    "pastorVerify": "Draft pastoral details. Confirm with the church before treating as final.",
     "identityHeading": "Who we are",
-    "identity": "We gather as a Korean-speaking Presbyterian church family in Greater Boston, seeking to worship faithfully and serve one another."
+    "identity": "We are a Korean-speaking Presbyterian church family in Greater Boston. We aim for faithful worship and practical care for each other."
   },
   "generations": {
     "title": "Next generations",
-    "intro": "One page for children's and youth ministries. Every time/place cell is a placeholder until the church confirms.",
+    "intro": "Children's and youth ministries on one page. Times and rooms marked draft still need church confirmation.",
     "colDept": "Ministry",
     "colAge": "Ages",
     "colTime": "Time",
     "colPlace": "Place",
-    "verify": "Placeholder — confirm with church",
+    "verify": "Draft — confirm with church",
     "rows": {
       "toddlers": "Toddlers / preschool",
       "elementary": "Elementary",
-      "youth": "Youth Group",
+      "youth": "Youth",
       "youngAdults": "Young adults"
     }
   },
   "sermons": {
     "title": "Sermons",
-    "intro": "Watch services on YouTube and read published sermon summaries.",
-    "youtubeHeading": "YouTube channel",
+    "intro": "Watch services on YouTube, or read sermon summaries when we publish them.",
+    "youtubeHeading": "YouTube",
     "youtubeCta": "Open @milalkoreanchurch1435",
     "listHeading": "Sermon summaries",
-    "empty": "No published sermon summaries yet.",
+    "empty": "No sermon summaries published yet.",
     "back": "All sermons",
     "readMore": "Read more",
     "newsHeading": "News",
-    "newsLabel": "Church news and announcements (secondary)",
+    "newsLabel": "Church news and notices",
     "newsBadge": "News"
   },
   "koreanSchool": {
     "title": "Korean School",
-    "intro": "Sunday Korean language and culture classes for the next generation.",
-    "goalsHeading": "Goals",
-    "goals": "Help children grow in Korean language, cultural identity, and community — learning with joy alongside the church family.",
+    "intro": "Sunday Korean language and culture classes for children and youth.",
+    "goalsHeading": "What we hope for",
+    "goals": "Help kids grow in Korean language and culture, and feel at home in the church family.",
     "timeHeading": "Class time",
     "time": "[PLACEHOLDER] Sundays 9:30–10:30 AM (spring and fall semesters) — confirm with church.",
-    "contactHeading": "Location & contact",
-    "contact": "Classes meet at 15 Alpha Road, Chelmsford, MA 01824. For questions, please ask after worship. [PLACEHOLDER] Phone and email omitted until confirmed.",
-    "noAlbums": "Teacher rosters and photo albums are not published on this site."
+    "contactHeading": "Place & contact",
+    "contact": "Classes meet at 15 Alpha Road, Chelmsford, MA 01824. Ask after worship if you have questions. [PLACEHOLDER] Phone and email omitted until confirmed.",
+    "noAlbums": "Teacher lists and photo albums are not published on this site."
   },
   "notFound": {
     "title": "Page not found",
-    "body": "This page does not exist or was moved.",
+    "body": "This page is missing or was moved.",
     "home": "Back to home"
   },
   "common": {
     "verify": "[PLACEHOLDER]",
-    "placeholderBanner": "Placeholder — confirm with church",
+    "placeholderBanner": "Draft — confirm with church",
     "placeholderTag": "[PLACEHOLDER]",
     "emailPhone": "[PLACEHOLDER] Email and phone not listed until the church confirms."
   }

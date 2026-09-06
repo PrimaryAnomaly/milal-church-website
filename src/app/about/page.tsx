@@ -24,10 +24,10 @@ export default async function AboutPage() {
       <section className="mt-10 rounded-xl border-2 border-dashed border-accent bg-accent-soft/40 p-6">
         <PlaceholderBanner label={t.common.placeholderBanner} />
         <h2 className="mt-3 text-lg font-semibold text-foreground">{t.about.mottoHeading}</h2>
-        <p className="mt-2 text-base text-foreground">
+        <p className="font-display mt-2 text-base font-semibold text-foreground">
           {locale === "ko" ? t.about.mottoKo : t.about.motto}
         </p>
-        <p className="mt-1 text-sm text-muted">
+        <p className="font-display mt-1 text-sm text-muted">
           {locale === "ko" ? t.about.motto : t.about.mottoKo}
         </p>
       </section>

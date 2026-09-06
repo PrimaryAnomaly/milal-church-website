@@ -38,7 +38,7 @@ export default async function SermonsPage() {
         <p className="mt-1 text-sm text-muted">{CHURCH.youtubeHandle}</p>
         <a
           href={CHURCH.youtubeUrl}
-          className="mt-3 inline-flex items-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+          className="mt-3 inline-flex items-center rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-[#FAF7F2] hover:bg-[#9A3412]"
           target="_blank"
           rel="noopener noreferrer"
         >
