@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { List, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { LocaleToggle } from "./LocaleToggle";
@@ -18,6 +18,7 @@ type Props = {
   localeKo: string;
   localeAria: string;
   adminLabel: string;
+  menuLabel: string;
 };
 
 export function MobileNav({
@@ -29,12 +30,52 @@ export function MobileNav({
   localeKo,
   localeAria,
   adminLabel,
+  menuLabel,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
+    }
+
+    function onPointer(e: PointerEvent) {
+      const target = e.target as Node;
+      if (
+        panelRef.current?.contains(target) ||
+        buttonRef.current?.contains(target)
+      ) {
+        return;
+      }
+      setOpen(false);
+    }
+
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const firstLink = panelRef.current?.querySelector<HTMLElement>("a, button");
+    firstLink?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
+        ref={buttonRef}
         type="button"
         className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-border bg-surface text-foreground"
         aria-expanded={open}
@@ -51,10 +92,11 @@ export function MobileNav({
 
       {open ? (
         <div
+          ref={panelRef}
           id="mobile-nav"
-          className="absolute left-0 right-0 top-full z-40 border-b border-border bg-background px-4 py-4"
+          className="absolute left-0 right-0 top-full z-40 border-b border-border bg-surface px-4 py-4"
         >
-          <nav className="flex flex-col">
+          <nav className="flex flex-col" aria-label={menuLabel}>
             {items.map((item) => (
               <NavLink
                 key={item.href}
@@ -76,7 +118,7 @@ export function MobileNav({
             />
             <Link
               href="/admin"
-              className="mt-4 block px-1 py-2 text-xs text-muted/80"
+              className="mt-3 flex min-h-11 items-center px-1 text-xs text-muted hover:text-foreground"
               onClick={() => setOpen(false)}
             >
               {adminLabel}

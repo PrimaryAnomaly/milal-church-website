@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "./Button";
 
 export function AdminLogoutButton({ label }: { label: string }) {
   const router = useRouter();
@@ -12,12 +13,8 @@ export function AdminLogoutButton({ label }: { label: string }) {
   }
 
   return (
-    <button
-      type="button"
-      onClick={() => void logout()}
-      className="inline-flex min-h-12 items-center rounded-full border border-border px-5 py-2 text-lg hover:bg-accent-soft"
-    >
+    <Button variant="secondary" className="text-lg" onClick={() => void logout()}>
       {label}
-    </button>
+    </Button>
   );
 }

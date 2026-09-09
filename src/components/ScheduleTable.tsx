@@ -21,7 +21,7 @@ export function ScheduleTable({
 }: ScheduleTableProps) {
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-surface">
-      <table className="min-w-full text-left text-sm">
+      <table className="min-w-full text-left text-base">
         <thead className="border-b border-border text-foreground">
           <tr>
             {columns.map((col) => (

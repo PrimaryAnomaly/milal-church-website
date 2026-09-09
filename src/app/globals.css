@@ -9,8 +9,12 @@
   --accent-soft: #fef3e2;
   --border: #e7e5e4;
   --surface: #ffffff;
-  --font-sans-stack: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
-    sans-serif;
+  --on-accent: #faf7f2;
+  --photo-ground: #e4dcd0;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --font-sans-stack: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 @theme inline {
@@ -22,6 +26,10 @@
   --color-accent-soft: var(--accent-soft);
   --color-border: var(--border);
   --color-surface: var(--surface);
+  --color-on-accent: var(--on-accent);
+  --color-photo-ground: var(--photo-ground);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
   --font-sans: var(--font-sans-stack);
 }
 
@@ -59,6 +67,11 @@ a {
   outline-offset: 2px;
 }
 
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
 .font-display {
   font-family: var(--font-display), "Noto Serif KR", Georgia, serif;
 }
@@ -69,6 +82,5 @@ a {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
   }
 }

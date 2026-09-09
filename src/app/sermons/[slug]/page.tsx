@@ -67,8 +67,10 @@ export default async function SermonDetailPage({ params }: Props) {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={cover}
-          alt=""
-          className="mt-8 max-h-96 w-full rounded-xl border border-border object-cover"
+          alt={post.title}
+          loading="lazy"
+          decoding="async"
+          className="mt-8 max-h-96 w-full rounded-xl border border-border bg-photo-ground object-cover"
         />
       ) : null}
       {post.imageUrls.length > 1 ? (
@@ -79,7 +81,9 @@ export default async function SermonDetailPage({ params }: Props) {
               key={url}
               src={url}
               alt=""
-              className="max-h-64 w-full rounded-xl border border-border object-cover"
+              loading="lazy"
+              decoding="async"
+              className="max-h-64 w-full rounded-xl border border-border bg-photo-ground object-cover"
             />
           ))}
         </div>

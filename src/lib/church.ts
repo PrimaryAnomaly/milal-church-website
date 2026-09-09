@@ -55,7 +55,7 @@ export const WORSHIP_ROWS = [
     timeKo: "매월 첫째·셋째 주 금요일 오후 7:30",
     placeEn: "",
     placeKo: "",
-    tbd: false,
+    tbd: true,
   },
   {
     key: "intercession",
@@ -63,7 +63,7 @@ export const WORSHIP_ROWS = [
     timeKo: "주일 오전 9:00",
     placeEn: "",
     placeKo: "",
-    tbd: false,
+    tbd: true,
   },
   {
     key: "cell",
@@ -71,7 +71,7 @@ export const WORSHIP_ROWS = [
     timeKo: "매월 첫째 주일",
     placeEn: "",
     placeKo: "",
-    tbd: false,
+    tbd: true,
   },
   {
     key: "children",

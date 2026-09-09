@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { listPosts } from "@/lib/posts";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { AdminLogoutButton } from "@/components/AdminLogoutButton";
+import { ButtonLink } from "@/components/Button";
 import { DeletePostButton } from "@/components/DeletePostButton";
 import { PageShell } from "@/components/PageShell";
 import { PostForm } from "@/components/PostForm";
@@ -27,7 +27,7 @@ export default async function AdminPage() {
         <AdminLogoutButton label={t.admin.logout} />
       </div>
 
-      <section className="mt-10 rounded-xl border border-border bg-white p-6 sm:p-8">
+      <section className="mt-10 rounded-xl border border-border bg-surface p-6 sm:p-8">
         <h2 className="text-2xl font-semibold">{t.admin.createHeading}</h2>
         <div className="mt-6">
           <PostForm labels={t.admin} />
@@ -39,7 +39,7 @@ export default async function AdminPage() {
         {posts.length === 0 ? (
           <p className="mt-4 text-lg text-muted">{t.admin.empty}</p>
         ) : (
-          <ul className="mt-4 divide-y divide-border rounded-xl border border-border bg-white">
+          <ul className="mt-4 divide-y divide-border rounded-xl border border-border bg-surface">
             {posts.map((post) => (
               <li key={post.id} className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
@@ -51,19 +51,17 @@ export default async function AdminPage() {
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
-                  <Link
-                    href={`/admin/edit/${post.id}`}
-                    className="inline-flex min-h-12 items-center justify-center rounded-full bg-accent px-5 py-2 text-lg font-medium text-[#FAF7F2] hover:bg-accent-hover"
-                  >
+                  <ButtonLink href={`/admin/edit/${post.id}`} className="text-lg">
                     {t.admin.edit}
-                  </Link>
+                  </ButtonLink>
                   {post.published ? (
-                    <Link
+                    <ButtonLink
                       href={`/sermons/${post.slug}`}
-                      className="inline-flex min-h-12 items-center justify-center rounded-full border border-border px-5 py-2 text-lg text-foreground hover:border-accent hover:text-accent"
+                      variant="secondary"
+                      className="text-lg"
                     >
                       {t.admin.view}
-                    </Link>
+                    </ButtonLink>
                   ) : null}
                   <DeletePostButton
                     id={post.id}

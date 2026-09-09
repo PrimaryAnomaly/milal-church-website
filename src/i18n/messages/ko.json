@@ -19,7 +19,9 @@
     "localeEn": "EN",
     "localeKo": "한국어",
     "localeLabel": "언어",
-    "admin": "관리자"
+    "admin": "관리자",
+    "skip": "본문으로 건너뛰기",
+    "menu": "메뉴"
   },
   "footer": {
     "name": "보스톤\u200b밀알\u200b한인\u200b장로교회",
@@ -171,7 +173,8 @@
     "home": "홈으로"
   },
   "common": {
-    "tbd": "TBD"
+    "tbd": "TBD",
+    "newTab": "새 탭에서 열립니다"
   },
   "admin": {
     "loginTitle": "관리자 로그인",

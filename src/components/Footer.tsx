@@ -19,22 +19,24 @@ export async function Footer() {
             © {year} {t.footer.name}
           </p>
         </div>
-        <div className="flex flex-col gap-2 sm:items-end">
+        <div className="flex flex-col gap-1 sm:items-end">
           <a
             href={CHURCH.youtubeUrl}
-            className="text-foreground underline-offset-4 hover:text-accent hover:underline"
+            className="inline-flex min-h-11 items-center text-foreground underline-offset-4 hover:text-accent hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
             {t.footer.youtube}
+            <span className="sr-only"> ({t.common.newTab})</span>
           </a>
           <a
             href={CHURCH.facebookUrl}
-            className="text-foreground underline-offset-4 hover:text-accent hover:underline"
+            className="inline-flex min-h-11 items-center text-foreground underline-offset-4 hover:text-accent hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
             {t.footer.facebook}
+            <span className="sr-only"> ({t.common.newTab})</span>
           </a>
         </div>
       </div>

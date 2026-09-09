@@ -1,7 +1,8 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "./Button";
 
 type AdminLoginFormProps = {
   passwordLabel: string;
@@ -33,6 +34,7 @@ export function AdminLoginForm({
     "password" | "network" | "config" | "locked" | null
   >(null);
   const [loading, setLoading] = useState(false);
+  const errorId = useId();
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -74,38 +76,35 @@ export function AdminLoginForm({
             type={visible ? "text" : "password"}
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
-            className="min-h-12 w-full rounded-lg border border-border bg-white px-4 py-3 pr-24 text-lg outline-none focus:border-accent"
+            className="min-h-12 w-full rounded-lg border border-border bg-surface px-4 py-3 pr-24 text-lg outline-none focus:border-accent"
             autoComplete="current-password"
             required
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : undefined}
           />
           <button
             type="button"
             onClick={() => setVisible((v) => !v)}
-            className="absolute inset-y-0 right-1 my-1 min-h-10 rounded-md px-4 text-base text-accent hover:bg-accent-soft"
+            className="absolute inset-y-0 right-1 my-1 min-h-11 rounded-md px-4 text-base text-accent hover:bg-accent-soft"
           >
             {visible ? hidePassword : showPassword}
           </button>
         </span>
       </label>
-      {error === "password" ? (
-        <p className="text-base text-red-700">{wrongPassword}</p>
+      {error ? (
+        <p id={errorId} role="alert" className="text-base text-danger">
+          {error === "password"
+            ? wrongPassword
+            : error === "locked"
+              ? tooManyTries
+              : error === "config"
+                ? notConfigured
+                : networkError}
+        </p>
       ) : null}
-      {error === "locked" ? (
-        <p className="text-base text-red-700">{tooManyTries}</p>
-      ) : null}
-      {error === "network" ? (
-        <p className="text-base text-red-700">{networkError}</p>
-      ) : null}
-      {error === "config" ? (
-        <p className="text-base text-red-700">{notConfigured}</p>
-      ) : null}
-      <button
-        type="submit"
-        disabled={loading}
-        className="min-h-12 w-full rounded-full bg-accent px-6 py-3 text-lg font-medium text-[#FAF7F2] hover:bg-accent-hover disabled:opacity-60"
-      >
+      <Button type="submit" disabled={loading} className="w-full text-lg">
         {loading ? submittingLabel : submitLabel}
-      </button>
+      </Button>
     </form>
   );
 }

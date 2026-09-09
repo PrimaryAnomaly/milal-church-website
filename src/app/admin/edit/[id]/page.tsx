@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { getPostById } from "@/lib/posts";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { ButtonLink } from "@/components/Button";
 import { DeletePostButton } from "@/components/DeletePostButton";
 import { PageShell } from "@/components/PageShell";
 import { PostForm } from "@/components/PostForm";
@@ -22,17 +22,14 @@ export default async function EditPostPage({ params }: Props) {
 
   return (
     <PageShell>
-      <Link
-        href="/admin"
-        className="inline-flex min-h-12 items-center text-lg text-accent hover:underline"
-      >
+      <ButtonLink href="/admin" variant="secondary">
         {t.admin.back}
-      </Link>
+      </ButtonLink>
       <h1 className="mt-4 text-3xl font-semibold text-foreground">
         {t.admin.editTitle}
       </h1>
       <p className="mt-2 text-lg text-muted">{post.title}</p>
-      <div className="mt-6 rounded-xl border border-border bg-white p-6 sm:p-8">
+      <div className="mt-6 rounded-xl border border-border bg-surface p-6 sm:p-8">
         <PostForm post={post} labels={t.admin} />
       </div>
       <div className="mt-8">

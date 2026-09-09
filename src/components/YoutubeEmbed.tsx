@@ -18,7 +18,7 @@ export function YoutubeEmbed({
 
   return (
     <div
-      className={`overflow-hidden rounded-xl border border-border bg-[#E4DCD0] ${className ?? ""}`}
+      className={`overflow-hidden rounded-xl border border-border bg-photo-ground ${className ?? ""}`}
     >
       <div className="relative aspect-video w-full">
         <iframe

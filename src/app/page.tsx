@@ -61,7 +61,12 @@ export default async function HomePage() {
           <ButtonLink href="/sermons" variant="secondary">
             {t.home.sermonsLink}
           </ButtonLink>
-          <ButtonLink href={CHURCH.youtubeUrl} variant="secondary" external>
+          <ButtonLink
+            href={CHURCH.youtubeUrl}
+            variant="secondary"
+            external
+            newTabHint={t.common.newTab}
+          >
             {t.home.youtubeLink}
           </ButtonLink>
           <ButtonLink href="/about" variant="secondary">

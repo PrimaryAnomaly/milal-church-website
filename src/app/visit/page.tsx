@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { PHOTOS } from "@/lib/church";
+import { CHURCH, PHOTOS } from "@/lib/church";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { ButtonLink } from "@/components/Button";
 import { ChurchPhoto } from "@/components/ChurchPhoto";
 import { PageHeader } from "@/components/PageHeader";
 import { PageShell } from "@/components/PageShell";
-
-const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=15+Alpha+Road%2C+Chelmsford%2C+MA+01824";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
@@ -60,7 +57,12 @@ export default async function VisitPage() {
             <p className="mt-2 max-w-[65ch] text-muted">{block.body}</p>
             {block.key === "parking" ? (
               <div className="mt-4">
-                <ButtonLink href={MAPS_URL} variant="secondary" external>
+                <ButtonLink
+                  href={CHURCH.mapsUrl}
+                  variant="secondary"
+                  external
+                  newTabHint={t.common.newTab}
+                >
                   {t.visit.mapsLabel}
                 </ButtonLink>
               </div>

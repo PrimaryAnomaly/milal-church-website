@@ -20,11 +20,11 @@ export async function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-4 py-2">
+    <header className="sticky top-0 z-40 border-b border-border bg-surface">
+      <div className="relative mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-4 py-2">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-2 text-[0.9375rem] font-semibold tracking-tight text-foreground sm:text-base"
+          className="flex min-w-0 items-center gap-2 text-[0.9375rem] font-semibold tracking-tight text-foreground md:text-base"
         >
           <Image
             src={PHOTOS.logo}
@@ -34,16 +34,19 @@ export async function Header() {
             className="h-8 w-auto shrink-0"
             priority
           />
-          <span className="block sm:hidden">{t.nav.brandShort}</span>
-          <span className="hidden leading-snug sm:block">{t.nav.brand}</span>
+          <span className="block md:hidden">{t.nav.brandShort}</span>
+          <span className="hidden leading-snug md:block">{t.nav.brand}</span>
         </Link>
 
-        <nav className="hidden items-center gap-5 text-sm text-foreground md:flex">
+        <nav
+          className="hidden items-center gap-4 text-sm text-foreground lg:flex"
+          aria-label={t.nav.menu}
+        >
           {items.map((link) => (
             <NavLink
               key={link.href}
               href={link.href}
-              className="whitespace-nowrap hover:text-accent"
+              className="inline-flex min-h-11 items-center whitespace-nowrap hover:text-accent"
               activeClassName="font-semibold text-accent"
             >
               {link.label}
@@ -57,7 +60,7 @@ export async function Header() {
           />
           <Link
             href="/admin"
-            className="text-[11px] tracking-wide text-muted/70 hover:text-muted"
+            className="inline-flex min-h-11 items-center px-1 text-xs text-muted hover:text-foreground"
           >
             {t.nav.admin}
           </Link>
@@ -72,6 +75,7 @@ export async function Header() {
           localeKo={t.nav.localeKo}
           localeAria={t.nav.localeLabel}
           adminLabel={t.nav.admin}
+          menuLabel={t.nav.menu}
         />
       </div>
     </header>

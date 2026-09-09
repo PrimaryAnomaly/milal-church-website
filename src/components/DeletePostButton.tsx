@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "./Button";
 
 type DeletePostButtonProps = {
   id: string;
@@ -40,13 +41,13 @@ export function DeletePostButton({
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="danger"
+      className="text-lg"
       onClick={() => void onDelete()}
       disabled={loading}
-      className="inline-flex min-h-12 items-center justify-center rounded-full border border-red-300 px-5 py-2 text-lg text-red-800 hover:bg-red-50 disabled:opacity-60"
     >
       {loading ? deletingLabel : label}
-    </button>
+    </Button>
   );
 }

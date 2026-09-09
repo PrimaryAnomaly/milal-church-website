@@ -50,7 +50,7 @@ export default async function WorshipPage() {
         <h2 className="text-xl font-semibold text-foreground">
           {t.worship.orderHeading}
         </h2>
-        <ol className="mt-4 max-w-xl divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface text-sm">
+        <ol className="mt-4 max-w-xl divide-y divide-border overflow-hidden rounded-xl border border-border bg-surface text-base">
           {BULLETIN.order.map((item) => (
             <li
               key={item.key}
@@ -149,7 +149,11 @@ export default async function WorshipPage() {
           </h2>
           <p className="mt-2 max-w-[65ch] text-muted">{t.worship.onlineBody}</p>
           <div className="mt-4">
-            <ButtonLink href={CHURCH.youtubeUrl} external>
+            <ButtonLink
+              href={CHURCH.youtubeUrl}
+              external
+              newTabHint={t.common.newTab}
+            >
               {t.worship.youtubeCta}
             </ButtonLink>
           </div>

@@ -24,7 +24,7 @@ export function ChurchPhoto({
 }: ChurchPhotoProps) {
   return (
     <figure
-      className={`overflow-hidden rounded-xl border border-border bg-[#E4DCD0] ${
+      className={`overflow-hidden rounded-xl border border-border bg-photo-ground ${
         cover ? "relative aspect-[4/3]" : ""
       } ${className ?? ""}`}
     >

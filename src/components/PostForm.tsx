@@ -1,10 +1,11 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Post, PostType } from "@/lib/posts";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { parseYoutubeVideoId } from "@/lib/youtube";
+import { Button } from "./Button";
 
 type Props = {
   post?: Post;
@@ -12,7 +13,7 @@ type Props = {
 };
 
 const field =
-  "mt-2 min-h-12 w-full rounded-lg border border-border bg-white px-4 py-3 text-lg outline-none focus:border-accent";
+  "mt-2 min-h-12 w-full rounded-lg border border-border bg-surface px-4 py-3 text-lg outline-none focus:border-accent";
 
 export function PostForm({ post, labels }: Props) {
   const router = useRouter();
@@ -24,6 +25,9 @@ export function PostForm({ post, labels }: Props) {
   const [published, setPublished] = useState(post?.published ?? true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const errorId = useId();
+  const titleError = Boolean(error && error === labels.saveFailed);
+  const youtubeError = Boolean(error && error === labels.badYoutube);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -88,6 +92,8 @@ export function PostForm({ post, labels }: Props) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          aria-invalid={titleError || undefined}
+          aria-describedby={titleError ? errorId : undefined}
         />
       </label>
       <label className="block">
@@ -98,6 +104,8 @@ export function PostForm({ post, labels }: Props) {
           onChange={(e) => setYoutubeUrl(e.target.value)}
           placeholder="https://www.youtube.com/watch?v=..."
           inputMode="url"
+          aria-invalid={youtubeError || undefined}
+          aria-describedby={youtubeError ? errorId : undefined}
         />
         <p className="mt-2 text-base text-muted">{labels.youtubeHint}</p>
       </label>
@@ -120,14 +128,14 @@ export function PostForm({ post, labels }: Props) {
         />
         <span className="font-medium">{labels.publish}</span>
       </label>
-      {error ? <p className="text-base text-red-700">{error}</p> : null}
-      <button
-        type="submit"
-        disabled={loading}
-        className="min-h-12 w-full rounded-full bg-accent px-6 py-3 text-lg font-medium text-[#FAF7F2] hover:bg-accent-hover disabled:opacity-60 sm:w-auto"
-      >
+      {error ? (
+        <p id={errorId} role="alert" className="text-base text-danger">
+          {error}
+        </p>
+      ) : null}
+      <Button type="submit" disabled={loading} className="w-full text-lg sm:w-auto">
         {loading ? labels.saving : labels.save}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -14,7 +14,7 @@ import "./globals.css";
 /** Display / motto / scripture. Hangul + Latin from the face itself. */
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-display",
   display: "swap",
 });
@@ -32,8 +32,8 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       siteName: "Boston Milal Korean Church",
-      locale: "en_US",
-      alternateLocale: "ko_KR",
+      locale: locale === "ko" ? "ko_KR" : "en_US",
+      alternateLocale: locale === "ko" ? "en_US" : "ko_KR",
       images: [
         {
           url: PHOTOS.congregation,
@@ -56,23 +56,33 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
+  const t = await getDictionary(locale);
 
   return (
     <html lang={locale} className={notoSerifKr.variable}>
       <head>
-        {/* Pretendard primary sans, jsDelivr CDN (Hangul-capable; works on Vercel) */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        {/* Pretendard variable (Hangul + Latin); jsDelivr CDN works on Vercel */}
         <link
           rel="stylesheet"
           as="style"
           crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
         />
       </head>
       <body className="min-h-[100dvh] font-sans antialiased">
         <JsonLd data={buildChurchJsonLd()} />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-on-accent"
+        >
+          {t.nav.skip}
+        </a>
         <div className="flex min-h-[100dvh] flex-col">
           <Header />
-          <main className="flex-1">{children}</main>
+          <main id="main" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
           <Footer />
         </div>
         <Analytics />

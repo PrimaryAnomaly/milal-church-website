@@ -19,7 +19,9 @@
     "localeEn": "EN",
     "localeKo": "한국어",
     "localeLabel": "Language",
-    "admin": "Admin"
+    "admin": "Admin",
+    "skip": "Skip to content",
+    "menu": "Menu"
   },
   "footer": {
     "name": "Boston Milal Korean Church",
@@ -171,7 +173,8 @@
     "home": "Home"
   },
   "common": {
-    "tbd": "TBD"
+    "tbd": "TBD",
+    "newTab": "Opens in a new tab"
   },
   "admin": {
     "loginTitle": "Admin login",
