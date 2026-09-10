@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CHURCH } from "@/lib/church";
 import { listPosts } from "@/lib/posts";
 import {
   parseYoutubeVideoId,
   YOUTUBE_UPLOADS_PLAYLIST_ID,
 } from "@/lib/youtube";
 import { getDictionary, getLocale } from "@/i18n/get-dictionary";
+import { ButtonLink } from "@/components/Button";
 import { PageHeader } from "@/components/PageHeader";
 import { PageShell } from "@/components/PageShell";
 import { YoutubeEmbed } from "@/components/YoutubeEmbed";
@@ -43,6 +45,16 @@ export default async function SermonsPage() {
           title={t.sermons.youtubePlayerTitle}
           className="mt-4 max-w-lg"
         />
+        <div className="mt-4">
+          <ButtonLink
+            href={CHURCH.youtubeUrl}
+            variant="secondary"
+            external
+            newTabHint={t.common.newTab}
+          >
+            {t.sermons.youtubeCta}
+          </ButtonLink>
+        </div>
       </section>
 
       <section className="mt-12">
@@ -50,7 +62,12 @@ export default async function SermonsPage() {
           {t.sermons.listHeading}
         </h2>
         {sermonSummaries.length === 0 ? (
-          <p className="mt-4 text-muted">{t.sermons.empty}</p>
+          <div className="mt-4 max-w-lg rounded-xl bg-accent-soft px-5 py-6">
+            <p className="text-foreground">{t.sermons.empty}</p>
+            <p className="mt-2 text-sm text-muted">
+              {t.sermons.emptyYouTube}
+            </p>
+          </div>
         ) : (
           <ul className="mt-4 divide-y divide-border border-y border-border">
             {sermonSummaries.map((post) => (

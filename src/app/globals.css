@@ -45,6 +45,7 @@ html[lang="ko"] {
 
 body {
   background: var(--background);
+  caret-color: var(--accent);
   color: var(--foreground);
   font-family: var(--font-sans-stack);
   font-size: 1.0625rem;
@@ -60,6 +61,7 @@ h3 {
 
 a {
   text-decoration: none;
+  text-underline-offset: 0.2em;
 }
 
 :focus-visible {
@@ -70,6 +72,11 @@ a {
 ::selection {
   background: var(--accent-soft);
   color: var(--foreground);
+}
+
+* {
+  scrollbar-color: var(--accent) var(--accent-soft);
+  scrollbar-width: thin;
 }
 
 .font-display {

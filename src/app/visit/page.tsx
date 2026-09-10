@@ -5,6 +5,7 @@ import { ButtonLink } from "@/components/Button";
 import { ChurchPhoto } from "@/components/ChurchPhoto";
 import { PageHeader } from "@/components/PageHeader";
 import { PageShell } from "@/components/PageShell";
+import { TbdChip } from "@/components/TbdChip";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
@@ -17,76 +18,84 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function VisitPage() {
   const t = await getDictionary();
 
-  const blocks = [
-    {
-      key: "expect",
-      title: t.visit.expectTitle,
-      body: t.visit.expectBody,
-      kids: false,
-    },
-    {
-      key: "parking",
-      title: t.visit.parkingTitle,
-      body: t.visit.parkingBody,
-      kids: false,
-    },
-    {
-      key: "kids",
-      title: t.visit.kidsTitle,
-      body: t.visit.kidsBody,
-      kids: true,
-    },
-    {
-      key: "contact",
-      title: t.visit.contactTitle,
-      body: t.visit.contactBody,
-      kids: false,
-    },
-  ];
-
   return (
     <PageShell>
       <PageHeader title={t.visit.title} intro={t.visit.intro} />
 
-      <div className="mt-10 space-y-10">
-        {blocks.map((block) => (
-          <section key={block.key}>
-            <h2 className="text-xl font-semibold text-foreground">
-              {block.title}
-            </h2>
-            <p className="mt-2 max-w-[65ch] text-muted">{block.body}</p>
-            {block.key === "parking" ? (
-              <div className="mt-4">
-                <ButtonLink
-                  href={CHURCH.mapsUrl}
-                  variant="secondary"
-                  external
-                  newTabHint={t.common.newTab}
-                >
-                  {t.visit.mapsLabel}
-                </ButtonLink>
-              </div>
-            ) : null}
-            {block.kids ? (
-              <ChurchPhoto
-                src={PHOTOS.children}
-                alt={t.visit.kidsPhotoAlt}
-                width={800}
-                height={450}
-                className="mt-5 max-w-md"
-                sizes="(max-width: 448px) 100vw, 448px"
-              />
-            ) : null}
-          </section>
-        ))}
-      </div>
+      <section className="mt-10">
+        <h2 className="text-xl font-semibold text-foreground">
+          {t.visit.glanceHeading}
+        </h2>
+        <dl className="mt-4 max-w-3xl divide-y divide-border border-y border-border">
+          <div className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="font-semibold text-foreground">
+              {t.visit.timeLabel}
+            </dt>
+            <dd className="text-muted">{t.visit.expectBody}</dd>
+          </div>
+          <div className="grid gap-3 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="font-semibold text-foreground">
+              {t.visit.addressLabel}
+            </dt>
+            <dd>
+              <p className="text-muted">{CHURCH.address}</p>
+              <ButtonLink
+                href={CHURCH.mapsUrl}
+                variant="secondary"
+                external
+                newTabHint={t.common.newTab}
+                className="mt-3"
+              >
+                {t.visit.mapsLabel}
+              </ButtonLink>
+            </dd>
+          </div>
+          <div className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="flex flex-wrap items-center gap-2 font-semibold text-foreground">
+              <TbdChip label={t.common.tbd} />
+              {t.visit.parkingLabel}
+            </dt>
+            <dd className="text-muted">{t.visit.parkingBody}</dd>
+          </div>
+          <div className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="flex flex-wrap items-center gap-2 font-semibold text-foreground">
+              <TbdChip label={t.common.tbd} />
+              {t.visit.entranceLabel}
+            </dt>
+            <dd className="text-muted">{t.visit.entranceBody}</dd>
+          </div>
+          <div className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="flex flex-wrap items-center gap-2 font-semibold text-foreground">
+              <TbdChip label={t.common.tbd} />
+              {t.visit.kidsTitle}
+            </dt>
+            <dd className="text-muted">{t.visit.kidsBody}</dd>
+          </div>
+        </dl>
+      </section>
 
-      <div className="mt-10 flex flex-wrap gap-3">
-        <ButtonLink href="/worship">{t.visit.ctaWorship}</ButtonLink>
-        <ButtonLink href="/generations" variant="secondary">
-          {t.visit.ctaGenerations}
-        </ButtonLink>
-      </div>
+      <section className="mt-12 grid items-start gap-7 md:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)]">
+        <div>
+          <h2 className="text-xl font-semibold text-foreground">
+            {t.visit.contactTitle}
+          </h2>
+          <p className="mt-2 max-w-[65ch] text-muted">{t.visit.contactBody}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ButtonLink href="/worship">{t.visit.ctaWorship}</ButtonLink>
+            <ButtonLink href="/generations" variant="secondary">
+              {t.visit.ctaGenerations}
+            </ButtonLink>
+          </div>
+        </div>
+        <ChurchPhoto
+          src={PHOTOS.children}
+          alt={t.visit.kidsPhotoAlt}
+          width={800}
+          height={450}
+          cover
+          sizes="(max-width: 768px) 100vw, 384px"
+        />
+      </section>
     </PageShell>
   );
 }

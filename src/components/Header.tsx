@@ -24,7 +24,7 @@ export async function Header() {
       <div className="relative mx-auto flex min-h-16 max-w-5xl items-center justify-between gap-4 px-4 py-2">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-2 text-[0.9375rem] font-semibold tracking-tight text-foreground md:text-base"
+          className="flex min-w-0 items-center gap-2 text-[0.9375rem] font-semibold tracking-tight text-foreground transition-colors hover:text-accent md:text-base"
         >
           <Image
             src={PHOTOS.logo}

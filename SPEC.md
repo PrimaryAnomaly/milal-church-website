@@ -1,6 +1,6 @@
-# SPEC.md — Boston Milal Korean Church Website (v1)
+# SPEC.md — Boston Milal Korean Church Website (v1.5)
 
-**Status:** accepted — engineering plans against this file  
+**Status:** accepted — UX refinement approved; engineering plans against this file (updated 2026-09-09)
 **Artifact chain:** [INTENT.md](./INTENT.md) → **SPEC.md** (this file) → [PLAN.md](./PLAN.md) → build with proof  
 **Audit:** [AUDIT.md](./AUDIT.md) (SPEC+PLAN review)
 
@@ -87,12 +87,14 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 | Visit / 새가족 | `/visit` | *(missing)* | Was broken YouTube dump |
 | About / 교회소개 | `/about` | `/about` | Pastor folded in |
 | Generations / 다음세대 | `/generations` | *(missing)* | One page only |
-| Sermons / 설교 | `/sermons` **or** `/posts` | `/posts` | Pick one in PLAN; redirect the other if needed |
+| Sermons / 설교 | `/sermons` | `/posts` | Canonical `/sermons`; permanent redirects from `/posts` and `/posts/:slug` |
 | Korean School / 한국학교 | `/korean-school` | *(missing)* | One page; no albums |
 
 **REQ-MILAL-NAV-02** Admin MUST NOT appear as a **primary** nav item (not in the §4.1 label table; not accent/pill styled). Header MUST include a **discreet chrome control** to `/admin` (unauthenticated visitors land on `/admin/login`): extra-small muted type, after the locale toggle on desktop; same control at the **bottom** of the mobile menu after the locale toggle. `/admin/edit/[id]` MUST NOT have its own nav entry. Rationale: volunteer 관리자 cannot be asked to type a URL.
 
 **REQ-MILAL-NAV-03** Language UX for chrome: Header MUST include an easy **EN ↔ KO** toggle (English-first affordance OK, e.g. `EN | 한국어`). Active locale drives nav labels and all public copy per **§4.4 Internationalization**. See REQ-MILAL-I18N-*.
+
+**REQ-MILAL-NAV-04** The full horizontal navigation MUST begin at the `lg` breakpoint, not `md`, so six bilingual links do not crowd or wrap. Below `lg`, the mobile menu MUST scroll internally within the remaining viewport. Its navigation, locale toggle, and discreet Admin control MUST remain reachable at 200% text zoom and on short phone viewports. The menu button MUST expose visible hover, pressed, focus, and expanded states without heavy motion.
 
 **Contradiction (scaffold vs SPEC):** Current Header links are Home / About / Posts (EN) with no locale toggle or bilingual dictionary. Implementing this SPEC requires routes in the table above, localized labels, and i18n per §4.4. See §12.
 
@@ -112,11 +114,13 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 **MUST appear (below fold OK):** short sincere intro (1–2 sentences); optional real photo or solid treatment; link path to 설교 / YouTube.
 
+**COMPOSITION:** The first viewport MUST use a deliberate reading order: church identity, restrained motto treatment, one compact Sunday-time/address fact group, then the two required CTAs. Secondary routes below the hero MUST be quieter text links rather than a competing cluster of pill buttons. A modest sanctuary image MAY support the page rhythm after the essential facts; it MUST NOT displace AC-01 content below the fold.
+
 **MUST NOT:** autoplay hero video; heavy animation; donate sticky; stock happy-church photos; empty ministry teasers.
 
 #### 예배·모임 `/worship` — REQ-MILAL-WORSHIP-*
 
-**MUST:** a schedule table with columns **예배/모임 | 시간 | 장소**.
+**MUST:** lead with permanent visitor information: Sunday worship time, address, and the recurring schedule, before any changing weekly bulletin or member-serving detail. On larger screens, the schedule MUST use a table with columns **예배/모임 | 시간 | 장소**. On phones it MUST become equivalent labeled stacked records, with the same content and semantics, and MUST NOT require horizontal panning.
 
 **Seed rows (migrate from old 예배안내 — all VERIFY-WITH-CHURCH before launch):**
 
@@ -131,18 +135,25 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 **MUST ALSO:** address block; link to YouTube for online worship (channel or /streams — not a raw dump of the channel as the only page content).
 
+**COMPOSITION:** When weekly bulletin content exists, present it as a restrained paper-like “This Sunday” / “이번 주일” feature after the permanent visitor facts. Order of worship, serving schedule, news, and prayer content follow as member detail rather than obscuring the recurring schedule.
+
 **MUST NOT:** embed an entire YouTube channel UI as the page body; invent undocumented gatherings.
 
 #### 새가족 `/visit` — REQ-MILAL-VISIT-*
 
 **MUST rewrite** the old page (which was essentially a YouTube click-through). Content contract:
 
+The page MUST lead with an **At a glance / 한눈에 보기** group containing the Sunday time, full address, parking guidance, entrance guidance, and children guidance. The address and map action MUST be adjacent. Parking, entrance, and children details remain VERIFY-WITH-CHURCH facts and MUST use `TbdChip` until confirmed.
+
 | Block | MUST cover |
 |-------|------------|
+| At a glance | Sunday time, address + map action, parking, entrance, and kids in one scannable group |
 | Expect | What a first visit looks like (welcome, service flow at high level — keep short) |
-| Parking | Where to park / arrive (verify copy with church) |
+| Parking / entrance | Where to park and which entrance to use (verify copy with church) |
 | Kids | Where children go during 주일예배 (pointer to 다음세대 times OK) |
 | Contact | How to ask questions (email/phone once confirmed; else 문의는 예배 후 / footer 연락처) |
+
+**COMPOSITION:** End with clear actions to Worship and Generations. Do not present all guidance as undifferentiated equal text sections.
 
 **MUST NOT:** be a YouTube link dump; require account signup; collect forms in v1 (static guidance is enough).
 
@@ -157,9 +168,11 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 **MUST NOT:** separate `/pastor` route; long CV; unrelated disability-mission content; empty 교회학교 mini-tables that duplicate 다음세대.
 
+**COMPOSITION:** The motto and church identity form the page anchor. The pastor portrait and short biography MUST be balanced as one coherent section rather than a detached image followed by a long CV.
+
 #### 다음세대 `/generations` — REQ-MILAL-GEN-*
 
-**MUST:** **one page** with a single table of age bands + times (and room if known).
+**MUST:** **one page** with a single schedule of age bands + times (and room if known). It MUST be a table on larger screens and equivalent labeled stacked records on phones, without horizontal panning.
 
 **Seed structure (fill times from worship/kids rows + church confirm):**
 
@@ -172,17 +185,21 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 
 **MUST NOT:** four separate ministry blog sites; empty EM blog; deep child URLs as primary nav.
 
-#### 설교 `/sermons` or `/posts` — REQ-MILAL-SERMON-*
+**COMPOSITION:** Each age group’s label, audience, time, and place MUST read as one unit. Real children/youth photographs MAY form a cohesive closing pair or gallery after the facts; they MUST NOT interrupt the schedule.
+
+#### 설교 `/sermons` — REQ-MILAL-SERMON-*
 
 **MUST:**
 
-1. Clear link / embed entry to YouTube channel `@milalkoreanchurch1435` (channel page or latest stream — not a Netflix grid).
+1. An explicit in-page `ButtonLink` action to YouTube channel `@milalkoreanchurch1435`, retained even when a single stream/video is embedded (not a Netflix grid).
 2. List of **published** posts with `type = sermon_summary` (설교요약), newest first.
-3. Detail route for a single post (existing `/posts/[slug]` MAY be reused).
+3. Detail route `/sermons/[slug]`; legacy `/posts/[slug]` permanently redirects to its canonical equivalent.
 
 **SHOULD:** also surface published `news` (소식) in a secondary list or filter — if both types share one index, label type clearly in KO.
 
 **MUST NOT:** require browsing hundreds of thumbnails; autoplay multiple videos; scrape YouTube into local video hosting.
+
+**MEDIA:** Author-provided sermon images MUST render in stable reserved media frames with a consistent aspect ratio so image loading or missing images does not cause layout shift. Images MUST remain secondary to title, date/type, and excerpt.
 
 #### 한국학교 `/korean-school` — REQ-MILAL-KS-*
 
@@ -193,6 +210,8 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 3. **Contact** — address + confirmed email/phone only.
 
 **MUST NOT in v1:** teacher roster by name; album galleries; 교칙 full legalistic dump; separate 소식/앨범 microsites.
+
+**COMPOSITION:** Class time and place MUST be promoted into a compact facts group before the longer goals copy. One real Korean School photo MAY be visually prominent after those facts without becoming a gallery.
 
 #### Footer (global) — REQ-MILAL-FOOTER-*
 
@@ -215,6 +234,8 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 **REQ-MILAL-PUB-02** 404 for unknown routes SHOULD be a simple localized (EN+KO dictionary) message + link home (nice-to-have in PLAN).
 
 **REQ-MILAL-PUB-03** Unpublished posts MUST NOT be visible on public list/detail.
+
+**REQ-MILAL-PUB-04** Responsive presentations MUST preserve the same facts, labels, reading order, and accessible relationships across breakpoints. Schedule-like data MUST NOT depend on horizontal scrolling on a typical phone viewport.
 
 
 ### 4.4 Internationalization (i18n) — REQ-MILAL-I18N-*
@@ -242,6 +263,8 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 **REQ-MILAL-I18N-06** Route strategy: **same URL paths** for both locales (no required `/en` or `/ko` prefix). Locale is carried by cookie / client state (and `html[lang]`). PLAN may use `next-intl` or a lightweight dictionary; path-prefix `[locale]` is optional and not required for v1.
 
 **REQ-MILAL-I18N-07** `html[lang]` (and page metadata where practical) MUST reflect the active locale (`en` or `ko`).
+
+**REQ-MILAL-I18N-08** English and Korean public copy MUST each read as naturally authored parish communication, not SEO-shaped repetition or literal translation. Refinement MAY improve wording but MUST NOT add claims, amenities, contacts, or ministry facts that the church has not confirmed.
 
 **Out of i18n scope (unchanged):** separate English Ministry blog spectacle; disability-mission site mix; inventing unconfirmed contact facts in either language.
 
@@ -317,6 +340,7 @@ Requirements are **MUST** unless marked SHOULD / MAY. IDs are stable for PLAN/te
 | **REQ-MILAL-NFR-04** | **a11y basics.** Semantic landmarks, label form controls, visible focus, sufficient contrast on accent-on-ground, alt text for meaningful images. |
 | **REQ-MILAL-NFR-05** | **Deploy.** Production on **Vercel** from this GitHub repo; package-manager build must succeed in CI/Vercel. |
 | **REQ-MILAL-NFR-06** | Env secrets never committed; `.env.example` documents `ADMIN_SECRET` and optional `BLOB_READ_WRITE_TOKEN`. |
+| **REQ-MILAL-NFR-07** | **Text resizing and reflow.** At 200% text zoom, public navigation controls and schedule facts remain reachable and readable without two-dimensional scrolling. |
 
 ---
 
@@ -372,17 +396,17 @@ Focus: `outline-2 outline-offset-2 outline-accent`. Touch targets ≥ 44px.
 - **Primary:** filled accent, cream label (`#FAF7F2`). One per cluster.
 - **Secondary:** white fill, visible border, foreground label. Hover: accent border + accent text.
 - Labels: short, one line (`예배 안내`, `새가족`, `설교 요약`, `유튜브`).
-- Footer socials may stay text links. In-page actions may not.
+- Footer socials and low-priority in-page destination lists may stay text links. Task actions and primary/secondary CTAs use `Button` / `ButtonLink`; never disguise a text link as a button action.
 
-**Header.** Single row, max 72px. Logo + short name on small screens, full name from `md`. Nav on one line from `md`. Current page is `font-semibold text-accent` (`aria-current="page"`). Sermon detail keeps 설교 current. Locale toggle is a pill, not a CTA. Admin is **not** a primary nav item: extra-small muted `관리자` / `Admin` after the locale toggle; same control at the bottom of the mobile menu. No pill, no accent.
+**Header.** Single row, max 72px. Logo + short name on small screens, full name from `md`. Full nav stays on one line from `lg`; below `lg`, use the mobile menu. The open mobile menu scrolls internally within the available viewport and preserves access to the locale and Admin controls under large text. Current page is `font-semibold text-accent` (`aria-current="page"`). Sermon detail keeps 설교 current. Locale toggle is a pill, not a CTA. Admin is **not** a primary nav item: extra-small muted `관리자` / `Admin` after the locale toggle; same control at the bottom of the mobile menu. No pill, no accent.
 
 **Page header.** Title + one short intro. No eyebrow above the title.
 
-**Photos.** Real church photos only. `rounded-xl`, thin border, no caption overlay, no stock smiles. Paired photos share a 4:3 `cover` crop. Figure ground `#E4DCD0` while loading. Facts first; modest photos (`max-w-md`) after. Do not sit a full-width photo above a schedule.
+**Photos.** Real church photos only. `rounded-xl`, thin border, no caption overlay, no stock smiles. Paired photos share a 4:3 `cover` crop. Figure ground `#E4DCD0` while loading. Sermon/post media uses a stable reserved aspect-ratio frame so content does not shift during load or when an image is absent. Facts first; modest photos (`max-w-md`) after. Do not sit a full-width photo above a schedule.
 
-**TBD chip.** Unverified displayed facts: filled accent pill `TBD` (`TbdChip`). Not dashed boxes, not a sentence about confirmation. Omit unknown contacts; do not TBD an absence. Use on: 표어, pastor, non-Sunday schedule rows, generations times, Korean School class time. Sunday 10:00 AM and the street address stay unmarked.
+**TBD chip.** Unverified displayed facts: filled accent pill `TBD` (`TbdChip`). Not dashed boxes, not a sentence about confirmation. Omit unknown contacts; do not TBD an absence. Use on: 표어, pastor, non-Sunday schedule rows, generations times, Korean School class time, and unconfirmed Visit parking/entrance/kids guidance. Sunday 10:00 AM and the street address stay unmarked. Church confirmation removes the chip and replaces provisional wording with the confirmed fact; design MUST NOT conceal or euphemize an unverified fact.
 
-**Tables.** Hairline rows on white. No dashed outer box. Columns stay meeting / time / place. TBD chip on unverified rows.
+**Tables and schedule records.** On larger screens, use tables with hairline rows on white and no dashed outer box. Columns stay meeting / time / place. On phones, render the same rows as labeled stacked records with clear grouping and no horizontal panning. Preserve semantic labels for assistive technology. TBD chip remains attached to the unverified value in either presentation.
 
 **Footer.** Name, address, YouTube, Facebook. No invented email or phone. No “we are not listing email yet.”
 
@@ -392,13 +416,19 @@ Focus: `outline-2 outline-offset-2 outline-accent`. Touch targets ≥ 44px.
 - Body copy `max-w-[65ch]`.
 - Section padding `py-12 md:py-16`.
 - Home hero without scrolling on ~390×844: church name (KO + EN), 표어, Sunday 10:00, address, CTAs to `/worship` and `/visit` (AC-01).
-- Home after hero: intro + actions, then a modest photo.
+- Home hero reading order: identity, motto, compact time/address group, then the two CTAs. Secondary destinations are quieter text links.
+- Home after hero: intro + secondary links, then a modest photo integrated into the section rhythm.
+- Worship: permanent visitor schedule and address first; weekly bulletin and member detail second.
+- Visit: at-a-glance arrival facts first, with map action beside the address; explanatory guidance and closing Worship/Generations actions follow.
+- About: motto/identity anchor; pastor portrait and biography compose as one section.
+- Generations: grouped age-band facts first; cohesive real-photo close.
+- Korean School: compact time/place facts before goals; one real photo may carry visual emphasis.
 
 ### Copy voice
 
 Parish bulletin. Not a landing page.
 
-**English:** short sentences, concrete facts, “we” as the congregation. No “aim to”, “journey”, “come as you are”, “no pressure”, “welcome to the family.”
+**English:** short sentences, concrete facts, “we” as the congregation. Avoid keyword repetition such as repeatedly restating “Korean church in Chelmsford.” No “aim to”, “journey”, “come as you are”, “no pressure”, “welcome to the family.”
 
 **Korean:** Church notice, not translated English. 합니다체. Do not calque (`look after one another` → `서로 돌아봅니다`). No `추구합니다`, `참고해 주세요`, `가운데 함께`. No `【확인 필요】`. Nav labels stay §4.1.
 
@@ -461,7 +491,6 @@ From INTENT (still open — do not silently invent answers in build):
 | Public email / phone | Confirm for footer and 새가족/한국학교 contact |
 | Domain cutover | Timing for bostonmilalchurch.org → this Vercel site |
 | `ADMIN_SECRET` owner | Who holds / rotates the volunteer secret |
-| Sage vs amber | Soft sage companion only if wheat-amber needs UI relief; navy stays rejected |
 | Pastor & schedule currency | 권혁진 bio + worship/다음세대/한국학교 times — verify before treating as final |
 | Admin locale | Public i18n locked (EN+KO); whether thin `/admin` is KO-only or bilingual is a PLAN judgment (not blocking public AC) |
 
@@ -471,14 +500,14 @@ From INTENT (still open — do not silently invent answers in build):
 
 Testable checklist for v1 done:
 
-- [ ] **AC-01** On a phone-width viewport, home shows church name, 표어, 주일 10:00, address, and CTAs to 예배안내 + 새가족 **without scrolling**.
-- [ ] **AC-02** Public nav matches localized labels in §4.1 for the active locale; no mega-menu; Header shows EN↔KO toggle; a discreet 관리자/Admin chrome control is present (not a primary nav item).
-- [ ] **AC-03** `/worship` shows schedule table with 예배/모임 · 시간 · 장소 (verified or clearly marked draft).
-- [ ] **AC-04** `/visit` explains expect / parking / kids / contact — **not** a YouTube-only page.
+- [ ] **AC-01** On a ~390×844 phone viewport, home shows church name, 표어, 주일 10:00, address, and CTAs to 예배안내 + 새가족 **without scrolling**, in the deliberate hierarchy defined in §4.2 and §7.
+- [ ] **AC-02** Public nav matches localized labels in §4.1 for the active locale; full nav begins at `lg`; below `lg` the internally scrolling menu keeps all links, EN↔KO toggle, and discreet 관리자/Admin control reachable at 200% text zoom; Admin is not a primary nav item.
+- [ ] **AC-03** `/worship` leads with Sunday time, address, and recurring schedule before weekly/member content; schedule shows 예배/모임 · 시간 · 장소 as a table on larger screens and labeled records without horizontal panning on phones; unverified facts use TBD.
+- [ ] **AC-04** `/visit` leads with time, address + adjacent map action, parking, entrance, and kids at a glance, then explains the visit and links to Worship/Generations; it is **not** a YouTube-only page.
 - [ ] **AC-05** `/about` shows 표어, KAPC line, and pastor short bio (no separate pastor page).
-- [ ] **AC-06** `/generations` is a **single** page with age-band table (no per-ministry blogs in nav).
-- [ ] **AC-07** 설교 page links YouTube channel and lists published 설교요약 posts.
-- [ ] **AC-08** `/korean-school` shows goals, Sunday class time, contact — no teacher roster/albums.
+- [ ] **AC-06** `/generations` is a **single** page with one age-band schedule: table on larger screens, grouped labeled records without horizontal panning on phones, and no per-ministry blogs in nav.
+- [ ] **AC-07** 설교 page provides an explicit YouTube channel action, lists published 설교요약 posts, and reserves stable media frames for author-provided images.
+- [ ] **AC-08** `/korean-school` promotes class time/place as a compact facts group, then shows goals and confirmed contact; no teacher roster/albums.
 - [ ] **AC-09** Footer shows address + YouTube + Facebook; email only if confirmed.
 - [ ] **AC-10** Volunteer can login with `ADMIN_SECRET`, create 설교요약 with optional image URL/Blob, publish, see it publicly, unpublish, logout.
 - [ ] **AC-11** Unpublished posts are not publicly listed or reachable by slug.
@@ -497,8 +526,8 @@ Testable checklist for v1 done:
 | **Language policy supersession** | Earlier drafts said KO primary UI / EN essentials only / full bilingual out of scope. | **Superseded** by §4.4 REQ-MILAL-I18N-*: full public EN+KO, default EN, browser detection, persisted toggle. |
 | **Post model drift** | Scaffold `Post` has `excerpt`/`content`/`coverImageUrl`/`createdAt` — no `type`, no `published_at`, no `imageUrls[]`. | Extend abstraction in PLAN to match §5.2; migrate JSON shape; map `content`→`body` cleanly. |
 | **Email obfuscation** | Old site Cloudflare email protection scrapes as placeholder protected text. | Confirm real public email with church; do not guess from obfuscation artifacts. |
-| **Schedule / pastor verify** | Seeded from old Imweb pages (2026 표어, 권혁진 bio, 금요 1·3주 7:30, 한국학교 9:30–10:30). May be stale. | Publish as normal copy. Do not show draft banners. Replace with church-confirmed copy before domain cutover. |
-| **설교 path naming** | `/sermons` (domain language) vs `/posts` (scaffold). | Pick one canonical in PLAN; redirect the other. |
+| **Schedule / pastor verify** | Seeded from old Imweb pages (2026 표어, 권혁진 bio, 금요 1·3주 7:30, 한국학교 9:30–10:30). May be stale. | Show unverified displayed facts with `TbdChip`; church confirmation replaces provisional wording and removes the chip. Do not conceal uncertainty with styling or draft banners. |
+| **설교 path naming** | `/sermons` is the public IA; `/posts` remains a historical scaffold path. | Canonical route is `/sermons`; permanently redirect `/posts` and `/posts/:slug` to their `/sermons` equivalents. |
 | **Name collision** | Milal disability mission at bostonmilal.org is not this KAPC church. | Never link or brand-mix; copy must say Korean Church / 한인장로교회. |
 | **INTENT vs thin SPEC risk** | Earlier SPEC restated INTENT without page contracts. | This file is the binding product+design source; PLAN/build must cite REQ/AC IDs. |
 
@@ -513,3 +542,4 @@ Testable checklist for v1 done:
 | v1.2 | 2026-09-05 | Visual + copy system moved to DESIGN.md; §7 keeps palette locks; public draft banners and meta-omission copy retired |
 | v1.3 | 2026-09-06 | NAV-02 / AC-02: discreet 관리자 chrome control required (not a primary nav item); volunteers must not type `/admin` |
 | v1.4 | 2026-09-06 | Visual + copy system lives in §7 again (INTENT: design collapsed into SPEC). DESIGN.md is a stub redirect. |
+| v1.5 | 2026-09-09 | Approved UX refinement: visitor-first Worship/Visit ordering, responsive schedule records, page-specific compositions, explicit YouTube action, resilient `lg` navigation, natural bilingual copy, stable sermon media, and explicit TBD verification behavior. |

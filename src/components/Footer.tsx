@@ -8,7 +8,7 @@ export async function Footer() {
 
   return (
     <footer className="mt-auto border-t border-border bg-surface">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-10 text-sm text-muted sm:flex-row sm:items-start sm:justify-between">
+      <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-9 text-sm text-muted sm:flex-row sm:items-start sm:justify-between sm:py-10">
         <div className="space-y-1">
           <p className="font-medium text-foreground">{t.footer.name}</p>
           <p>

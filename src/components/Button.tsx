@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const base =
-  "inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-5 text-[0.9375rem] font-medium transition-[color,background-color,border-color] duration-200";
+  "inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-5 text-[0.9375rem] font-medium transition-[color,background-color,border-color] duration-200 disabled:cursor-not-allowed disabled:opacity-55";
 
 const variants = {
   primary:

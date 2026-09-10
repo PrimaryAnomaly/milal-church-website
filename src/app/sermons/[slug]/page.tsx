@@ -40,60 +40,67 @@ export default async function SermonDetailPage({ params }: Props) {
 
   const videoId = parseYoutubeVideoId(post.youtubeUrl);
   const cover = post.imageUrls[0];
+  const galleryImages = videoId ? post.imageUrls : post.imageUrls.slice(1);
 
   return (
     <PageShell>
-    <article>
-      <ButtonLink href="/sermons" variant="secondary">
-        {t.sermons.back}
-      </ButtonLink>
-      <h1 className="mt-8 text-3xl font-semibold text-foreground sm:text-4xl">
-        {post.title}
-      </h1>
-      <p className="mt-3 text-sm text-muted">
-        {new Date(post.publishedAt ?? post.createdAt).toLocaleDateString(
-          locale === "ko" ? "ko-KR" : "en-US",
-          { year: "numeric", month: "long", day: "numeric" },
-        )}
-      </p>
-      {videoId ? (
-        <YoutubeEmbed
-          videoId={videoId}
-          title={post.title}
-          className="mt-8 max-w-lg"
-        />
-      ) : null}
-      {cover && !videoId ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={cover}
-          alt={post.title}
-          loading="lazy"
-          decoding="async"
-          className="mt-8 max-h-96 w-full rounded-xl border border-border bg-photo-ground object-cover"
-        />
-      ) : null}
-      {post.imageUrls.length > 1 ? (
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {post.imageUrls.slice(1).map((url) => (
-            // eslint-disable-next-line @next/next/no-img-element
+      <article>
+        <ButtonLink href="/sermons" variant="secondary">
+          {t.sermons.back}
+        </ButtonLink>
+        <h1 className="mt-8 max-w-3xl text-3xl font-semibold text-foreground sm:text-4xl">
+          {post.title}
+        </h1>
+        <p className="mt-3 text-sm text-muted">
+          {new Date(post.publishedAt ?? post.createdAt).toLocaleDateString(
+            locale === "ko" ? "ko-KR" : "en-US",
+            { year: "numeric", month: "long", day: "numeric" },
+          )}
+        </p>
+        {videoId ? (
+          <YoutubeEmbed
+            videoId={videoId}
+            title={post.title}
+            className="mt-8 max-w-2xl"
+          />
+        ) : null}
+        {cover && !videoId ? (
+          <div className="relative mt-8 aspect-[16/10] max-w-2xl overflow-hidden rounded-xl border border-border bg-photo-ground">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              key={url}
-              src={url}
-              alt=""
+              src={cover}
+              alt={post.title}
               loading="lazy"
               decoding="async"
-              className="max-h-64 w-full rounded-xl border border-border bg-photo-ground object-cover"
+              className="h-full w-full object-contain"
             />
-          ))}
-        </div>
-      ) : null}
-      {post.body || post.excerpt ? (
-        <div className="mt-8 max-w-[65ch] whitespace-pre-wrap text-base leading-relaxed text-foreground">
-          {post.body || post.excerpt}
-        </div>
-      ) : null}
-    </article>
+          </div>
+        ) : null}
+        {galleryImages.length > 0 ? (
+          <div className="mt-4 grid max-w-2xl gap-3 sm:grid-cols-2">
+            {galleryImages.map((url) => (
+              <div
+                key={url}
+                className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-photo-ground"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={url}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        ) : null}
+        {post.body || post.excerpt ? (
+          <div className="mt-8 max-w-[65ch] whitespace-pre-wrap text-base leading-relaxed text-foreground">
+            {post.body || post.excerpt}
+          </div>
+        ) : null}
+      </article>
     </PageShell>
   );
 }

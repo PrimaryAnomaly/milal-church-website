@@ -32,6 +32,46 @@ export default async function WorshipPage() {
       <PageHeader title={t.worship.title} intro={t.worship.intro} />
 
       <section className="mt-10">
+        <div className="grid gap-6 border-y border-border py-6 sm:grid-cols-2">
+          <div>
+            <h2 className="text-xl font-semibold text-foreground">
+              {t.worship.sundayHeading}
+            </h2>
+            <p className="mt-2 text-lg font-medium text-foreground">
+              {t.home.worshipTime}
+            </p>
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-foreground">
+              {t.worship.addressHeading}
+            </h2>
+            <p className="mt-2 text-muted">{CHURCH.address}</p>
+          </div>
+        </div>
+
+        <h2 className="mt-10 text-xl font-semibold text-foreground">
+          {t.worship.gatheringsHeading}
+        </h2>
+        <div className="mt-4">
+          <ScheduleTable
+            columns={[
+              { key: "meeting", label: t.worship.colMeeting },
+              { key: "time", label: t.worship.colTime },
+              { key: "place", label: t.worship.colPlace },
+            ]}
+            tbdLabel={t.common.tbd}
+            rows={WORSHIP_ROWS.map((row) => ({
+              key: row.key,
+              meeting: labels[row.key as keyof typeof labels],
+              time: locale === "ko" ? row.timeKo : row.timeEn,
+              place: locale === "ko" ? row.placeKo : row.placeEn,
+              tbd: row.tbd,
+            }))}
+          />
+        </div>
+      </section>
+
+      <section className="mt-12 rounded-xl bg-accent-soft px-5 py-6 sm:px-7">
         <h2 className="text-xl font-semibold text-foreground">
           {t.worship.thisWeekHeading}
         </h2>
@@ -67,29 +107,6 @@ export default async function WorshipPage() {
           ))}
         </ol>
         <p className="mt-2 text-sm text-muted">{t.worship.standNote}</p>
-      </section>
-
-      <section className="mt-12">
-        <h2 className="text-xl font-semibold text-foreground">
-          {t.worship.gatheringsHeading}
-        </h2>
-        <div className="mt-4">
-          <ScheduleTable
-            columns={[
-              { key: "meeting", label: t.worship.colMeeting },
-              { key: "time", label: t.worship.colTime },
-              { key: "place", label: t.worship.colPlace },
-            ]}
-            tbdLabel={t.common.tbd}
-            rows={WORSHIP_ROWS.map((row) => ({
-              key: row.key,
-              meeting: labels[row.key as keyof typeof labels],
-              time: locale === "ko" ? row.timeKo : row.timeEn,
-              place: locale === "ko" ? row.placeKo : row.placeEn,
-              tbd: row.tbd,
-            }))}
-          />
-        </div>
       </section>
 
       <section className="mt-12">
@@ -136,27 +153,19 @@ export default async function WorshipPage() {
         </ul>
       </section>
 
-      <section className="mt-12 space-y-8">
-        <div>
-          <h2 className="text-xl font-semibold text-foreground">
-            {t.worship.addressHeading}
-          </h2>
-          <p className="mt-2 text-muted">{CHURCH.address}</p>
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold text-foreground">
-            {t.worship.onlineHeading}
-          </h2>
-          <p className="mt-2 max-w-[65ch] text-muted">{t.worship.onlineBody}</p>
-          <div className="mt-4">
-            <ButtonLink
-              href={CHURCH.youtubeUrl}
-              external
-              newTabHint={t.common.newTab}
-            >
-              {t.worship.youtubeCta}
-            </ButtonLink>
-          </div>
+      <section className="mt-12 border-t border-border pt-10">
+        <h2 className="text-xl font-semibold text-foreground">
+          {t.worship.onlineHeading}
+        </h2>
+        <p className="mt-2 max-w-[65ch] text-muted">{t.worship.onlineBody}</p>
+        <div className="mt-4">
+          <ButtonLink
+            href={CHURCH.youtubeUrl}
+            external
+            newTabHint={t.common.newTab}
+          >
+            {t.worship.youtubeCta}
+          </ButtonLink>
         </div>
       </section>
     </PageShell>

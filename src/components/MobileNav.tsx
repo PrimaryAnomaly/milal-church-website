@@ -43,6 +43,25 @@ export function MobileNav({
       if (e.key === "Escape") {
         setOpen(false);
         buttonRef.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab" && panelRef.current) {
+        const focusable = Array.from(
+          panelRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled])',
+          ),
+        );
+        const first = focusable[0];
+        const last = focusable.at(-1);
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
       }
     }
 
@@ -77,7 +96,7 @@ export function MobileNav({
       <button
         ref={buttonRef}
         type="button"
-        className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-border bg-surface text-foreground"
+        className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-border bg-surface text-foreground transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent active:bg-accent-soft"
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={open ? closeLabel : openLabel}
@@ -94,7 +113,7 @@ export function MobileNav({
         <div
           ref={panelRef}
           id="mobile-nav"
-          className="absolute left-0 right-0 top-full z-40 border-b border-border bg-surface px-4 py-4"
+          className="absolute left-0 right-0 top-full z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-b border-border bg-surface px-4 py-4 shadow-[0_12px_24px_-18px_rgba(28,25,23,0.35)]"
         >
           <nav className="flex flex-col" aria-label={menuLabel}>
             {items.map((item) => (
