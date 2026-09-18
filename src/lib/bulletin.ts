@@ -130,8 +130,8 @@ export const BULLETIN = {
       en: "There is a fall barbecue after worship today.",
     },
     {
-      ko: "이번 주 금요일(9월 18일) 저녁 7시 30분에 금요기도회가 있습니다.",
-      en: "The Friday prayer meeting is this Friday, September 18, at 7:30 PM.",
+      ko: "이번 주 금요일(9월 18일) 저녁 7시 30분에 금요기도회가 있습니다. 사도행전 성경공부 (1) 「약속하신 것을 기다리라」(사도행전 1장)을 나눕니다.",
+      en: "The Friday prayer meeting is this Friday, September 18, at 7:30 PM. We will share in Acts Bible study (1), “Wait for What Was Promised” (Acts 1).",
     },
     {
       ko: "다음 주일(9월 20일)에는 이진택 목사님(보스톤늘푸른교회)께서 설교해 주십니다.",
